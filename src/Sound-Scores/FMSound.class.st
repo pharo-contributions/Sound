@@ -178,7 +178,7 @@ FMSound class >> flute2 [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 FMSound class >> initialize [
 	"Build a sine wave table."
 	"FMSound initialize"
@@ -333,7 +333,7 @@ FMSound class >> randomWeird2 [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 FMSound class >> sineTable [
 	"Answer a SoundBuffer containing one complete cycle of a sine wave."
 

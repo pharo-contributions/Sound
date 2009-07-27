@@ -9,12 +9,12 @@ Class {
 	#category : #'Sound-Synthesis'
 }
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 BaseSoundSystem class >> initialize [
 	SoundService register: self new.
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 BaseSoundSystem class >> unload [
 	SoundService registeredClasses do: [:ss |
 		(ss isKindOf: self) ifTrue: [SoundService unregister: ss]].

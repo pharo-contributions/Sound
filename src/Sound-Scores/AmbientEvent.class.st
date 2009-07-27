@@ -22,7 +22,7 @@ AmbientEvent >> morph: m [
 
 { #category : #'as yet unclassified' }
 AmbientEvent >> occurAtTime: ticks inScorePlayer: player atIndex: index inEventTrack: track secsPerTick: secsPerTick [
-	(target == nil or: [selector == nil]) ifTrue:
+	(target isNil or: [selector isNil]) ifTrue:
 		[morph ifNil: [^ self].
 		^ morph encounteredAtTime: ticks inScorePlayer: player atIndex: index
 				inEventTrack: track secsPerTick: secsPerTick].

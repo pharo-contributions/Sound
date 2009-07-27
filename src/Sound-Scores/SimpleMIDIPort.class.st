@@ -41,7 +41,7 @@ SimpleMIDIPort class >> examplePlayNoteNamedVelocityOnChannel [
 	aPort stopNoteNamed: 'c4' onChannel: 0] ensure: [aPort close]]
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 SimpleMIDIPort class >> initialize [
 	"SimpleMIDIPort initialize"
 
@@ -56,11 +56,11 @@ SimpleMIDIPort class >> inputPortNumFromUser [
 	"SimpleMIDIPort inputPortNumFromUser"
 
 	| portCount aMenu dir |
-	portCount _ self primPortCount.
+	portCount := self primPortCount.
 	portCount = 0 ifTrue: [^ nil].
-	aMenu _ CustomMenu new title: 'MIDI port for input:' translated.
+	aMenu := CustomMenu new title: 'MIDI port for input:' translated.
 	0 to: portCount - 1 do:[:i |
-		dir _ self primPortDirectionalityOf: i.
+		dir := self primPortDirectionalityOf: i.
 		(dir = 1) | (dir = 3) ifTrue:[
 			aMenu add: (self portDescription: i) action: i]].
 	 ^ aMenu startUp
@@ -133,8 +133,8 @@ SimpleMIDIPort class >> portDescription: portNum [
 		[:i | SimpleMIDIPort portDescription: i]"
 
 	| portName dir |
-	portName _ (self primPortNameOf: portNum) convertFromSystemString.
-	dir _ self primPortDirectionalityOf: portNum.
+	portName := (self primPortNameOf: portNum) convertFromSystemString.
+	dir := self primPortDirectionalityOf: portNum.
 	dir = 1 ifTrue: [^ portName, ' (in)'].
 	dir = 2 ifTrue: [^ portName, ' (out)'].
 	dir = 3 ifTrue: [^ portName, ' (in/out)'].

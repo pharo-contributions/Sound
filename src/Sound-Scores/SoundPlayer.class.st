@@ -440,7 +440,7 @@ SoundPlayer class >> startPlayingImmediately: aSound [
 	totalSamples := Buffer stereoSampleCount * 2.  "two buffer's worth"
 	buf := SoundBuffer newStereoSampleCount: totalSamples.
 	aSound playSampleCount: totalSamples into: buf startingAt: 1.
-	ReverbState == nil ifFalse: [
+	ReverbState isNil ifFalse: [
 		ReverbState applyReverbTo: buf startingAt: 1 count: totalSamples].
 
 	PlayerSemaphore critical: [

@@ -57,11 +57,11 @@ SampledSound class >> addLibrarySoundNamed: aString samples: sampleData sampling
 
 { #category : #'sound library' }
 SampledSound class >> assimilateSoundsFrom: aDictionary [
-	"assimilate sounds with new keys from the given dictionary"
-
-	aDictionary associationsDo:
-		[:assoc | (SoundLibrary includesKey: assoc key) ifFalse:
-			[SoundLibrary add: assoc]]
+ 	"assimilate sounds with new keys from the given dictionary"
+ 
+ 	aDictionary associationsDo:
+ 		[:assoc | (SoundLibrary includesKey: assoc key) ifFalse:
+ 			[SoundLibrary add: assoc]]
 ]
 
 { #category : #'instance creation' }
@@ -242,7 +242,7 @@ SampledSound class >> fromWaveStream: fileStream [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 SampledSound class >> initialize [
 	"SampledSound initialize"
 
@@ -269,7 +269,7 @@ SampledSound class >> initializeCoffeeCupClink [
 
 ]
 
-{ #category : #'WAV reading' }
+{ #category : #'wav reading' }
 SampledSound class >> next16BitWord: msbFirst from: stream [
 	"Read a 16-bit positive integer from the input stream."
 	"Assume: Stream has at least two bytes left."
@@ -282,7 +282,7 @@ SampledSound class >> next16BitWord: msbFirst from: stream [
 
 ]
 
-{ #category : #'WAV reading' }
+{ #category : #'wav reading' }
 SampledSound class >> next32BitWord: msbFirst from: stream [
 	"Read a 32-bit positive integer from the input stream."
 	"Assume: Stream has at least four bytes left."
@@ -324,7 +324,7 @@ SampledSound class >> putCoffeeCupClinkInSoundLibrary [
 		samplingRate: 11025
 ]
 
-{ #category : #'WAV reading' }
+{ #category : #'wav reading' }
 SampledSound class >> readWaveChunk: chunkType inRIFF: stream [
 	"Search the stream for a format chunk of the given type and return its contents."
 
@@ -376,9 +376,7 @@ SampledSound class >> soundNamed: aString [
 
 	"(SampledSound soundNamed: 'shutterClick') play"
 
-	^ self soundNamed: aString ifAbsent:
-		[self inform: aString, ' not found in the Sound Library'.
-		nil]
+	^ self soundNamed: aString ifAbsent: [Beeper default]
 ]
 
 { #category : #'sound library' }
@@ -495,11 +493,11 @@ SampledSound class >> uLawEncodeSample: s [
 
 { #category : #'sound library' }
 SampledSound class >> universalSoundKeys [
-	"Answer a list of the sound-names that are expected to be found in the SoundLibrary of every image."
-
-	^ #('splash' 'peaks' 'clink' 'croak' 'scratch' 'chirp' 'scritch' 'warble' 'scrape' 'camera' 'coyote' 'silence' 'motor')
-
-
+ 	"Answer a list of the sound-names that are expected to be found in the SoundLibrary of every image."
+ 
+ 	^ #()
+ 
+ 
 ]
 
 { #category : #'sound library' }

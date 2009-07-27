@@ -976,11 +976,11 @@ AbstractSound class >> default [
 
 { #category : #utilities }
 AbstractSound class >> dial: aString [
-	| index lo hi m s |
+	| s |
 	"AbstractSound dial: '867-5309'" "ask for Jenny"
 
 	s := SequentialSound new.
-	aString do: [ :c |
+	aString do: [ :c | | index lo hi m |
 		c = $,
 			ifTrue: [ s add: (FMSound new setPitch: 1 dur: 1 loudness: 0) ]
 			ifFalse: [
@@ -1060,8 +1060,6 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 	"Note: This method is separated out so that one can file out edited sound libraries, as well as the system sound library. To make such a collection, you can inspect AbstractSound sounds and remove the items you don't want. Then do: 'AbstractSound fileOutSoundLibrary: self' from the Dictionary inspector."
 
 	| fileName refStream |
-	(aDictionary isKindOf: Dictionary)
-		ifFalse: [self error: 'arg should be a dictionary of sounds'].
 	fileName := UIManager default request: 'Sound library file name?'.
 	fileName isEmptyOrNil ifTrue: [^ self].
 	refStream := SmartRefStream fileNamed: fileName, '.sounds'.
@@ -1119,7 +1117,7 @@ AbstractSound class >> initSounds [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 AbstractSound class >> initialize [
 	"AbstractSound initialize"
  
@@ -1160,15 +1158,15 @@ AbstractSound class >> majorChord [
 AbstractSound class >> majorChordOn: aSound from: aPitch [
 	"FMSound majorChord play"
 
-	| score majorScale leadingRest pan note |
+	| score majorScale leadingRest pan |
 	majorScale := self majorPitchesFrom: aPitch.
 	score := MixedSound new.
 	leadingRest := pan := 0.
-	#(1 3 5 8) do: [:noteIndex |
+	#(1 3 5 8) do: [:noteIndex | | note |
 		note := aSound
-			soundForPitch: (majorScale at: noteIndex)
-			dur: 2.0 - leadingRest
-			loudness: 0.3.
+					soundForPitch: (majorScale at: noteIndex)
+					dur: 2.0 - leadingRest
+					loudness: 0.3.
 		score add: (RestSound dur: leadingRest), note pan: pan.
 		leadingRest := leadingRest + 0.2.
 		pan := pan + 0.3].
@@ -1255,9 +1253,9 @@ AbstractSound class >> midiKeyForPitch: pitchNameOrNumber [
 { #category : #'instance creation' }
 AbstractSound class >> noteSequenceOn: aSound from: anArray [
 	"Build a note sequence (i.e., a SequentialSound) from the given array using the given sound as the instrument. Elements are either (pitch, duration, loudness) triples or (#rest duration) pairs.  Pitches can be given as names or as numbers."
-	| score pitch |
+	| score |
 	score := SequentialSound new.
-	anArray do: [:el |
+	anArray do: [:el | | pitch |
 		el size = 3
 			ifTrue: [
 				pitch := el at: 1.
@@ -1324,11 +1322,11 @@ AbstractSound class >> pitchForName: aString [
 AbstractSound class >> pitchTable [
 	"AbstractSound pitchTable"
 
-	| out note i |
+	| out i |
 	out := WriteStream on: (String new: 1000).
 	i := 12.
 	0 to: 8 do: [:octave |
-		#(c 'c#' d eb e f fs g 'g#' a bf b) do: [:noteName |
+		#(c 'c#' d eb e f fs g 'g#' a bf b) do: [:noteName | | note |
 			note := noteName, octave printString.
 			out nextPutAll: note; tab.
 			out nextPutAll: i printString; tab.
@@ -1338,7 +1336,7 @@ AbstractSound class >> pitchTable [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 AbstractSound class >> scaleFactor [
 
 	^ ScaleFactor
@@ -1411,7 +1409,7 @@ AbstractSound class >> stereoBachFugue [
 AbstractSound class >> storeFiledInSound: snd named: sndName [
 	"Store the given sound in the sound library. Use the given name if it isn't in use, otherwise ask the user what to do."
 
-	| menu choice i |
+	| choice i |
 	(Sounds includesKey: sndName) ifFalse: [  "no name clash"
 		Sounds at: sndName put: snd.
 		^ self].
@@ -1422,14 +1420,13 @@ AbstractSound class >> storeFiledInSound: snd named: sndName [
 		^ self].
 
 	"the given sound name is already used"
-	menu := SelectionMenu selections:
-		#('replace the existing sound' 'rename the new sound' 'skip it').
-	choice := menu startUpWithCaption:
-		'"', sndName, '" has the same name as an existing sound'.
-	(choice beginsWith: 'replace') ifTrue: [
+	choice := UIManager default 
+		chooseFrom: {'Replace the existing sound' translated. 'Rename the new sound' translated}
+		title: ('"', sndName, '" ', 'has the same name as an existing sound' translated).
+	(choice = 1) ifTrue: [
 		Sounds at: sndName put: snd.
 		^ self].
-	(choice beginsWith: 'rename') ifTrue: [
+	(choice = 2) ifTrue: [
 		i := 2.
 		[Sounds includesKey: (sndName, ' v', i printString)] whileTrue: [i := i + 1].
 		Sounds at: (sndName, ' v', i printString) put: snd].
@@ -1525,13 +1522,14 @@ AbstractSound class >> updateScorePlayers [
 	| soundsBeingEdited |
 	"Force all ScorePlayers to update their instrument list from the sound library. This may done after loading, unloading, or replacing a sound to make all ScorePlayers feel the change."
 
-	ScorePlayer allSubInstancesDo:
-		[:p | p pause].
+	ScorePlayer allSubInstancesDo: [:p | p pause].
 	SoundPlayer shutDown.
-	soundsBeingEdited := EnvelopeEditorMorph allSubInstances collect: [:ed | ed soundBeingEdited].
-	ScorePlayerMorph allSubInstancesDo:
-		[:p | p updateInstrumentsFromLibraryExcept: soundsBeingEdited].
-
+	Smalltalk at: #EnvelopeEditorMorph ifPresent: [ :class |
+		soundsBeingEdited := class allSubInstances
+			collect: [:ed | ed soundBeingEdited ] ].
+	Smalltalk at: #ScorePlayerMorph ifPresent: [ :class |
+		class allSubInstancesDo:
+			[:p | p updateInstrumentsFromLibraryExcept: soundsBeingEdited ] ]
 ]
 
 { #category : #composition }
@@ -1689,7 +1687,7 @@ AbstractSound >> initialVolume: vol [
 
 { #category : #initialization }
 AbstractSound >> initialize [
-
+	super initialize.
 	envelopes := #().
 	mSecsSinceStart := 0.
 	samplesUntilNextControl := 0.
@@ -2068,22 +2066,23 @@ AbstractSound >> storeSample: sample in: aSoundBuffer at: sliceIndex leftVol: le
 AbstractSound >> storeSampleCount: samplesToStore bigEndian: bigEndianFlag on: aBinaryStream [
 	"Store my samples on the given stream at the current SoundPlayer sampling rate. If bigFlag is true, then each 16-bit sample is stored most-significant byte first (AIFF files), otherwise it is stored least-significant byte first (WAV files). If self isStereo is true, both channels are stored, creating a stereo file. Otherwise, only the left channel is stored, creating a mono file."
 
-	| bufSize stereoBuffer reverseBytes remaining out |
+	| bufSize stereoBuffer reverseBytes |
 	self reset.
 	bufSize := (2 * self samplingRate rounded) min: samplesToStore.  "two second buffer"
 	stereoBuffer := SoundBuffer newStereoSampleCount: bufSize.
 	reverseBytes := bigEndianFlag ~= (SmalltalkImage current isBigEndian).
 
-	'Storing audio...' displayProgressAt: Sensor cursorPoint
-		from: 0 to: samplesToStore during: [:bar |
+	'Storing audio...'
+		displayProgressAt: Sensor cursorPoint
+		from: 0 to: samplesToStore during: [:bar | | remaining out |
 			remaining := samplesToStore.
 			[remaining > 0] whileTrue: [
 				bar value: samplesToStore - remaining.
 				stereoBuffer primFill: 0.  "clear the buffer"
 				self playSampleCount: (bufSize min: remaining) into: stereoBuffer startingAt: 1.
-				self isStereo
-					ifTrue: [out := stereoBuffer]
-					ifFalse: [out := stereoBuffer extractLeftChannel].
+				out := self isStereo
+						ifTrue: [stereoBuffer]
+						ifFalse: [stereoBuffer extractLeftChannel].
 				reverseBytes ifTrue: [out reverseEndianness].
 				(aBinaryStream isKindOf: StandardFileStream)
 					ifTrue: [  "optimization for files: write sound buffer directly to file"
@@ -2189,14 +2188,6 @@ AbstractSound >> updateVolume [
 				ifTrue: [  "reached the limit; stop incrementing"
 					scaledVol := scaledVolLimit.
 					scaledVolIncr := 0]].
-
-]
-
-{ #category : #playing }
-AbstractSound >> viewSamples [
-	"Open a WaveEditor on my samples."
-
-	WaveEditor openOn: self samples.
 
 ]
 
