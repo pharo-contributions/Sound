@@ -251,10 +251,11 @@ SampledSound class >> initialize [
 	ScaledIndexOverflow := 2 raisedTo: 29.  "handle overflow before needing LargePositiveIntegers"
 	self useCoffeeCupClink.
 	SoundLibrary ifNil: [SoundLibrary := Dictionary new].
-	Beeper setDefault: (self new
+	
+	"Beeper setDefault: (self new
 						setSamples: self coffeeCupClink
 						samplingRate: 12000).
-
+	"
 ]
 
 { #category : #'coffee cup clink' }
