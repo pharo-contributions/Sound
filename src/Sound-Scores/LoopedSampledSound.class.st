@@ -42,7 +42,7 @@ LoopedSampledSound class >> fromAIFFFileNamed: fileName mergeIfStereo: mergeFlag
 	self new fromAIFFFileReader: aiffFileReader mergeIfStereo: mergeFlag
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 LoopedSampledSound class >> initialize [
 	"LoopedSampledSound initialize"
 
@@ -172,6 +172,22 @@ LoopedSampledSound >> duration: seconds [
 
 	super duration: seconds.
 	count := initialCount := (seconds * self samplingRate) rounded.
+
+]
+
+{ #category : #other }
+LoopedSampledSound >> edit [
+	"Open a WaveEditor on this sound."
+
+	| loopLen ed |
+	loopLen := scaledLoopLength asFloat / LoopIndexScaleFactor.
+	ed := WaveEditor new
+		data: leftSamples;
+		samplingRate: originalSamplingRate;
+		loopEnd: loopEnd;
+		loopLength: loopLen;
+		loopCycles: (loopLen / (originalSamplingRate asFloat / perceivedPitch)) rounded.
+	ed openInWorld.
 
 ]
 

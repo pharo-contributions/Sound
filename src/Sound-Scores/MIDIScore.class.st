@@ -70,12 +70,12 @@ MIDIScore >> cutSelection: selection [
 	tracks at: selection first put: track
 ]
 
-{ #category : #nil }
+{ #category : #accessing }
 MIDIScore >> durationInTicks [
 	
 	| t |
 	t := 0.
-	tracks, {ambientTrack} do:
+	tracks, {self ambientTrack} do:
 		[:track |
 		track do:
 			[:n | (n isNoteEvent)
@@ -102,7 +102,7 @@ MIDIScore >> eventMorphsDo: aBlock [
 	"Evaluate aBlock for all morphs related to the ambient events."
 
 	ambientTrack == nil ifTrue: [^ self].
-	ambientTrack do: [:evt | evt morph ifNotNil: aBlock].
+	ambientTrack do: [:evt | evt morph ifNotNilDo: aBlock].
 
 ]
 
@@ -143,7 +143,6 @@ MIDIScore >> gridTrack: trackIndex toQuarter: quarterDelta at: indexInTrack [
 { #category : #initialization }
 MIDIScore >> initialize [
 
-	super initialize.
 	tracks := #().
 	ambientTrack := Array new.
 	tempoMap := #().

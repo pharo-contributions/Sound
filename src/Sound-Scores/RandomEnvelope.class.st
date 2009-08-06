@@ -70,7 +70,6 @@ RandomEnvelope >> highLimit: aNumber [
 { #category : #initialization }
 RandomEnvelope >> initialize [
 
-	super initialize.
 	rand := Random new.
 	lowLimit := 0.994.
 	highLimit := 1.006.
@@ -101,7 +100,7 @@ RandomEnvelope >> name [
 
 ]
 
-{ #category : #'envelopeeditor compatibility' }
+{ #category : #'envelopeEditor compatibility' }
 RandomEnvelope >> points [
 
 	| env |
@@ -119,7 +118,7 @@ RandomEnvelope >> points [
 	^points
 ]
 
-{ #category : #'envelopeeditor compatibility' }
+{ #category : #'envelopeEditor compatibility' }
 RandomEnvelope >> setPoints: pointList loopStart: startIndex loopEnd: endIndex [
 
 	self delta: pointList first y - 0.5 / 5.

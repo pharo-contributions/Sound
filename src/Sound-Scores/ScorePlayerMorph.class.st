@@ -468,7 +468,7 @@ ScorePlayerMorph >> saveAsAIFF [
 	"Create a stereo AIFF audio file with the result of performing my score."
 
 	| fileName |
-	fileName := FillInTheBlank request: 'New file name?' translated.
+	fileName := UIManager default request: 'New file name?' translated.
 	fileName isEmpty ifTrue: [^ self].
 	(fileName asLowercase endsWith: '.aif') ifFalse: [
 		fileName := fileName, '.aif'].
@@ -482,7 +482,7 @@ ScorePlayerMorph >> saveAsSunAudio [
 	"Create a stereo Sun audio file with the result of performing my score."
 
 	| fileName |
-	fileName := FillInTheBlank request: 'New file name?' translated.
+	fileName := UIManager default request: 'New file name?' translated.
 	fileName isEmpty ifTrue: [^ self].
 	(fileName asLowercase endsWith: '.au') ifFalse: [
 		fileName := fileName, '.au'].
@@ -496,7 +496,7 @@ ScorePlayerMorph >> saveAsWAV [
 	"Create a stereo WAV audio file with the result of performing my score."
 
 	| fileName |
-	fileName := FillInTheBlank request: 'New file name?' translated.
+	fileName := UIManager default request: 'New file name?' translated.
 	fileName isEmpty ifTrue: [^ self].
 	(fileName asLowercase endsWith: '.wav') ifFalse: [
 		fileName := fileName, '.wav'].

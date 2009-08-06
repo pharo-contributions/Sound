@@ -184,7 +184,6 @@ SampledInstrument >> chooseSamplesForPitch: pitchInHz from: sortedNotes [
 { #category : #accessing }
 SampledInstrument >> initialize [
 
-	super initialize.
 	sustainedThreshold := 0.15.
 	loudThreshold := 0.5.
 
@@ -280,22 +279,23 @@ SampledInstrument >> pruneToSingleNote: aNote [
 ]
 
 { #category : #other }
-SampledInstrument >> readSampleSetFrom: dirName [ 
+SampledInstrument >> readSampleSetFrom: dirName [
 	"Answer a collection of sounds read from AIFF files in the given directory and sorted in ascending pitch order."
+
 	| all dir fullName snd |
-	all := SortedCollection sortBlock: [ :s1 :s2 | s1 pitch < s2 pitch ].
+	all := SortedCollection sortBlock: [:s1 :s2 | s1 pitch < s2 pitch].
 	dir := FileDirectory default on: dirName.
-	dir fileNames do: 
-		[ :n | 
+	dir fileNames do: [:n |
 		fullName := dir fullNameFor: n.
-		UIManager default 
-			informUser: 'Reading AIFF file ' translated, n
-			during: 
-				[ snd := LoopedSampledSound new 
+		Utilities
+			informUser: 'Reading AIFF file ', n
+			during:
+				[snd := LoopedSampledSound new
 					fromAIFFFileNamed: fullName
-					mergeIfStereo: true ].
-		all add: snd ].
+					mergeIfStereo: true].
+		all add: snd].
 	^ all asArray
+
 ]
 
 { #category : #other }

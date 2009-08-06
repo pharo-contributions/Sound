@@ -47,7 +47,7 @@ ScorePlayer >> adjustVolumeTo: vol overMSecs: mSecs [
 			[[(normalizedVolume - self overallVolume) abs > 0.01] whileTrue: [self overallVolume: self overallVolume - incr. (Delay forMilliseconds: 50) wait]]]
 		ifFalse: [
 			[[self overallVolume > 0.0] whileTrue: [self overallVolume: self overallVolume - incr. (Delay forMilliseconds: 50) wait]. self pause]].
-	block fork
+	block fixTemps; fork
 
 ]
 
@@ -182,6 +182,11 @@ ScorePlayer >> isDone [
 	(trackEventIndex last) <= score ambientTrack size ifTrue: [^ false].
 	^ true
 
+]
+
+{ #category : #'sound generation' }
+ScorePlayer >> isPlaying [
+	^ SoundPlayer isPlaying: self
 ]
 
 { #category : #accessing }

@@ -48,7 +48,7 @@ SoundBuffer class >> fromByteArray: aByteArray [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SoundBuffer class >> initialize [
 	"Build a sine wave table."
 	"SoundBuffer initialize"
@@ -88,7 +88,7 @@ SoundBuffer class >> newStereoSampleCount: anInteger [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SoundBuffer class >> sineTable [
 	"Answer a SoundBuffer containing one complete cycle of a sine wave."
 

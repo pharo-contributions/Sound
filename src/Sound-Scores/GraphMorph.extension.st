@@ -29,7 +29,7 @@ GraphMorph >> openWaveEditor [
 GraphMorph >> readDataFromFile [
 
 	| fileName |
-	fileName := FillInTheBlank
+	fileName := UIManager default
 		request: 'File name?' translated
 		initialAnswer: ''.
 	fileName isEmpty ifTrue: [^ self].
