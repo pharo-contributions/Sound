@@ -1036,10 +1036,10 @@ AbstractSound class >> fileInSoundLibraryNamed: fileName [
 
 	| s newSounds |
 	s := FileStream oldFileNamed: fileName.
-	newSounds := s fileInObjectAndCode.
-	s close.
-	newSounds associationsDo:
-		[:assoc | self storeFiledInSound: assoc value named: assoc key].
+	[ newSounds := s fileInObjectAndCode ]
+		ensure: [ s close ].
+	newSounds associationsDo: [:assoc | 
+		self storeFiledInSound: assoc value named: assoc key].
 	AbstractSound updateScorePlayers.
 	Smalltalk garbageCollect.  "Large objects may have been released"
 
@@ -1060,12 +1060,13 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 	"Note: This method is separated out so that one can file out edited sound libraries, as well as the system sound library. To make such a collection, you can inspect AbstractSound sounds and remove the items you don't want. Then do: 'AbstractSound fileOutSoundLibrary: self' from the Dictionary inspector."
 
 	| fileName refStream |
-	fileName := UIManager default request: 'Sound library file name?'.
+	(aDictionary isKindOf: Dictionary)
+		ifFalse: [self error: 'arg should be a dictionary of sounds'].
+	fileName := FillInTheBlank request: 'Sound library file name?'.
 	fileName isEmptyOrNil ifTrue: [^ self].
 	refStream := SmartRefStream fileNamed: fileName, '.sounds'.
-	refStream nextPut: aDictionary.
-	refStream close.
-
+	[ refStream nextPut: aDictionary ]
+		ensure: [ refStream close ]
 ]
 
 { #category : #utilities }
@@ -1987,8 +1988,8 @@ AbstractSound >> storeAIFFOnFileNamed: fileName [
 
 	| f |
 	f := (FileStream fileNamed: fileName) binary.
-	self storeAIFFSamplesOn: f.
-	f close.
+	[ self storeAIFFSamplesOn: f ]
+		ensure: [ f close ]
 
 ]
 
@@ -2099,9 +2100,8 @@ AbstractSound >> storeSunAudioOnFileNamed: fileName [
 
 	| f |
 	f := (FileStream fileNamed: fileName) binary.
-	self storeSunAudioSamplesOn: f.
-	f close.
-
+	[ self storeSunAudioSamplesOn: f]
+		ensure: [ f close ]
 ]
 
 { #category : #'file i/o' }
@@ -2134,9 +2134,8 @@ AbstractSound >> storeWAVOnFileNamed: fileName [
 
 	| f |
 	f := (FileStream fileNamed: fileName) binary.
-	self storeWAVSamplesOn: f.
-	f close.
-
+	[ self storeWAVSamplesOn: f ]
+		ensure: [ f close ]
 ]
 
 { #category : #'file i/o' }
