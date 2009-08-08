@@ -39,7 +39,7 @@ SoundRecorder class >> canRecordWhilePlaying [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 SoundRecorder class >> initialize [
 	"SoundRecorder initialize"
 	"Details: Some computers cannot record and playback sound at the same time. If CanRecordWhilePlaying is false, then the SoundRecorder alternates between recording and playing. If it is true, sounds can be playing during recording."
@@ -236,15 +236,16 @@ SoundRecorder >> firstSampleOverThreshold: threshold dcOffset: dcOffset starting
 
 { #category : #'recording controls' }
 SoundRecorder >> hasRecordedSound [
-	"Answer whether the receiver currently has any recorded sound"
-
-	^ self recordedSound notNil
+ 	"Answer whether the receiver currently has any recorded sound"
+ 
+ 	^ self recordedSound notNil
 ]
 
 { #category : #initialization }
 SoundRecorder >> initialize [
 	"SoundRecorder new"
 
+	super initialize.
 	stereo := false.
 	samplingRate := 11025.
 	recordLevel := 0.5.
@@ -263,14 +264,6 @@ SoundRecorder >> initializeRecordingState [
 	soundPlaying := nil.
 	currentBuffer := nil.
 	nextIndex := 1.
-
-]
-
-{ #category : #accessing }
-SoundRecorder >> isActive [
-	"Return true if I have a recordProcess running."
-
-	^ recordProcess ~~ nil
 
 ]
 
@@ -722,12 +715,12 @@ SoundRecorder >> trim: threshold normalizedVolume: percentOfMaxVolume [
 
 { #category : #'recording controls' }
 SoundRecorder >> verifyExistenceOfRecordedSound [
-	"If the receiver has a recorded sound, answer true; if not, put up an informer and answer false"
-
-	^ self recordedSound
-		ifNotNil:
-			[true]
-		ifNil:
-			[self inform: 'please record a sound first' translated.
-			false]
+ 	"If the receiver has a recorded sound, answer true; if not, put up an informer and answer false"
+ 
+ 	^ self recordedSound
+ 		ifNotNil:
+ 			[true]
+ 		ifNil:
+ 			[self inform: 'please record a sound first' translated.
+ 			false]
 ]

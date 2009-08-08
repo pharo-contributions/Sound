@@ -41,7 +41,7 @@ SimpleMIDIPort class >> examplePlayNoteNamedVelocityOnChannel [
 	aPort stopNoteNamed: 'c4' onChannel: 0] ensure: [aPort close]]
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 SimpleMIDIPort class >> initialize [
 	"SimpleMIDIPort initialize"
 
@@ -55,17 +55,15 @@ SimpleMIDIPort class >> inputPortNumFromUser [
 	"Prompt the user for a MIDI input port. Answer a port number, or nil if the user does not select a port or if MIDI is not supported on this platform."
 	"SimpleMIDIPort inputPortNumFromUser"
 
-	| portCount dir portList |
-	portCount _ self primPortCount.
+	| portCount aMenu dir |
+	portCount := self primPortCount.
 	portCount = 0 ifTrue: [^ nil].
-	portList := OrderedCollection new.
+	aMenu := CustomMenu new title: 'MIDI port for input:' translated.
 	0 to: portCount - 1 do:[:i |
 		dir := self primPortDirectionalityOf: i.
-		(dir = 1) | (dir = 3) ifTrue:[portList add: i]].
-	^UIManager default
-		chooseFrom: (portList collect:[:i| self portDescription: i])
-		values: portList
-		title: 'MIDI port for input:' translated
+		(dir = 1) | (dir = 3) ifTrue:[
+			aMenu add: (self portDescription: i) action: i]].
+	 ^ aMenu startUp
 
 ]
 
@@ -110,18 +108,15 @@ SimpleMIDIPort class >> outputPortNumFromUser [
 	"Prompt the user for a MIDI output port. Answer a port number, or nil if the user does not select a port or if MIDI is not supported on this platform."
 	"SimpleMIDIPort outputPortNumFromUser"
 
-	| portCount dir portList |
+	| portCount aMenu dir |
 	portCount := self primPortCount.
 	portCount = 0 ifTrue: [^ nil].
-	portList := OrderedCollection new.
+	aMenu := CustomMenu new title: 'MIDI port for output:' translated.
 	0 to: portCount - 1 do:[:i |
 		dir := self primPortDirectionalityOf: i.
-		(dir = 2) | (dir = 3) ifTrue:[portList add: i]].
-	^UIManager default
-		chooseFrom: (portList collect:[:i| self portDescription: i])
-		values: portList
-		title: 'MIDI port for output:' translated.
-
+		(dir = 2) | (dir = 3) ifTrue:[
+			aMenu add: (self portDescription: i) action: i]].
+	 ^ aMenu startUp
 
 ]
 
@@ -138,8 +133,8 @@ SimpleMIDIPort class >> portDescription: portNum [
 		[:i | SimpleMIDIPort portDescription: i]"
 
 	| portName dir |
-	portName _ (self primPortNameOf: portNum) convertFromSystemString.
-	dir _ self primPortDirectionalityOf: portNum.
+	portName := (self primPortNameOf: portNum) convertFromSystemString.
+	dir := self primPortDirectionalityOf: portNum.
 	dir = 1 ifTrue: [^ portName, ' (in)'].
 	dir = 2 ifTrue: [^ portName, ' (out)'].
 	dir = 3 ifTrue: [^ portName, ' (in/out)'].

@@ -92,6 +92,7 @@ MIDISynthChannel >> doChannelCmd: cmdByte byte1: byte1 byte2: byte2 [
 { #category : #initialization }
 MIDISynthChannel >> initialize [
 
+	super initialize.
 	instrument := FMSound default.
 	muted := false.
 	masterVolume := 0.5.

@@ -8,8 +8,8 @@ Class {
 		'SoundSupported',
 		'ActiveSounds',
 		'BufferMSecs',
-		'SoundJustStarted',
 		'SamplingRate',
+		'SoundJustStarted',
 		'Stereo',
 		'ReverbState',
 		'UseReadySemaphore',
@@ -345,7 +345,7 @@ SoundPlayer class >> reverbState [
 { #category : #accessing }
 SoundPlayer class >> samplingRate [
 
-	^ SamplingRate
+	^ SamplingRate ifNil: [ 22050 ]
 ]
 
 { #category : #accessing }
@@ -440,7 +440,7 @@ SoundPlayer class >> startPlayingImmediately: aSound [
 	totalSamples := Buffer stereoSampleCount * 2.  "two buffer's worth"
 	buf := SoundBuffer newStereoSampleCount: totalSamples.
 	aSound playSampleCount: totalSamples into: buf startingAt: 1.
-	ReverbState == nil ifFalse: [
+	ReverbState isNil ifFalse: [
 		ReverbState applyReverbTo: buf startingAt: 1 count: totalSamples].
 
 	PlayerSemaphore critical: [
