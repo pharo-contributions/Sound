@@ -603,7 +603,7 @@ WaveEditor >> saveInstrument [
 
 	| name |
 	name := UIManager default request: 'Instrument name?' translated.
-	name isEmpty ifTrue: [^ self].
+	name isEmptyOrNil ifTrue: [^ self].
 	AbstractSound soundNamed: name put: self makeLoopedSampledSound.
 
 ]
