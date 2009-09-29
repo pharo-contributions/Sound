@@ -235,7 +235,7 @@ SimpleSliderMorph >> setActionSelector [
 				request: 'Please type the selector to be sent to
 the target when this slider is changed' translated
 				initialAnswer: oldSel.
-	newSel isEmpty ifFalse: [self actionSelector: newSel]
+	newSel isEmptyOrNil ifFalse: [self actionSelector: newSel]
 ]
 
 { #category : #menu }
@@ -249,7 +249,7 @@ SimpleSliderMorph >> setArguments [
 'Please type the arguments to be sent to the target
 when this button is pressed separated by periods' translated
 		initialAnswer: s contents.
-	newArgs isEmpty ifFalse: [
+	newArgs isEmptyOrNil ifFalse: [
 		newArgsArray := Compiler evaluate: '{', newArgs, '}' for: self logged: false.
 		self arguments: newArgsArray].
 
@@ -263,7 +263,7 @@ SimpleSliderMorph >> setLabel [
 		request:
 'Please a new label for this button' translated
 		initialAnswer: self label.
-	newLabel isEmpty ifFalse: [self label: newLabel].
+	newLabel isEmptyOrNil ifFalse: [self label: newLabel].
 
 ]
 
@@ -274,7 +274,7 @@ SimpleSliderMorph >> setMaxVal [
 	newMaxVal := UIManager default
 		request: 'Maximum value?' translated
 		initialAnswer: maxVal printString.
-	newMaxVal isEmpty ifFalse: [
+	newMaxVal isEmptyOrNil ifFalse: [
 		maxVal := newMaxVal asNumber.
 		minVal := minVal min: maxVal].
 
@@ -294,7 +294,7 @@ SimpleSliderMorph >> setMinVal [
 	newMinVal := UIManager default
 		request: 'Minimum value?' translated
 		initialAnswer: minVal printString.
-	newMinVal isEmpty ifFalse: [
+	newMinVal isEmptyOrNil ifFalse: [
 		minVal := newMinVal asNumber.
 		maxVal := maxVal max: minVal].
 

@@ -202,7 +202,7 @@ EnvelopeEditorMorph >> adjustScale: evt [
 	oldScale := envelope scale.
 	scaleString := UIManager default request: 'Enter the new full-scale value...' translated
 				initialAnswer: oldScale printString.
-	scaleString isEmpty ifTrue: [^self].
+	scaleString isEmptyOrNil ifTrue: [^self].
 	envelope scale: (Number readFrom: scaleString) asFloat.
 	baseValue := envelope updateSelector = #pitch: ifTrue: [0.5] ifFalse: [0.0].
 	envelope 
@@ -641,7 +641,7 @@ EnvelopeEditorMorph >> saveLibToDisk: evt [
 	| newName f snd |
 	newName := UIManager default request: 'Please confirm name for library...' translated
 						initialAnswer: 'MySounds'.
-	newName isEmpty ifTrue: [^ self].
+	newName isEmptyOrNil ifTrue: [^ self].
 	f := FileStream newFileNamed: newName , '.fml'.
 	AbstractSound soundNames do:
 		[:name | snd := AbstractSound soundNamed: name.
@@ -655,7 +655,7 @@ EnvelopeEditorMorph >> saveSound: evt [
 	| newName |
 	newName := UIManager default request: 'Please confirm name for save...' translated
 						initialAnswer: soundName.
-	newName isEmpty ifTrue: [^ self].
+	newName isEmptyOrNil ifTrue: [^ self].
 	AbstractSound soundNamed: newName put: sound.
 	soundName := newName.
 ]
@@ -665,7 +665,7 @@ EnvelopeEditorMorph >> saveToDisk: evt [
 	| newName f |
 	newName := UIManager default request: 'Please confirm name for save...' translated
 						initialAnswer: soundName.
-	newName isEmpty ifTrue: [^ self].
+	newName isEmptyOrNil ifTrue: [^ self].
 	f := FileStream newFileNamed: newName , '.fmp'.
 	sound storeOn: f.
 	f close
