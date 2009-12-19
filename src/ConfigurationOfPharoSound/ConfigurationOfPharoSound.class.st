@@ -73,14 +73,16 @@ ConfigurationOfPharoSound class >> project [
 	^self new project
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #baselines }
 ConfigurationOfPharoSound >> baseline10: spec [ 
 	<version: '1.0-baseline'>
 	
-	spec for: #pharo do: [
+	spec for: #common do: [
 		spec blessing: #baseline.
+	].	
+		
+	spec for: #pharo do: [
 		spec repository: 'http://www.squeaksource.com/PharoSound'.
-
 		spec 
 			package: 'Sound';
 			package: 'SoundMorphicUserInterface'.
@@ -101,19 +103,20 @@ ConfigurationOfPharoSound >> project [
 		project ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #versions }
 ConfigurationOfPharoSound >> version10: spec [
 	<version: '1.0' imports: #('1.0-baseline')>
 
-	spec for: #pharo do: [
+	spec for: #common do: [
 		spec blessing: #release.
 		spec author: Author fullName.
 		spec description: 'First release 1.0 of this project '.
-		
-	spec 
-		package: 'Sound' with: 'Sound-StephaneDucasse.47';
-		package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-DamienCassou.6'.
-		
-	]
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.47';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-DamienCassou.6'.
 			
+	]		
 ]
