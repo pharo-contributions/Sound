@@ -85,7 +85,7 @@ ConfigurationOfPharoSound >> baseline10: spec [
 		spec repository: 'http://www.squeaksource.com/PharoSound'.
 		spec 
 			package: 'Sound';
-			package: 'SoundMorphicUserInterface'.
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound' ].
 			
 	]
 ]
@@ -109,7 +109,7 @@ ConfigurationOfPharoSound >> version10: spec [
 
 	spec for: #common do: [
 		spec blessing: #release.
-		spec author: Author fullName.
+		spec author: 'MarianoMartinezPeck'.
 		spec description: 'First release 1.0 of this project '.
 	].
 	
