@@ -27,21 +27,21 @@ ConfigurationOfPharoSound class >> bootstrapPackage: aString from: aPath [
 
 { #category : #private }
 ConfigurationOfPharoSound class >> ensureMetacello [
-	"Minimum package versions from which to boot Metacello. Corresponds to version 1.0-beta.15"
+	"Bootstrap Gofer (if necessary), bootstrap ConfigurationOfMetacello (using old Gofer API), then load the latest 
+	version of Metacello itself."
 
 	Smalltalk at: #MetacelloProject ifAbsent: [
 		Smalltalk at: #Gofer ifAbsent: [
 			"Current version of Gofer from which to bootstrap - as of 1.0-beta.15"
 			self bootstrapPackage: 'Gofer-lr.83' from: 'http://seaside.gemstone.com/ss/metacello' ].
-		Smalltalk at: #Gofer ifPresent: [:gofer |
-			gofer new
+		Smalltalk at: #Gofer ifPresent: [:goferClass | | gofer |
+			gofer := goferClass new
 				url: 'http://seaside.gemstone.com/ss/metacello';
-				addVersion: 'Metacello-Core-dkh.302'; "Minimum version from which to bootstrap Metacello"
-				addVersion: 'Metacello-MC-dkh.258'; "Minimum version from which to bootstrap Metacello"
-				addPackage: 'ConfigurationOfMetacello'; "Loads latest version of configuration package"
-				load ].
+				yourself.
+			[ gofer addPackage: 'ConfigurationOfMetacello' ] on: Warning do: [:ex | ex resume ].
+			gofer load ].
 		"load latest version of Metacello, load a specific version if desired"
-		(Smalltalk at: #ConfigurationOfMetacello) loadLatestVersion ]
+		(Smalltalk at: #ConfigurationOfMetacello) perform: #loadLatestVersion ]
 ]
 
 { #category : #'metacello tool support' }
