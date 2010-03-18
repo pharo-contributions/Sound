@@ -2,21 +2,21 @@ Class {
 	#name : #SoundPlayer,
 	#superclass : #Object,
 	#classVars : [
-		'UseReverb',
-		'BufferIndex',
-		'Buffer',
-		'SoundSupported',
 		'ActiveSounds',
+		'Buffer',
+		'BufferIndex',
 		'BufferMSecs',
+		'LastBuffer',
+		'PlayerProcess',
+		'PlayerSemaphore',
+		'ReadyForBuffer',
+		'ReverbState',
 		'SamplingRate',
 		'SoundJustStarted',
+		'SoundSupported',
 		'Stereo',
-		'ReverbState',
 		'UseReadySemaphore',
-		'PlayerSemaphore',
-		'PlayerProcess',
-		'LastBuffer',
-		'ReadyForBuffer'
+		'UseReverb'
 	],
 	#category : #'Sound-Synthesis'
 }

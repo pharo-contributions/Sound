@@ -12,13 +12,13 @@ Class {
 		'scaledIncrement'
 	],
 	#classVars : [
-		'SoundLibrary',
-		'NominalSamplePitch',
+		'CoffeeCupClink',
 		'DefaultSampleTable',
-		'ScaledIndexOverflow',
-		'IncrementScaleFactor',
 		'IncrementFractionBits',
-		'CoffeeCupClink'
+		'IncrementScaleFactor',
+		'NominalSamplePitch',
+		'ScaledIndexOverflow',
+		'SoundLibrary'
 	],
 	#category : #'Sound-Synthesis'
 }

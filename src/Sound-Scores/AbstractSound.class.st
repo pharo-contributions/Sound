@@ -10,13 +10,13 @@ Class {
 		'scaledVolLimit'
 	],
 	#classVars : [
+		'FloatScaleFactor',
 		'MaxScaledValue',
 		'PitchesForBottomOctave',
 		'ScaleFactor',
-		'UnloadedSnd',
-		'TopOfBottomOctave',
 		'Sounds',
-		'FloatScaleFactor'
+		'TopOfBottomOctave',
+		'UnloadedSnd'
 	],
 	#category : #'Sound-Synthesis'
 }

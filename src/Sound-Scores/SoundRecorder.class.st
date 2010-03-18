@@ -19,8 +19,8 @@ Class {
 		'desiredSampleRate'
 	],
 	#classVars : [
-		'RecorderActive',
-		'CanRecordWhilePlaying'
+		'CanRecordWhilePlaying',
+		'RecorderActive'
 	],
 	#category : #'Sound-Synthesis'
 }

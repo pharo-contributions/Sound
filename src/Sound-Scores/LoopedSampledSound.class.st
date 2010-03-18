@@ -23,9 +23,9 @@ Class {
 		'scaledIndexIncr'
 	],
 	#classVars : [
+		'FloatLoopIndexScaleFactor',
 		'LoopIndexFractionMask',
-		'LoopIndexScaleFactor',
-		'FloatLoopIndexScaleFactor'
+		'LoopIndexScaleFactor'
 	],
 	#category : #'Sound-Synthesis'
 }
