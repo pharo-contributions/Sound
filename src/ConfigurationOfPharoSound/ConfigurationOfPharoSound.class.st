@@ -90,6 +90,23 @@ ConfigurationOfPharoSound >> baseline10: spec [
 	]
 ]
 
+{ #category : #baselines }
+ConfigurationOfPharoSound >> baseline20: spec [ 
+	<version: '1.0-baseline'>
+	
+	spec for: #common do: [
+		spec blessing: #baseline.
+	].	
+		
+	spec for: #pharo do: [
+		spec repository: 'http://www.squeaksource.com/PharoNonCorePackages'.
+		spec 
+			package: 'Sound';
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound' ].
+			
+	]
+]
+
 { #category : #accessing }
 ConfigurationOfPharoSound >> project [
 
@@ -117,6 +134,25 @@ ConfigurationOfPharoSound >> version10: spec [
 		spec 
 			package: 'Sound' with: 'Sound-StephaneDucasse.47';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-DamienCassou.6'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version20: spec [
+	<version: '2.0' imports: #('1.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'MarianoMartinezPeck'.
+		spec description: '- Changed the repository.
+		- Some fixes to work with Pharo 1.1  '.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-MarianoMartinezPeck.49';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-MarianoMartinezPeck.9'.
 			
 	]		
 ]
