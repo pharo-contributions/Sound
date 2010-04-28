@@ -469,7 +469,7 @@ ScorePlayerMorph >> saveAsAIFF [
 
 	| fileName |
 	fileName := UIManager default request: 'New file name?' translated.
-	fileName isEmpty ifTrue: [^ self].
+	fileName isEmptyOrNil ifTrue: [^ self].
 	(fileName asLowercase endsWith: '.aif') ifFalse: [
 		fileName := fileName, '.aif'].
 
@@ -483,7 +483,7 @@ ScorePlayerMorph >> saveAsSunAudio [
 
 	| fileName |
 	fileName := UIManager default request: 'New file name?' translated.
-	fileName isEmpty ifTrue: [^ self].
+	fileName isEmptyOrNil ifTrue: [^ self].
 	(fileName asLowercase endsWith: '.au') ifFalse: [
 		fileName := fileName, '.au'].
 
@@ -497,7 +497,7 @@ ScorePlayerMorph >> saveAsWAV [
 
 	| fileName |
 	fileName := UIManager default request: 'New file name?' translated.
-	fileName isEmpty ifTrue: [^ self].
+	fileName isEmptyOrNil ifTrue: [^ self].
 	(fileName asLowercase endsWith: '.wav') ifFalse: [
 		fileName := fileName, '.wav'].
 
