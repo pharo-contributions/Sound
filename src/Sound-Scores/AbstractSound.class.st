@@ -1062,7 +1062,7 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 	| fileName refStream |
 	(aDictionary isKindOf: Dictionary)
 		ifFalse: [self error: 'arg should be a dictionary of sounds'].
-	fileName := FillInTheBlank request: 'Sound library file name?'.
+	fileName := UIManager default request: 'Sound library file name?'.
 	fileName isEmptyOrNil ifTrue: [^ self].
 	refStream := SmartRefStream fileNamed: fileName, '.sounds'.
 	[ refStream nextPut: aDictionary ]
