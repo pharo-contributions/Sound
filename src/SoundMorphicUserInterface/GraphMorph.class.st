@@ -35,7 +35,7 @@ GraphMorph >> appendValue: aPointOrNumber [
 
 	| newVal |
 	data := data asOrderedCollection.
-	newVal := self newValueFrom: aPointOrNumber.
+	newVal := self asNumber: aPointOrNumber.
 	data addLast: newVal.
 	newVal < minVal ifTrue: [minVal := newVal].
 	newVal > maxVal ifTrue: [maxVal := newVal].
@@ -402,15 +402,6 @@ GraphMorph >> mouseMove: evt [
 
 ]
 
-{ #category : #private }
-GraphMorph >> newValueFrom: aPointOrNumber [
-
-	^ aPointOrNumber class = Point
-		ifTrue: [aPointOrNumber r]
-		ifFalse: [aPointOrNumber].
-
-]
-
 { #category : #commands }
 GraphMorph >> playOnce [
 
@@ -475,7 +466,7 @@ GraphMorph >> valueAtCursor: aPointOrNumber [
 	data isEmpty ifTrue: [^ 0].
 	data
 		at: ((cursor truncated max: 1) min: data size)
-		put: (self newValueFrom: aPointOrNumber).
+		put: (self asNumber: aPointOrNumber).
 	self flushCachedForm.
 
 ]
