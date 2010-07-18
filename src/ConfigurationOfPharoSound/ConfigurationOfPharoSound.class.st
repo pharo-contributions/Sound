@@ -156,3 +156,22 @@ ConfigurationOfPharoSound >> version20: spec [
 			
 	]		
 ]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version30: spec [
+	<version: '3.0' imports: #('1.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #development.
+		spec author: 'MarianoMartinezPeck'.
+		spec description: '- Changed the repository.
+		- Some fixes to work with Pharo 1.1  '.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-Mariano.50';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-MarianoMartinezPeck.9'.
+			
+	]		
+]
