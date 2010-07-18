@@ -171,7 +171,7 @@ ConfigurationOfPharoSound >> version30: spec [
 	spec for: #pharo do: [
 		spec 
 			package: 'Sound' with: 'Sound-Mariano.50';
-			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-MarianoMartinezPeck.9'.
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-MarianoMartinezPeck.11'.
 			
 	]		
 ]
