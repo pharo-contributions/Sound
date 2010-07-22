@@ -14,7 +14,7 @@ Class {
 MixedSound >> + aSound [
 	"Return the mix of the receiver and the argument sound."
 
-	^ self add: aSound
+	self add: aSound
 
 ]
 

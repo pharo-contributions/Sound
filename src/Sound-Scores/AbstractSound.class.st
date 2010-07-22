@@ -1537,9 +1537,10 @@ AbstractSound class >> updateScorePlayers [
 AbstractSound >> + aSound [
 	"Return the mix of the receiver and the argument sound."
 
-	^ MixedSound new
-		add: self;
-		add: aSound
+	^ (MixedSound new)
+		add: self ;
+		add: aSound;
+		yourself
 
 ]
 
@@ -1547,9 +1548,10 @@ AbstractSound >> + aSound [
 AbstractSound >> , aSound [
 	"Return the concatenation of the receiver and the argument sound."
 
-	^ SequentialSound new
+	^ (SequentialSound new)
 		add: self;
-		add: aSound
+		add: aSound;
+		yourself
 
 ]
 

@@ -4,9 +4,9 @@ I am a queue for sound - give me a bunch of sounds to play and I will play them 
 Example:
 ""Here is a simple example which plays two sounds three times.""
 | clink warble queue |
-clink _ SampledSound soundNamed: 'clink'.
-warble _ SampledSound soundNamed: 'warble'.
-queue _ QueueSound new.
+clink := SampledSound soundNamed: 'clink'.
+warble := SampledSound soundNamed: 'warble'.
+queue := QueueSound new.
 3 timesRepeat:[
 	queue add: clink; add: warble
 ].
