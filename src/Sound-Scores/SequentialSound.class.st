@@ -20,6 +20,7 @@ SequentialSound >> , aSound [
 SequentialSound >> add: aSound [
 
 	sounds := sounds copyWith: aSound.
+	^ aSound
 
 ]
 
@@ -64,11 +65,7 @@ SequentialSound >> duration [
 
 	"7 dec 2000 - handle compressed sounds. better way??"
 
-	| dur |
-	dur := 0.
-	sounds do: [:snd | dur := dur + snd asSound duration].
-	^ dur
-
+	 ^sounds inject: 0 into: [:totalDuration :snd | totalDuration + snd asSound duration]
 ]
 
 { #category : #initialization }
