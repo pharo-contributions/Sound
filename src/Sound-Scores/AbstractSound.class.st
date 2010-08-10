@@ -1062,7 +1062,7 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 	| fileName refStream |
 	(aDictionary isKindOf: Dictionary)
 		ifFalse: [self error: 'arg should be a dictionary of sounds'].
-	fileName := UIManager default request: 'Sound library file name?'.
+	fileName := FillInTheBlank request: 'Sound library file name?'.
 	fileName isEmptyOrNil ifTrue: [^ self].
 	refStream := SmartRefStream fileNamed: fileName, '.sounds'.
 	[ refStream nextPut: aDictionary ]
@@ -1165,9 +1165,9 @@ AbstractSound class >> majorChordOn: aSound from: aPitch [
 	leadingRest := pan := 0.
 	#(1 3 5 8) do: [:noteIndex | | note |
 		note := aSound
-			soundForPitch: (majorScale at: noteIndex)
-			dur: 2.0 - leadingRest
-			loudness: 0.3.
+					soundForPitch: (majorScale at: noteIndex)
+					dur: 2.0 - leadingRest
+					loudness: 0.3.
 		score add: (RestSound dur: leadingRest), note pan: pan.
 		leadingRest := leadingRest + 0.2.
 		pan := pan + 0.3].
@@ -1379,7 +1379,7 @@ AbstractSound class >> soundNamed: soundName put: aSound [
 { #category : #'sound library' }
 AbstractSound class >> soundNames [
 
-	^ Sounds keys asArray sort
+	^ Sounds keys sorted
 
 ]
 
@@ -1473,14 +1473,14 @@ AbstractSound class >> translatedPrimitives [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : #'examples-bach fugue' }
 AbstractSound class >> unloadSampledTimbres [
 	"This can be done to unload those bulky sampled timbres to shrink the image. The unloaded sounds are replaced by a well-known 'unloaded sound' object to enable the unloaded sounds to be detected when the process is reversed."
 	"AbstractSound unloadSampledTimbres"
 
-	Sounds keys do: [:soundName |
-		(((Sounds at: soundName) isKindOf: SampledInstrument) or:
-		 [(Sounds at: soundName) isKindOf: LoopedSampledSound]) ifTrue: [
+	Sounds keysAndValuesDo: [:soundName : sound|
+		((sound isKindOf: SampledInstrument) or:
+		 [sound isKindOf: LoopedSampledSound]) ifTrue: [
 			Sounds at: soundName put: self unloadedSound]].
 	self updateScorePlayers.
 	Smalltalk garbageCollect.
@@ -1537,8 +1537,8 @@ AbstractSound class >> updateScorePlayers [
 AbstractSound >> + aSound [
 	"Return the mix of the receiver and the argument sound."
 
-	^ (MixedSound new)
-		add: self ;
+	^(MixedSound new)
+		add: self;
 		add: aSound;
 		yourself
 
@@ -1548,11 +1548,10 @@ AbstractSound >> + aSound [
 AbstractSound >> , aSound [
 	"Return the concatenation of the receiver and the argument sound."
 
-	^ (SequentialSound new)
+	^(SequentialSound new)
 		add: self;
 		add: aSound;
 		yourself
-
 ]
 
 { #category : #envelopes }
@@ -1619,6 +1618,14 @@ AbstractSound >> controlRate [
 	"Answer the number of control changes per second."
 
 	^ 100
+
+]
+
+{ #category : #copying }
+AbstractSound >> copy [
+	"A sound should copy all of the state needed to play itself, allowing two copies of a sound to play at the same time. These semantics require a recursive copy but only down to the level of immutable data. For example, a SampledSound need not copy its sample buffer. Subclasses overriding this method should include a resend to super."
+
+	^ self clone copyEnvelopes
 
 ]
 
@@ -1850,15 +1857,6 @@ AbstractSound >> playSilentlyUntil: startTime [
 			ifFalse: [n := samplesRemaining].
 		self playSampleCount: n into: buf startingAt: 1.
 		nextSample := nextSample + n].
-
-]
-
-{ #category : #copying }
-AbstractSound >> postCopy [
-	"A sound should copy all of the state needed to play itself, allowing two copies of a sound to play at the same time. These semantics require a recursive copy but only down to the level of immutable data. For example, a SampledSound need not copy its sample buffer. Subclasses overriding this method should include a resend to super."
-
-	super postCopy.
-	self copyEnvelopes
 
 ]
 

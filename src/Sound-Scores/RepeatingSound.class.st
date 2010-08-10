@@ -62,6 +62,14 @@ RepeatingSound class >> repeatForever: aSound [
 ]
 
 { #category : #copying }
+RepeatingSound >> copy [
+	"Copy my component sound."
+
+	^ super copy copySound
+
+]
+
+{ #category : #copying }
 RepeatingSound >> copySound [
 	"Private! Support for copying. Copy my component sound."
 
@@ -119,15 +127,6 @@ RepeatingSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex le
 			rightVol: rightVol.
 		i := i + count.
 		samplesNeeded := samplesNeeded - count].
-
-]
-
-{ #category : #copying }
-RepeatingSound >> postCopy [
-	"Copy my component sound."
-
-	super postCopy.
-	self copySound
 
 ]
 

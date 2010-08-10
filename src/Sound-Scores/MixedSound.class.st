@@ -23,7 +23,8 @@ MixedSound >> add: aSound [
 	"Add the given sound with a pan setting of centered and no attenuation."
 
 	self add: aSound pan: 0.5 volume: 1.0.
-	^ aSound
+	^aSound
+
 ]
 
 { #category : #composition }
@@ -44,6 +45,14 @@ MixedSound >> add: aSound pan: leftRightPan volume: volume [
 	sounds := sounds copyWith: aSound.
 	leftVols := leftVols copyWith: ((ScaleFactor - pan) * vol) // ScaleFactor.
 	rightVols := rightVols copyWith: (pan * vol) // ScaleFactor.
+
+]
+
+{ #category : #copying }
+MixedSound >> copy [
+	"Copy my component sounds."
+
+	^ super copy copySounds
 
 ]
 
@@ -108,14 +117,6 @@ MixedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVo
 					snd mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: left rightVol: right]
 				ifFalse: [soundDone at: i put: true]]].
 
-]
-
-{ #category : #copying }
-MixedSound >> postCopy [
-	"Copy my component sounds."
-
-	super postCopy.
-	self copySounds
 ]
 
 { #category : #'sound generation' }

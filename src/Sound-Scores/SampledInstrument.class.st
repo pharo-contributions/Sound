@@ -146,7 +146,7 @@ SampledInstrument >> allNotes [
 	sustainedSoft ~~ sustainedLoud ifTrue: [r addAll: sustainedSoft].
 	staccatoLoud ~~ sustainedLoud ifTrue: [r addAll: staccatoLoud].
 	staccatoSoft ~~ staccatoLoud ifTrue: [r addAll: staccatoSoft].
-	^ r asArray sort: [:n1 :n2 | n1 pitch < n2 pitch]
+	^ (r asSortedCollection: [:n1 :n2 | n1 pitch < n2 pitch]) asArray
 
 ]
 
@@ -288,7 +288,7 @@ SampledInstrument >> readSampleSetFrom: dirName [
 	dir := FileDirectory default on: dirName.
 	dir fileNames do: [:n | | fullName snd |
 		fullName := dir fullNameFor: n.
-		Utilities
+		UIManager default
 			informUser: 'Reading AIFF file ', n
 			during:
 				[snd := LoopedSampledSound new

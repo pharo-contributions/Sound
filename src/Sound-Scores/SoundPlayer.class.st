@@ -80,6 +80,7 @@ SoundPlayer class >> bufferMSecs [
 SoundPlayer class >> canStartPlayer [
 	"Some platforms do no support simultaneous record and play. If this is one of those platforms, return false if there is a running SoundRecorder."
 
+	Preferences canRecordWhilePlaying ifTrue: [^ true].
 	SoundRecorder anyActive ifTrue:[^false].
 	^ true
 
@@ -160,7 +161,8 @@ SoundPlayer class >> pauseSound: aSound [
 SoundPlayer class >> playLoop [
 	"The sound player process loop."
 
-	| bytesPerSlice count willStop |
+	| bytesPerSlice count willStop mayStop |
+	mayStop := Preferences soundStopWhenDone.
 	bytesPerSlice := Stereo ifTrue: [4] ifFalse: [2].
 	[true] whileTrue: [
 		[(count := self primSoundAvailableBytes // bytesPerSlice) > 100]
@@ -175,8 +177,9 @@ SoundPlayer class >> playLoop [
 			ReverbState == nil ifFalse: [
 				ReverbState applyReverbTo: Buffer startingAt: 1 count: count].
 			self primSoundPlaySamples: count from: Buffer startingAt: 1.
-			willStop := (ActiveSounds size = 0) and:[
-							self isAllSilence: Buffer size: count].
+			willStop := mayStop and:[
+						(ActiveSounds size = 0) and:[
+							self isAllSilence: Buffer size: count]].
 			LastBuffer ifNotNil:[
 				LastBuffer replaceFrom: 1 to: LastBuffer size with: Buffer startingAt: 1.
 			].
@@ -315,9 +318,9 @@ SoundPlayer class >> resumePlaying: aSound quickStart: quickStart [
 	"Start playing the given sound without resetting it; it will resume playing from where it last stopped. If quickStart is true, then try to start playing the given sound immediately."
 
 	| doQuickStart |
-	BaseSoundSystem soundEnabled ifFalse: [^ self].
+	Preferences soundsEnabled ifFalse: [^ self].
 	doQuickStart := quickStart.
-	BaseSoundSystem soundQuickStart ifFalse: [doQuickStart := false].
+	Preferences soundQuickStart ifFalse: [doQuickStart := false].
 	PlayerProcess == nil ifTrue: [
 		self canStartPlayer ifFalse: [^ self].
 		^self startUpWithSound: aSound].

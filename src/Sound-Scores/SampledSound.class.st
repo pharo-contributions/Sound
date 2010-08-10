@@ -91,8 +91,8 @@ SampledSound class >> convert8bitSignedFrom: aByteArray to16Bit: aSoundBuffer [
 
 	| n s |
 	<primitive: 'primitiveConvert8BitSigned' module: 'MiscPrimitivePlugin'>
-	<var: #aByteArray declareC: 'unsigned char *aByteArray'>
-	<var: #aSoundBuffer declareC: 'unsigned short *aSoundBuffer'>
+	self var: #aByteArray declareC: 'unsigned char *aByteArray'.
+	self var: #aSoundBuffer declareC: 'unsigned short *aSoundBuffer'.
 	n := aByteArray size.
 	1 to: n do: [:i |
 		s := aByteArray at: i.
@@ -574,8 +574,8 @@ SampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 	| lastIndex outIndex sampleIndex sample i s overflow |
 	<primitive:'primitiveMixSampledSound' module:'SoundGenerationPlugin'>
-	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
-	<var: #samples declareC: 'short int *samples'>
+	self var: #aSoundBuffer declareC: 'short int *aSoundBuffer'.
+	self var: #samples declareC: 'short int *samples'.
 
 	lastIndex := (startIndex + n) - 1.
 	outIndex := startIndex.    "index of next stereo output sample pair"
@@ -790,9 +790,7 @@ SampledSound >> volumeForm: height from: start to: stop nSamplesPerPixel: nPerPi
 	width := stop-start//nPerPixel.
 	volPlot := Form extent: width@height.
 	(start max: 1) to: (stop min: samples size)-nPerPixel by: nPerPixel do:
-		[:i | 
-		| sample min vol | 
-		min:= max:= 0.
+		[:i | | sample min vol | min:= max:= 0.
 		i asInteger to: (i+nPerPixel-1) asInteger by: 4 do:  "by: 4 makes it faster yet looks the same"
 			[:j | sample := samples at: j.
 			sample < min ifTrue: [min := sample].

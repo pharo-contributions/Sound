@@ -61,6 +61,14 @@ ScorePlayer >> closeMIDIPort [
 ]
 
 { #category : #copying }
+ScorePlayer >> copy [
+	"Copy my component sounds."
+
+	^ super copy copySounds
+
+]
+
+{ #category : #copying }
 ScorePlayer >> copySounds [
 	"Private! Support for copying."
 
@@ -400,15 +408,6 @@ ScorePlayer >> positionInScore: pos [
 	ticksSinceStart := pos * durationInTicks.
 	done := false.
 
-
-]
-
-{ #category : #copying }
-ScorePlayer >> postCopy [
-	"Copy my component sounds."
-
-	super postCopy.
-	self copySounds
 
 ]
 

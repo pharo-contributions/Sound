@@ -259,7 +259,7 @@ ADPCMCodec >> indexForDeltaFrom: thisSample to: nextSample [
 	"Note: Since there does not appear to be any documentation of how Flash actually computes the indices used in its frame headers, this algorithm was guessed by reverse-engineering the Flash ADPCM decoder."
 
 	| diff bestIndex |
-	<inline: true>
+	self inline: true.
 
 	diff := nextSample - thisSample.
 	diff < 0 ifTrue: [diff := 0 - diff].
@@ -311,7 +311,7 @@ ADPCMCodec >> nextBits: n [
 	"Answer the next n bits of my bit stream as an unsigned integer."
 
 	| result remaining shift |
-	<inline: true>
+	self inline: true.
 
 	result := 0.
 	remaining := n.
@@ -336,7 +336,7 @@ ADPCMCodec >> nextBits: n put: anInteger [
 	"Write the next n bits to my bit stream."
 
 	| buf bufBits bitsAvailable shift |
-	<inline: true>
+	self inline: true.
 
 	buf := anInteger.
 	bufBits := n.
@@ -364,10 +364,10 @@ ADPCMCodec >> privateDecodeMono: count [
 
 	| delta step predictedDelta bit |
 	<primitive: 'primitiveDecodeMono' module: 'ADPCMCodecPlugin'>
-	<var: #stepSizeTable declareC: 'short int *stepSizeTable'>
-	<var: #indexTable declareC: 'short int *indexTable'>
-	<var: #samples declareC: 'short int *samples'>
-	<var: #encodedBytes declareC: 'unsigned char *encodedBytes'>
+	self var: #stepSizeTable declareC: 'short int *stepSizeTable'.
+	self var: #indexTable declareC: 'short int *indexTable'.
+	self var: #samples declareC: 'short int *samples'.
+	self var: #encodedBytes declareC: 'unsigned char *encodedBytes'.
 
 	1 to: count do: [:i |
 		(i bitAnd: frameSizeMask) = 1
@@ -410,13 +410,13 @@ ADPCMCodec >> privateDecodeStereo: count [
 	 stepLeft stepRight predictedDeltaLeft predictedDeltaRight bit |
 
 	<primitive: 'primitiveDecodeStereo' module: 'ADPCMCodecPlugin'>
-	<var: #stepSizeTable declareC: 'short int *stepSizeTable'>
-	<var: #indexTable declareC: 'short int *indexTable'>
-	<var: #samples declareC: 'short int *samples'>
-	<var: #encodedBytes declareC: 'unsigned char *encodedBytes'>
-	<var: #rightSamples declareC: 'short int *rightSamples'>
-	<var: #predicted declareC: 'short int *predicted'>
-	<var: #index declareC: 'short int *index'>
+	self var: #stepSizeTable declareC: 'short int *stepSizeTable'.
+	self var: #indexTable declareC: 'short int *indexTable'.
+	self var: #samples declareC: 'short int *samples'.
+	self var: #encodedBytes declareC: 'unsigned char *encodedBytes'.
+	self var: #rightSamples declareC: 'short int *rightSamples'.
+	self var: #predicted declareC: 'short int *predicted'.
+	self var: #index declareC: 'short int *index'.
 
 	"make local copies of decoder state variables"
 	predictedLeft := predicted at: 1.
@@ -491,10 +491,10 @@ ADPCMCodec >> privateEncodeMono: count [
 
 	| step sign diff delta predictedDelta bit p |
 	<primitive: 'primitiveEncodeMono' module: 'ADPCMCodecPlugin'>
-	<var: #stepSizeTable declareC: 'short int *stepSizeTable'>
-	<var: #indexTable declareC: 'short int *indexTable'>
-	<var: #samples declareC: 'short int *samples'>
-	<var: #encodedBytes declareC: 'unsigned char *encodedBytes'>
+	self var: #stepSizeTable declareC: 'short int *stepSizeTable'.
+	self var: #indexTable declareC: 'short int *indexTable'.
+	self var: #samples declareC: 'short int *samples'.
+	self var: #encodedBytes declareC: 'unsigned char *encodedBytes'.
 
 	step := stepSizeTable at: 1.
 	1 to: count do: [:i |
@@ -556,8 +556,8 @@ ADPCMCodec >> privateEncodeMono: count [
 ADPCMCodec >> privateEncodeStereo: count [
 
 	<primitive: 'primitiveEncodeStereo' module: 'ADPCMCodecPlugin'>
-	<inline: false>
 	"not yet implemented"
+	self inline: false.
 	self success: false.
 ]
 
