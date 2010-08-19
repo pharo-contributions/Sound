@@ -60,26 +60,6 @@ ScorePlayer >> closeMIDIPort [
 
 ]
 
-{ #category : #copying }
-ScorePlayer >> copy [
-	"Copy my component sounds."
-
-	^ super copy copySounds
-
-]
-
-{ #category : #copying }
-ScorePlayer >> copySounds [
-	"Private! Support for copying."
-
-	instruments := instruments copy.
-	leftVols := leftVols copy.
-	rightVols := rightVols copy.
-	muted := muted copy.
-	self reset.
-
-]
-
 { #category : #operating }
 ScorePlayer >> disableReverb: aBoolean [
 
@@ -408,6 +388,18 @@ ScorePlayer >> positionInScore: pos [
 	ticksSinceStart := pos * durationInTicks.
 	done := false.
 
+
+]
+
+{ #category : #copying }
+ScorePlayer >> postCopy [
+	"Private! Support for copying."
+	super postCopy.
+	instruments := instruments copy.
+	leftVols := leftVols copy.
+	rightVols := rightVols copy.
+	muted := muted copy.
+	self reset.
 
 ]
 

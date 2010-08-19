@@ -48,24 +48,6 @@ MixedSound >> add: aSound pan: leftRightPan volume: volume [
 
 ]
 
-{ #category : #copying }
-MixedSound >> copy [
-	"Copy my component sounds."
-
-	^ super copy copySounds
-
-]
-
-{ #category : #copying }
-MixedSound >> copySounds [
-	"Private! Support for copying. Copy my component sounds and settings array."
-
-	sounds := sounds collect: [:s | s copy].
-	leftVols := leftVols copy.
-	rightVols := rightVols copy.
-
-]
-
 { #category : #'sound generation' }
 MixedSound >> doControl [
 
@@ -116,6 +98,16 @@ MixedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVo
 				ifTrue: [
 					snd mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: left rightVol: right]
 				ifFalse: [soundDone at: i put: true]]].
+
+]
+
+{ #category : #copying }
+MixedSound >> postCopy [
+	"Private! Support for copying. Copy my component sounds and settings array."
+	super postCopy.
+	sounds := sounds collect: [:s | s copy].
+	leftVols := leftVols copy.
+	rightVols := rightVols copy.
 
 ]
 

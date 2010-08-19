@@ -34,22 +34,6 @@ SequentialSound >> compressWith: codecClass atRate: aSamplingRate [
 	^ self copy transformSounds: [:s | s compressWith: codecClass atRate: aSamplingRate]
 ]
 
-{ #category : #copying }
-SequentialSound >> copy [
-	"Copy my component sounds."
-
-	^ super copy copySounds
-
-]
-
-{ #category : #copying }
-SequentialSound >> copySounds [
-	"Private! Support for copying. Copy my component sounds."
-
-	sounds := sounds collect: [:s | s copy].
-
-]
-
 { #category : #'sound generation' }
 SequentialSound >> doControl [
 
@@ -101,6 +85,14 @@ SequentialSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex l
 		remaining < count ifTrue: [count := remaining].
 		snd mixSampleCount: count into: aSoundBuffer startingAt: i leftVol: leftVol rightVol: rightVol.
 		i := i + count].
+
+]
+
+{ #category : #copying }
+SequentialSound >> postCopy [
+	"Private! Support for copying. Copy my component sounds."
+	super postCopy.
+	sounds := sounds collect: [:s | s copy].
 
 ]
 

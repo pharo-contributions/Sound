@@ -1621,22 +1621,6 @@ AbstractSound >> controlRate [
 
 ]
 
-{ #category : #copying }
-AbstractSound >> copy [
-	"A sound should copy all of the state needed to play itself, allowing two copies of a sound to play at the same time. These semantics require a recursive copy but only down to the level of immutable data. For example, a SampledSound need not copy its sample buffer. Subclasses overriding this method should include a resend to super."
-
-	^ self clone copyEnvelopes
-
-]
-
-{ #category : #copying }
-AbstractSound >> copyEnvelopes [
-	"Private! Support for copying. Copy my envelopes."
-
-	envelopes := envelopes collect: [:e | e copy target: self].
-
-]
-
 { #category : #composition }
 AbstractSound >> delayedBy: seconds [
 	"Return a composite sound consisting of a rest for the given amount of time followed by the receiver."
@@ -1857,6 +1841,14 @@ AbstractSound >> playSilentlyUntil: startTime [
 			ifFalse: [n := samplesRemaining].
 		self playSampleCount: n into: buf startingAt: 1.
 		nextSample := nextSample + n].
+
+]
+
+{ #category : #copying }
+AbstractSound >> postCopy [
+	"Private! Support for copying. Copy my envelopes."
+	super postCopy.
+	envelopes := envelopes collect: [:e | e copy target: self].
 
 ]
 
