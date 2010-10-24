@@ -11,7 +11,7 @@ Class {
 	#category : #'Sound-Synthesis'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MuLawCodec class >> initialize [
 	"Build the 256 entry table to be used to decode 8-bit uLaw-encoded samples."
 	"MuLawCodec initialize"

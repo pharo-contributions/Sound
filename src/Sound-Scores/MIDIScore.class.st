@@ -70,12 +70,12 @@ MIDIScore >> cutSelection: selection [
 	tracks at: selection first put: track
 ]
 
-{ #category : #nil }
+{ #category : #accessing }
 MIDIScore >> durationInTicks [
 	
 	| t |
 	t := 0.
-	tracks, {ambientTrack} do:
+	tracks, {self ambientTrack} do:
 		[:track |
 		track do:
 			[:n | (n isNoteEvent)

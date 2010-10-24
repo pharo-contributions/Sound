@@ -1036,10 +1036,10 @@ AbstractSound class >> fileInSoundLibraryNamed: fileName [
 
 	| s newSounds |
 	s := FileStream oldFileNamed: fileName.
-	[ newSounds := s fileInObjectAndCode ]
-		ensure: [ s close ].
-	newSounds associationsDo: [:assoc | 
-		self storeFiledInSound: assoc value named: assoc key].
+	newSounds := s fileInObjectAndCode.
+	s close.
+	newSounds associationsDo:
+		[:assoc | self storeFiledInSound: assoc value named: assoc key].
 	AbstractSound updateScorePlayers.
 	Smalltalk garbageCollect.  "Large objects may have been released"
 
@@ -1062,11 +1062,12 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 	| fileName refStream |
 	(aDictionary isKindOf: Dictionary)
 		ifFalse: [self error: 'arg should be a dictionary of sounds'].
-	fileName := FillInTheBlank request: 'Sound library file name?'.
+	fileName := UIManager default request: 'Sound library file name?'.
 	fileName isEmptyOrNil ifTrue: [^ self].
 	refStream := SmartRefStream fileNamed: fileName, '.sounds'.
-	[ refStream nextPut: aDictionary ]
-		ensure: [ refStream close ]
+	refStream nextPut: aDictionary.
+	refStream close.
+
 ]
 
 { #category : #utilities }
@@ -1118,7 +1119,7 @@ AbstractSound class >> initSounds [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 AbstractSound class >> initialize [
 	"AbstractSound initialize"
  
@@ -1165,9 +1166,9 @@ AbstractSound class >> majorChordOn: aSound from: aPitch [
 	leadingRest := pan := 0.
 	#(1 3 5 8) do: [:noteIndex | | note |
 		note := aSound
-					soundForPitch: (majorScale at: noteIndex)
-					dur: 2.0 - leadingRest
-					loudness: 0.3.
+			soundForPitch: (majorScale at: noteIndex)
+			dur: 2.0 - leadingRest
+			loudness: 0.3.
 		score add: (RestSound dur: leadingRest), note pan: pan.
 		leadingRest := leadingRest + 0.2.
 		pan := pan + 0.3].
@@ -1323,11 +1324,11 @@ AbstractSound class >> pitchForName: aString [
 AbstractSound class >> pitchTable [
 	"AbstractSound pitchTable"
 
-	| out i |
+	| out note i |
 	out := WriteStream on: (String new: 1000).
 	i := 12.
 	0 to: 8 do: [:octave |
-		#(c 'c#' d eb e f fs g 'g#' a bf b) do: [:noteName | | note |
+		#(c 'c#' d eb e f fs g 'g#' a bf b) do: [:noteName |
 			note := noteName, octave printString.
 			out nextPutAll: note; tab.
 			out nextPutAll: i printString; tab.
@@ -1337,7 +1338,7 @@ AbstractSound class >> pitchTable [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 AbstractSound class >> scaleFactor [
 
 	^ ScaleFactor
@@ -1379,7 +1380,7 @@ AbstractSound class >> soundNamed: soundName put: aSound [
 { #category : #'sound library' }
 AbstractSound class >> soundNames [
 
-	^ Sounds keys sorted
+	^ Sounds keys asArray sort
 
 ]
 
@@ -1422,12 +1423,13 @@ AbstractSound class >> storeFiledInSound: snd named: sndName [
 
 	"the given sound name is already used"
 	choice := UIManager default 
-		chooseFrom: {'Replace the existing sound' translated. 'Rename the new sound' translated}
-		title: ('"', sndName, '" ', 'has the same name as an existing sound' translated).
-	(choice = 1) ifTrue: [
+		chooseFrom: #('replace the existing sound' 'rename the new sound' 'skip it')
+		values: #('replace the existing sound' 'rename the new sound' 'skip it')
+		title: '"', sndName, '" has the same name as an existing sound'.
+	(choice beginsWith: 'replace') ifTrue: [
 		Sounds at: sndName put: snd.
 		^ self].
-	(choice = 2) ifTrue: [
+	(choice beginsWith: 'rename') ifTrue: [
 		i := 2.
 		[Sounds includesKey: (sndName, ' v', i printString)] whileTrue: [i := i + 1].
 		Sounds at: (sndName, ' v', i printString) put: snd].
@@ -1473,14 +1475,14 @@ AbstractSound class >> translatedPrimitives [
 
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : #'sound library-file in/out' }
 AbstractSound class >> unloadSampledTimbres [
 	"This can be done to unload those bulky sampled timbres to shrink the image. The unloaded sounds are replaced by a well-known 'unloaded sound' object to enable the unloaded sounds to be detected when the process is reversed."
 	"AbstractSound unloadSampledTimbres"
 
-	Sounds keysAndValuesDo: [:soundName : sound|
-		((sound isKindOf: SampledInstrument) or:
-		 [sound isKindOf: LoopedSampledSound]) ifTrue: [
+	Sounds keys do: [:soundName |
+		(((Sounds at: soundName) isKindOf: SampledInstrument) or:
+		 [(Sounds at: soundName) isKindOf: LoopedSampledSound]) ifTrue: [
 			Sounds at: soundName put: self unloadedSound]].
 	self updateScorePlayers.
 	Smalltalk garbageCollect.
@@ -1523,14 +1525,13 @@ AbstractSound class >> updateScorePlayers [
 	| soundsBeingEdited |
 	"Force all ScorePlayers to update their instrument list from the sound library. This may done after loading, unloading, or replacing a sound to make all ScorePlayers feel the change."
 
-	ScorePlayer allSubInstancesDo: [:p | p pause].
+	ScorePlayer allSubInstancesDo:
+		[:p | p pause].
 	SoundPlayer shutDown.
-	Smalltalk at: #EnvelopeEditorMorph ifPresent: [ :class |
-		soundsBeingEdited := class allSubInstances
-			collect: [:ed | ed soundBeingEdited ] ].
-	Smalltalk at: #ScorePlayerMorph ifPresent: [ :class |
-		class allSubInstancesDo:
-			[:p | p updateInstrumentsFromLibraryExcept: soundsBeingEdited ] ]
+	soundsBeingEdited := EnvelopeEditorMorph allSubInstances collect: [:ed | ed soundBeingEdited].
+	ScorePlayerMorph allSubInstancesDo:
+		[:p | p updateInstrumentsFromLibraryExcept: soundsBeingEdited].
+
 ]
 
 { #category : #composition }
@@ -1618,6 +1619,14 @@ AbstractSound >> controlRate [
 	"Answer the number of control changes per second."
 
 	^ 100
+
+]
+
+{ #category : #copying }
+AbstractSound >> copyEnvelopes [
+	"Private! Support for copying. Copy my envelopes."
+
+	envelopes := envelopes collect: [:e | e copy target: self].
 
 ]
 
@@ -1846,9 +1855,10 @@ AbstractSound >> playSilentlyUntil: startTime [
 
 { #category : #copying }
 AbstractSound >> postCopy [
-	"Private! Support for copying. Copy my envelopes."
+	"A sound should copy all of the state needed to play itself, allowing two copies of a sound to play at the same time. These semantics require a recursive copy but only down to the level of immutable data. For example, a SampledSound need not copy its sample buffer. Subclasses overriding this method should include a resend to super."
+
 	super postCopy.
-	envelopes := envelopes collect: [:e | e copy target: self].
+	self copyEnvelopes
 
 ]
 
@@ -1981,8 +1991,8 @@ AbstractSound >> storeAIFFOnFileNamed: fileName [
 
 	| f |
 	f := (FileStream fileNamed: fileName) binary.
-	[ self storeAIFFSamplesOn: f ]
-		ensure: [ f close ]
+	self storeAIFFSamplesOn: f.
+	f close.
 
 ]
 
@@ -2093,8 +2103,9 @@ AbstractSound >> storeSunAudioOnFileNamed: fileName [
 
 	| f |
 	f := (FileStream fileNamed: fileName) binary.
-	[ self storeSunAudioSamplesOn: f]
-		ensure: [ f close ]
+	self storeSunAudioSamplesOn: f.
+	f close.
+
 ]
 
 { #category : #'file i/o' }
@@ -2127,8 +2138,9 @@ AbstractSound >> storeWAVOnFileNamed: fileName [
 
 	| f |
 	f := (FileStream fileNamed: fileName) binary.
-	[ self storeWAVSamplesOn: f ]
-		ensure: [ f close ]
+	self storeWAVSamplesOn: f.
+	f close.
+
 ]
 
 { #category : #'file i/o' }
@@ -2180,6 +2192,14 @@ AbstractSound >> updateVolume [
 				ifTrue: [  "reached the limit; stop incrementing"
 					scaledVol := scaledVolLimit.
 					scaledVolIncr := 0]].
+
+]
+
+{ #category : #playing }
+AbstractSound >> viewSamples [
+	"Open a WaveEditor on my samples."
+
+	WaveEditor openOn: self samples.
 
 ]
 

@@ -54,6 +54,16 @@ ReverbSound >> applyReverbTo: aSoundBuffer startingAt: startIndex count: n [
 
 ]
 
+{ #category : #copying }
+ReverbSound >> copySound [
+	"Private! Support for copying. Copy my component sound."
+
+	sound := sound copy.
+	leftBuffer := leftBuffer clone.
+	rightBuffer := rightBuffer clone.
+
+]
+
 { #category : #'sound generation' }
 ReverbSound >> doControl [
 
@@ -77,11 +87,10 @@ ReverbSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftV
 
 { #category : #copying }
 ReverbSound >> postCopy [
-	"Private! Support for copying. Copy my component sound."
+	"Copy my component sound."
+
 	super postCopy.
-	sound := sound copy.
-	leftBuffer := leftBuffer copy.
-	rightBuffer := rightBuffer copy.
+	self copySound
 
 ]
 

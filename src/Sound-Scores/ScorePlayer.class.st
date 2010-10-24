@@ -60,6 +60,18 @@ ScorePlayer >> closeMIDIPort [
 
 ]
 
+{ #category : #copying }
+ScorePlayer >> copySounds [
+	"Private! Support for copying."
+
+	instruments := instruments copy.
+	leftVols := leftVols copy.
+	rightVols := rightVols copy.
+	muted := muted copy.
+	self reset.
+
+]
+
 { #category : #operating }
 ScorePlayer >> disableReverb: aBoolean [
 
@@ -162,6 +174,11 @@ ScorePlayer >> isDone [
 	(trackEventIndex last) <= score ambientTrack size ifTrue: [^ false].
 	^ true
 
+]
+
+{ #category : #'sound generation' }
+ScorePlayer >> isPlaying [
+	^ SoundPlayer isPlaying: self
 ]
 
 { #category : #accessing }
@@ -393,13 +410,10 @@ ScorePlayer >> positionInScore: pos [
 
 { #category : #copying }
 ScorePlayer >> postCopy [
-	"Private! Support for copying."
+	"Copy my component sounds."
+
 	super postCopy.
-	instruments := instruments copy.
-	leftVols := leftVols copy.
-	rightVols := rightVols copy.
-	muted := muted copy.
-	self reset.
+	self copySounds
 
 ]
 

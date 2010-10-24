@@ -101,7 +101,7 @@ RandomEnvelope >> name [
 
 ]
 
-{ #category : #'envelopeeditor compatibility' }
+{ #category : #'envelopeEditor compatibility' }
 RandomEnvelope >> points [
 
 	| env |
@@ -119,7 +119,7 @@ RandomEnvelope >> points [
 	^points
 ]
 
-{ #category : #'envelopeeditor compatibility' }
+{ #category : #'envelopeEditor compatibility' }
 RandomEnvelope >> setPoints: pointList loopStart: startIndex loopEnd: endIndex [
 
 	self delta: pointList first y - 0.5 / 5.

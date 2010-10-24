@@ -104,6 +104,29 @@ FFT >> permuteData [
 		i := i + 2]
 ]
 
+{ #category : #testing }
+FFT >> plot: samples in: rect [
+	"Throw-away code just to check out a couple of examples"
+	| dx pen min max x |
+	Display fillWhite: rect; border: (rect expandBy: 2) width: 2.
+	min := 1.0e30.  max := -1.0e30.
+	samples do:
+		[:v |
+		min := min min: v.
+		max := max max: v].
+	pen := Pen new.  pen up.
+	x := rect left.
+	dx := rect width asFloat / samples size.
+	samples do:
+		[:v | | y |
+		y := (max-v) / (max-min) * rect height asFloat.
+		pen goto: x asInteger @ (rect top + y asInteger).
+		pen down.
+		x := x + dx].
+	max printString displayOn: Display at: (x+2) @ (rect top-9).
+	min printString displayOn: Display at: (x+2) @ (rect bottom - 9)
+]
+
 { #category : #'plugin-testing' }
 FFT >> pluginPrepareData [
 	"The FFT plugin requires data to be represented in WordArrays or FloatArrays"
@@ -111,6 +134,20 @@ FFT >> pluginPrepareData [
 	permTable := permTable asWordArray.
 	realData := realData asFloatArray.
 	imagData := imagData asFloatArray.
+]
+
+{ #category : #'plugin-testing' }
+FFT >> pluginTest [  "Display restoreAfter: [(FFT new nu: 12) pluginTest]."
+	"Test on an array of 256 samples"
+	"Initialize to pure (co)Sine Wave, plot, transform, plot, invert and plot again"
+	self realData: ((1 to: n) collect: [:i | (Float pi * (i-1) / (n/8)) cos]).
+	self plot: realData in: (100@20 extent: 256@60).
+	self pluginPrepareData.
+	Transcript cr; print: (Time millisecondsToRun:[self pluginTransformData: true]); endEntry.
+	self plot: realData in: (100@100 extent: 256@60).
+	self plot: imagData in: (100@180 extent: 256@60).
+	Transcript cr; print: (Time millisecondsToRun:[self pluginTransformData: false]); endEntry.
+	self plot: realData in: (100@260 extent: 256@60)
 ]
 
 { #category : #'plugin-testing' }
@@ -176,6 +213,18 @@ FFT >> setSize: anIntegerPowerOfTwo [
 	imagData := FloatArray new: n.
 	self initializeHammingWindow: 0.54.  "0.54 for Hamming, 0.5 for hanning"
 
+]
+
+{ #category : #testing }
+FFT >> test [  "Display restoreAfter: [(FFT new nu: 8) test].  --  Test on an array of 256 samples"
+	"Initialize to pure (co)Sine Wave, plot, transform, plot, invert and plot again"
+	self realData: ((1 to: n) collect: [:i | (Float pi * (i-1) / (n/8)) cos]).
+	self plot: realData in: (100@20 extent: 256@60).
+	self transformForward: true.
+	self plot: realData in: (100@100 extent: 256@60).
+	self plot: imagData in: (100@180 extent: 256@60).
+	self transformForward: false.
+	self plot: realData in: (100@260 extent: 256@60)
 ]
 
 { #category : #'bulk processing' }

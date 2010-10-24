@@ -33,6 +33,14 @@ PluckedSound class >> default [
 
 ]
 
+{ #category : #copying }
+PluckedSound >> copyRing [
+	"Private! Support for copying"
+
+	ring := ring copy.
+
+]
+
 { #category : #accessing }
 PluckedSound >> duration [
 	"Answer the duration of this sound in seconds."
@@ -100,9 +108,9 @@ PluckedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 { #category : #copying }
 PluckedSound >> postCopy [
-	"Private! Support for copying"
+
 	super postCopy.
-	ring := ring copy.
+	self copyRing
 
 ]
 
