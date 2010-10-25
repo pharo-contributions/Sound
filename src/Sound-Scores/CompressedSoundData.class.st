@@ -21,7 +21,7 @@ Class {
 	#category : #'Sound-Synthesis'
 }
 
-{ #category : #asSound }
+{ #category : #assound }
 CompressedSoundData >> asSound [
 	"Answer the result of decompressing the receiver."
 
@@ -76,7 +76,7 @@ CompressedSoundData >> compressWith: codecClass atRate: aSamplingRate [
 	^self asSound compressWith: codecClass atRate: aSamplingRate
 ]
 
-{ #category : #asSound }
+{ #category : #assound }
 CompressedSoundData >> doControl [
 
 	cachedSound doControl
@@ -143,7 +143,7 @@ CompressedSoundData >> loopLength: anInteger [
 
 ]
 
-{ #category : #asSound }
+{ #category : #assound }
 CompressedSoundData >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 
 	cachedSound mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol
@@ -165,7 +165,7 @@ CompressedSoundData >> perceivedPitch: aNumber [
 
 ]
 
-{ #category : #asSound }
+{ #category : #assound }
 CompressedSoundData >> reset [
 	"This message is the cue to start behaving like a real sound in order to be played.
 	We do this by caching a decompressed version of this sound.
@@ -176,13 +176,13 @@ CompressedSoundData >> reset [
 
 ]
 
-{ #category : #asSound }
+{ #category : #assound }
 CompressedSoundData >> samples [
 
 	^ self asSound samples
 ]
 
-{ #category : #asSound }
+{ #category : #assound }
 CompressedSoundData >> samplesRemaining [
 	"This message is the cue that the cached sound may no longer be needed.
 	We know it is done playing when samplesRemaining=0."
@@ -221,19 +221,4 @@ CompressedSoundData >> soundClassName: aStringOrSymbol [
 
 	soundClassName := aStringOrSymbol asSymbol.
 
-]
-
-{ #category : #'as yet unclassified' }
-CompressedSoundData >> withEToySound: aByteArray samplingRate: anInteger [
-
-	soundClassName := #SampledSound.
-	channels := {aByteArray}.
-	codecName := #GSMCodec.
-	loopEnd := nil.	"???"
-	loopLength :=  nil.
-	perceivedPitch := 100.0.
-	samplingRate  := anInteger.
-	gain  := 1.0.	"???"
-	firstSample := 1.
-	cachedSound  := nil.	"???"
 ]

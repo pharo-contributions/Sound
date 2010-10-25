@@ -73,16 +73,12 @@ MIDIScore >> cutSelection: selection [
 { #category : #accessing }
 MIDIScore >> durationInTicks [
 	
-	| t |
-	t := 0.
-	tracks, {self ambientTrack} do:
-		[:track |
-		track do:
-			[:n | (n isNoteEvent)
-				ifTrue: [t := t max: n endTime]
-				ifFalse: [t := t max: n time]]].
-	^ t
-
+	| duration |
+	duration := self ambientTrack inject: 0 into: [:end :event | end max: event endTime].
+	self tracks do: [:track |
+		duration := 	track inject: duration into: [:end :event | 	end max: event endTime]].
+	^duration
+	
 ]
 
 { #category : #editing }

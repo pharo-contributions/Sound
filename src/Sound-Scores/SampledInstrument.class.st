@@ -288,7 +288,7 @@ SampledInstrument >> readSampleSetFrom: dirName [
 	dir := FileDirectory default on: dirName.
 	dir fileNames do: [:n | | fullName snd |
 		fullName := dir fullNameFor: n.
-		Utilities
+		UIManager default
 			informUser: 'Reading AIFF file ', n
 			during:
 				[snd := LoopedSampledSound new
