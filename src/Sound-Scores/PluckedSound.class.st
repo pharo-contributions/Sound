@@ -64,7 +64,6 @@ PluckedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 	| lastIndex scaledThisIndex scaledNextIndex average sample i s |
 	<primitive:'primitiveMixPluckedSound' module:'SoundGenerationPlugin'>
-	
 	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
 	<var: #ring declareC: 'short int *ring'>
 

@@ -178,7 +178,7 @@ FMSound class >> flute2 [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FMSound class >> initialize [
 	"Build a sine wave table."
 	"FMSound initialize"
@@ -333,7 +333,7 @@ FMSound class >> randomWeird2 [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FMSound class >> sineTable [
 	"Answer a SoundBuffer containing one complete cycle of a sine wave."
 
@@ -393,7 +393,6 @@ FMSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: 
 
 	| doingFM lastIndex sample offset i s |
 	<primitive:'primitiveMixFMSound' module:'SoundGenerationPlugin'>
-	
 	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
 	<var: #waveTable declareC: 'short int *waveTable'>
 

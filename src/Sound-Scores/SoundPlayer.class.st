@@ -345,7 +345,7 @@ SoundPlayer class >> reverbState [
 { #category : #accessing }
 SoundPlayer class >> samplingRate [
 
-	^ SamplingRate ifNil: [ 22050 ]
+	^ SamplingRate
 ]
 
 { #category : #accessing }

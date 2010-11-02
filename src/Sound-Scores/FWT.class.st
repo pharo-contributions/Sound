@@ -123,6 +123,34 @@ sumOutput into: outData [
 
 ]
 
+{ #category : #testing }
+FWT >> doWaveDemo [  "FWT new doWaveDemo"
+	"Printing the above should yield a small number -- I get 1.1e-32"
+	| originalData |
+	self nSamples: 312 nLevels: 3.
+	self setAlpha: 0.0 beta: 0.0.
+
+	"Install a sine wave as sample data"
+	self samples: ((1 to: nSamples) collect: [:i | ((i-1) * 0.02 * Float pi) sin]).
+	originalData := samples copy.
+	FFT new plot: (samples copyFrom: 1 to: nSamples) in: (0@0 extent: nSamples@100).
+
+	"Transform forward and plot the decomposition"
+	self transformForward: true.
+	transform withIndexDo:
+		[:w :i |
+		FFT new plot: (w copyFrom: 1 to: w size-5)
+			in: (i-1\\2*320@(i+1//2*130) extent: (w size-5)@100)].
+
+	"Test copy out and read in the transform coefficients"
+	self coeffs: self coeffs.
+
+	"Ttransform back, plot the reconstruction, and return the error figure"
+	self transformForward: false.
+	FFT new plot: (samples copyFrom: 1 to: nSamples) in: (320@0 extent: nSamples@100).
+	^ self meanSquareError: originalData
+]
+
 { #category : #computation }
 FWT >> dotpData: data endIndex: endIndex filter: filter start: start stop: stop inc: inc [
 	| sum i j |
@@ -258,4 +286,29 @@ FWT >> transformForward: forward [
 					filter: g sumOutput: true into: outData.
 			inLen := inLen * 2]]
 
+]
+
+{ #category : #testing }
+FWT >> viewPhiAndPsi [  "(FWT new nSamples: 256 nLevels: 6) viewPhiAndPsi"
+	"View the scaling function and mother wavelets for this transform"
+	| p |
+	Display fillWhite: (0@0 extent: 300@300).
+	Display border: (0@0 extent: 300@300) width: 2.
+	[Sensor anyButtonPressed] whileFalse:
+		["Move mouse around in the outer rectangle to explore"
+		p := Sensor cursorPoint min: 300@300.
+		self setAlpha: (p x - 150) / 150.0 * Float pi
+				beta: (p y - 150) / 150.0 * Float pi.
+		'alpha=', (alpha roundTo: 0.01) printString, '   ',
+			'beta=', (beta roundTo: 0.01) printString, '    ' displayAt: 50@5.
+		transform do: [:w | w atAllPut: 0.0].
+		(transform at: transform size - 1) at: (nSamples>>nLevels) put: 1.0.
+		self transformForward: false.
+		FFT new plot: (samples copyFrom: 1 to: nSamples) in: (20@30 extent: nSamples@100).
+
+		transform do: [:w | w atAllPut: 0.0].
+		(transform at: transform size) at: (nSamples>>nLevels) put: 1.0.
+		self transformForward: false.
+		FFT new plot: (samples copyFrom: 1 to: nSamples) in: (20@170 extent: nSamples@100)].
+	Sensor waitNoButton
 ]

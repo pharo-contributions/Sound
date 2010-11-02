@@ -57,11 +57,11 @@ SampledSound class >> addLibrarySoundNamed: aString samples: sampleData sampling
 
 { #category : #'sound library' }
 SampledSound class >> assimilateSoundsFrom: aDictionary [
- 	"assimilate sounds with new keys from the given dictionary"
- 
- 	aDictionary associationsDo:
- 		[:assoc | (SoundLibrary includesKey: assoc key) ifFalse:
- 			[SoundLibrary add: assoc]]
+	"assimilate sounds with new keys from the given dictionary"
+
+	aDictionary associationsDo:
+		[:assoc | (SoundLibrary includesKey: assoc key) ifFalse:
+			[SoundLibrary add: assoc]]
 ]
 
 { #category : #'instance creation' }
@@ -91,10 +91,8 @@ SampledSound class >> convert8bitSignedFrom: aByteArray to16Bit: aSoundBuffer [
 
 	| n s |
 	<primitive: 'primitiveConvert8BitSigned' module: 'MiscPrimitivePlugin'>
-	
 	<var: #aByteArray declareC: 'unsigned char *aByteArray'>
 	<var: #aSoundBuffer declareC: 'unsigned short *aSoundBuffer'>
-	
 	n := aByteArray size.
 	1 to: n do: [:i |
 		s := aByteArray at: i.
@@ -244,7 +242,7 @@ SampledSound class >> fromWaveStream: fileStream [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SampledSound class >> initialize [
 	"SampledSound initialize"
 
@@ -253,11 +251,10 @@ SampledSound class >> initialize [
 	ScaledIndexOverflow := 2 raisedTo: 29.  "handle overflow before needing LargePositiveIntegers"
 	self useCoffeeCupClink.
 	SoundLibrary ifNil: [SoundLibrary := Dictionary new].
-	
-	"Beeper setDefault: (self new
+	Beeper setDefault: (self new
 						setSamples: self coffeeCupClink
 						samplingRate: 12000).
-	"
+
 ]
 
 { #category : #'coffee cup clink' }
@@ -272,7 +269,7 @@ SampledSound class >> initializeCoffeeCupClink [
 
 ]
 
-{ #category : #'wav reading' }
+{ #category : #'WAV reading' }
 SampledSound class >> next16BitWord: msbFirst from: stream [
 	"Read a 16-bit positive integer from the input stream."
 	"Assume: Stream has at least two bytes left."
@@ -285,7 +282,7 @@ SampledSound class >> next16BitWord: msbFirst from: stream [
 
 ]
 
-{ #category : #'wav reading' }
+{ #category : #'WAV reading' }
 SampledSound class >> next32BitWord: msbFirst from: stream [
 	"Read a 32-bit positive integer from the input stream."
 	"Assume: Stream has at least four bytes left."
@@ -327,7 +324,7 @@ SampledSound class >> putCoffeeCupClinkInSoundLibrary [
 		samplingRate: 11025
 ]
 
-{ #category : #'wav reading' }
+{ #category : #'WAV reading' }
 SampledSound class >> readWaveChunk: chunkType inRIFF: stream [
 	"Search the stream for a format chunk of the given type and return its contents."
 
@@ -379,7 +376,9 @@ SampledSound class >> soundNamed: aString [
 
 	"(SampledSound soundNamed: 'shutterClick') play"
 
-	^ self soundNamed: aString ifAbsent: [Beeper default]
+	^ self soundNamed: aString ifAbsent:
+		[self inform: aString, ' not found in the Sound Library'.
+		nil]
 ]
 
 { #category : #'sound library' }
@@ -496,11 +495,11 @@ SampledSound class >> uLawEncodeSample: s [
 
 { #category : #'sound library' }
 SampledSound class >> universalSoundKeys [
- 	"Answer a list of the sound-names that are expected to be found in the SoundLibrary of every image."
- 
- 	^ #()
- 
- 
+	"Answer a list of the sound-names that are expected to be found in the SoundLibrary of every image."
+
+	^ #('splash' 'peaks' 'clink' 'croak' 'scratch' 'chirp' 'scritch' 'warble' 'scrape' 'camera' 'coyote' 'silence' 'motor')
+
+
 ]
 
 { #category : #'sound library' }
@@ -576,7 +575,6 @@ SampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 	| lastIndex outIndex sampleIndex sample i s overflow |
 	<primitive:'primitiveMixSampledSound' module:'SoundGenerationPlugin'>
-	
 	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
 	<var: #samples declareC: 'short int *samples'>
 

@@ -33,7 +33,7 @@ Class {
 	#category : #'Sound-Scores'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MIDIInputParser class >> initialize [
 	"Build the default MIDI command-byte action table. This table maps MIDI command bytes to the action to be performed when that is received. Note that MIDI data bytes (bytes whose value is < 128) are never used to index into this table."
 	"MIDIInputParser initialize"

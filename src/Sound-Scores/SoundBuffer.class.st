@@ -48,7 +48,7 @@ SoundBuffer class >> fromByteArray: aByteArray [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SoundBuffer class >> initialize [
 	"Build a sine wave table."
 	"SoundBuffer initialize"
@@ -88,7 +88,7 @@ SoundBuffer class >> newStereoSampleCount: anInteger [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SoundBuffer class >> sineTable [
 	"Answer a SoundBuffer containing one complete cycle of a sine wave."
 
@@ -253,7 +253,7 @@ SoundBuffer >> lowPassFiltered [
 
 	| sz out last this |
 	sz := self monoSampleCount.
-	out := self shallowCopy.
+	out := self clone.
 	last := self at: 1.
 	2 to: sz do: [:i |
 		this := self at: i.
