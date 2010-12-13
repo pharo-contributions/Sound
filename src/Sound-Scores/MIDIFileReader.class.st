@@ -39,37 +39,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-MIDIFileReader class >> playFileNamed: fileName [
-
-	ScorePlayerMorph
-		openOn: (self scoreFromFileNamed: fileName)
-		title: (FileDirectory localNameFor: fileName).
-
-]
-
-{ #category : #'as yet unclassified' }
-MIDIFileReader class >> playStream: binaryStream [
-
-	ScorePlayerMorph
-		openOn: (self scoreFromStream: binaryStream)
-		title: 'a MIDI stream'
-
-]
-
-{ #category : #'as yet unclassified' }
-MIDIFileReader class >> playURLNamed: urlString [
-
-	| titleString |
-	titleString := urlString
-		copyFrom: (urlString findLast: [:c | c=$/]) + 1
-		to: urlString size.
-	ScorePlayerMorph
-		openOn: (self scoreFromURL: urlString)
-		title: titleString.
-
-]
-
-{ #category : #'as yet unclassified' }
 MIDIFileReader class >> scoreFromFileNamed: fileName [
 
 	| f score |
@@ -102,16 +71,17 @@ MIDIFileReader class >> scoreFromURL: urlString [
 { #category : #'as yet unclassified' }
 MIDIFileReader class >> standardMIDIInstrumentNames [
 	"Answer an array of Standard MIDI instrument names."
+	"Use the list available here: http://www.midi.org/techspecs/gm1sound.php"
 
 	^ #(
-		'Grand Piano'
-		'Bright Piano'
+		'Acoustic Grand Piano'
+		'Bright Acoustic Piano'
 		'Electric Grand Piano'
 		'Honky-tonk Piano'
 		'Electric Piano 1'
 		'Electric Piano 2'
 		'Harpsichord'
-		'Clavichord'
+		'Clavi'
 		'Celesta'
 		'Glockenspiel'
 		'Music Box'
@@ -119,7 +89,7 @@ MIDIFileReader class >> standardMIDIInstrumentNames [
 		'Marimba'
 		'Xylophone'
 		'Tubular Bells'
-		'Duclimer'
+		'Dulcimer'
 		'Drawbar Organ'
 		'Percussive Organ'
 		'Rock Organ'
@@ -128,17 +98,17 @@ MIDIFileReader class >> standardMIDIInstrumentNames [
 		'Accordion'
 		'Harmonica'
 		'Tango Accordion'
-		'Nylon Guitar'
-		'Steel Guitar'
-		'Electric Guitar 1'
-		'Electric Guitar 2'
-		'Electric Guitar 3'
-		'Overdrive Guitar'
-		'Distorted Guitar'
+		'Acoustic Guitar (nylon)'
+		'Acoustic Guitar (steel)'
+		'Electric Guitar (jazz)'
+		'Electric Guitar (clean)'
+		'Electric Guitar (muted)'
+		'Overdriven Guitar'
+		'Distortion Guitar'
 		'Guitar Harmonics'
 		'Acoustic Bass'
-		'Electric Bass 1'
-		'Electric Bass 2'
+		'Electric Bass (finger)'
+		'Electric Bass (pick)'
 		'Fretless Bass'
 		'Slap Bass 1'
 		'Slap Bass 2'
@@ -154,10 +124,10 @@ MIDIFileReader class >> standardMIDIInstrumentNames [
 		'Timpani'
 		'String Ensemble 1'
 		'String Ensemble 2'
-		'Synth Strings 1'
-		'Synth Strings 2'
-		'Choir Ahhs'
-		'Choir Oohs'
+		'SynthStrings 1'
+		'SynthStrings 2'
+		'Choir Aahs'
+		'Voice Oohs'
 		'Synth Voice'
 		'Orchestra Hit'
 		'Trumpet'
@@ -166,8 +136,8 @@ MIDIFileReader class >> standardMIDIInstrumentNames [
 		'Muted Trumpet'
 		'French Horn'
 		'Brass Section'
-		'Synth Brass 1'
-		'Synth Brass 2'
+		'SynthBrass 1'
+		'SynthBrass 2'
 		'Soprano Sax'
 		'Alto Sax'
 		'Tenor Sax'
@@ -202,7 +172,7 @@ MIDIFileReader class >> standardMIDIInstrumentNames [
 		'Pad 8 (sweep)'
 		'FX 1 (rain)'
 		'FX 2 (soundtrack)'
-		'FX 3 (crystals)'
+		'FX 3 (crystal)'
 		'FX 4 (atmosphere)'
 		'FX 5 (brightness)'
 		'FX 6 (goblins)'
@@ -213,12 +183,12 @@ MIDIFileReader class >> standardMIDIInstrumentNames [
 		'Shamisen'
 		'Koto'
 		'Kalimba'
-		'Bagpipe'
+		'Bag pipe'
 		'Fiddle'
 		'Shanai'
 		'Tinkle Bell'
 		'Agogo'
-		'Steel Drum'
+		'Steel Drums'
 		'Woodblock'
 		'Taiko Drum'
 		'Melodic Tom'
