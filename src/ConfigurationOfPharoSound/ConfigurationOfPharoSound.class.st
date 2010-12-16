@@ -120,6 +120,15 @@ ConfigurationOfPharoSound >> project [
 		project ]
 ]
 
+{ #category : #'symbolic versions' }
+ConfigurationOfPharoSound >> stable: spec [ 
+	<symbolicVersion: #stable>
+	
+	spec for: #'pharo1.0.x' version: '1.0'. 
+	spec for: #'pharo1.1.x' version: '3.0'. 
+
+]
+
 { #category : #versions }
 ConfigurationOfPharoSound >> version10: spec [
 	<version: '1.0' imports: #('1.0-baseline')>
