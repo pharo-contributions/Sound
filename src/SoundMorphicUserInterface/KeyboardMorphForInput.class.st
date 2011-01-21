@@ -3,8 +3,8 @@ This class adds state and controls to the basic PianoKeyboardMorph so that notes
 
 To try this out, execute...
 
-	| n score | n _ 3.
-	score _ (MIDIScore new tracks: ((1 to: n) collect: [:i | Array new]);
+	| n score | n := 3.
+	score := (MIDIScore new tracks: ((1 to: n) collect: [:i | Array new]);
 		trackInfo: ((1 to: n) collect: [:i | 'Instrument' , i printString]);
 		tempoMap: nil; ticksPerQuarterNote: 96).
 	ScorePlayerMorph openOn: score title: 'empty score'
