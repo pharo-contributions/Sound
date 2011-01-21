@@ -11,7 +11,6 @@ Class {
 		'BufferIndex',
 		'BufferMSecs',
 		'LastBuffer',
-		'LoopSounds',
 		'PlayerProcess',
 		'PlayerSemaphore',
 		'ReadyForBuffer',
@@ -20,6 +19,7 @@ Class {
 		'SoundJustStarted',
 		'SoundSupported',
 		'SoundsShouldStartQuick',
+		'SoundsStopWhenDone',
 		'Stereo',
 		'UseReadySemaphore',
 		'UseReverb'
@@ -91,26 +91,35 @@ SoundPlayer class >> canStartPlayer [
 ]
 
 { #category : #settings }
-SoundPlayer class >> infinitelyLoopSounds [
-	"If true, sounds will repeat when done playing"
-	^(LoopSounds ifNil: [false]) 
+SoundPlayer class >> defaultQuickStartForPlatform [
+
+	^ Smalltalk os platformName = 'Mac OS'.
 ]
 
 { #category : #settings }
-SoundPlayer class >> infinitelyLoopSounds: aBoolean [
-	LoopSounds := aBoolean
+SoundPlayer class >> defaultStopSoundForPlatform [
+
+	^(Smalltalk os platformName = 'Mac OS') not
 ]
 
 { #category : #initialization }
 SoundPlayer class >> initialize [
 	"SoundPlayer initialize; shutDown; startUp"
 	"Details: BufferMSecs represents a tradeoff between latency and quality. If BufferMSecs is too low, the sound will not play smoothly, especially during long-running primitives such as large BitBlts. If BufferMSecs is too high, there will be a long time lag between when a sound buffer is submitted to be played and when that sound is actually heard. BufferMSecs is typically in the range 50-200."
-
+	self initializeForPlatform.
 	SamplingRate := 22050.
 	BufferMSecs := 120.
 	Stereo := true.
 	UseReverb ifNil: [UseReverb := true].
 
+]
+
+{ #category : #initialization }
+SoundPlayer class >> initializeForPlatform [
+	"Apparently, the VM could crash if these were not correct. 
+		Change in future if platform support for the features change"
+	self soundQuickStart: self defaultQuickStartForPlatform.
+	self stopSoundWhenDone: self defaultStopSoundForPlatform.
 ]
 
 { #category : #private }
@@ -177,7 +186,7 @@ SoundPlayer class >> playLoop [
 	"The sound player process loop."
 
 	| bytesPerSlice count willStop mayStop |
-	mayStop := self infinitelyLoopSounds not.
+	mayStop := self stopSoundWhenDone.
 	bytesPerSlice := Stereo ifTrue: [4] ifFalse: [2].
 	[true] whileTrue: [
 		[(count := self primSoundAvailableBytes // bytesPerSlice) > 100]
@@ -396,7 +405,7 @@ SoundPlayer class >> sineTable: size [
 { #category : #settings }
 SoundPlayer class >> soundQuickStart [
 	"Attempt to start sounds immediately. Should always be on unless it causes vm to crash"
-	^SoundsShouldStartQuick ifNil: [true]
+	^SoundsShouldStartQuick  ifNil: [self defaultQuickStartForPlatform]
 ]
 
 { #category : #settings }
@@ -577,6 +586,18 @@ SoundPlayer class >> stopReverb [
 	UseReverb := false.
 	ReverbState := nil.
 
+]
+
+{ #category : #settings }
+SoundPlayer class >> stopSoundWhenDone [
+	"If true, the sound player is shut down after playing finished"
+	^(SoundsStopWhenDone ifNil: [self defaultStopSoundForPlatform]) 
+]
+
+{ #category : #settings }
+SoundPlayer class >> stopSoundWhenDone: aBoolean [
+	"If true, the sound player is shut down after playing finished"
+	SoundsStopWhenDone := aBoolean
 ]
 
 { #category : #initialization }
