@@ -721,7 +721,7 @@ EnvelopeEditorMorph >> valueFromY: y [
 
 { #category : #rounding }
 EnvelopeEditorMorph >> wantsRoundedCorners [
-	^ Preferences roundedWindowCorners or: [super wantsRoundedCorners]
+	^ UITheme currentSettings preferRoundCorner or: [super wantsRoundedCorners]
 ]
 
 { #category : #scaling }

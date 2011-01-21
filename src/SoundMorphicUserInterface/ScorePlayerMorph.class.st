@@ -719,5 +719,5 @@ ScorePlayerMorph >> volumeControl [
 
 { #category : #rounding }
 ScorePlayerMorph >> wantsRoundedCorners [
-	^ Preferences roundedWindowCorners or: [super wantsRoundedCorners]
+	^ UITheme currentSettings preferRoundCorner or: [super wantsRoundedCorners]
 ]

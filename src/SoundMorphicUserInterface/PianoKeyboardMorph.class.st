@@ -31,7 +31,7 @@ PianoKeyboardMorph >> buildKeyboard [
 	1 to: nOctaves+1 do:
 		[:i | i <= nOctaves ifTrue: [nWhite := 7.  nBlack := 5]
 						ifFalse: [nWhite := 1.  nBlack := 0 "High C"].
-		octavePt := self innerBounds topLeft + ((7*wtWid*(i-1)-1) @ -1).
+		octavePt := self innerBounds topLeft + ((7*wtWid*(i-1)-1)@-1).
 		1 to: nWhite do:
 			[:j | keyRect := octavePt + (j-1*wtWid@0) extent: (wtWid+1)@36.
 			self addMorph: ((RectangleMorph newBounds: keyRect color: whiteKeyColor)
