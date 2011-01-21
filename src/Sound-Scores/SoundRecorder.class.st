@@ -31,12 +31,19 @@ SoundRecorder class >> anyActive [
 	^RecorderActive == true
 ]
 
-{ #category : #accessing }
+{ #category : #settings }
 SoundRecorder class >> canRecordWhilePlaying [
 	"Return true if this platform supports simultaneous sound recording and playback."
 
-	^Preferences canRecordWhilePlaying.		"now in preferences"
+	^CanRecordWhilePlaying ifNil: [false]
 
+]
+
+{ #category : #settings }
+SoundRecorder class >> canRecordWhilePlaying: aBoolean [
+	"Return true if this platform supports simultaneous sound recording and playback."
+
+	CanRecordWhilePlaying := aBoolean
 ]
 
 { #category : #initialization }
@@ -44,7 +51,7 @@ SoundRecorder class >> initialize [
 	"SoundRecorder initialize"
 	"Details: Some computers cannot record and playback sound at the same time. If CanRecordWhilePlaying is false, then the SoundRecorder alternates between recording and playing. If it is true, sounds can be playing during recording."
 
-	CanRecordWhilePlaying := #ignoredNowInPreferences.
+	CanRecordWhilePlaying := false.
 
 ]
 
@@ -333,7 +340,7 @@ SoundRecorder >> pause [
 		soundPlaying := nil].
 	"Note: there can be problems if canRecordWhilePlaying is true. Recorders which only pause will inhibit other recorders from recording. I chose to make #stopPlaying unconditional in a subclass. The same might be appropriate here at the expense of making recorders resumable"
 
-	Preferences canRecordWhilePlaying ifFalse: [self stopRecording].
+	self class canRecordWhilePlaying ifFalse: [self stopRecording].
 
 ]
 
@@ -478,7 +485,7 @@ SoundRecorder >> resumeRecording [
 	self flag: #bob.
 	"Note: If canRecordWhilePlaying is true, then recordings may never get started (at least by this method). One possibility, used in a subclass, is to make the #startPlaying unconditional. Another would be to use #startPlaying instead of #resumePlaying in appropriate cases"
 
-	Preferences canRecordWhilePlaying ifFalse: [self startRecording].
+	self class canRecordWhilePlaying ifFalse: [self startRecording].
 	paused := false.
 
 ]
@@ -639,7 +646,7 @@ SoundRecorder >> startRecording [
 
 	| semaIndex |
 	recordLevel ifNil: [recordLevel := 0.5].  "lazy initialization"
-	Preferences canRecordWhilePlaying ifFalse: [SoundPlayer shutDown].
+	self class canRecordWhilePlaying ifFalse: [SoundPlayer shutDown].
 	recordProcess ifNotNil: [self stopRecording].
 	paused := true.
 	meteringBuffer := SoundBuffer newMonoSampleCount: 1024.

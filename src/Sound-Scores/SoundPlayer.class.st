@@ -7,6 +7,7 @@ Class {
 		'BufferIndex',
 		'BufferMSecs',
 		'LastBuffer',
+		'LoopSounds',
 		'PlayerProcess',
 		'PlayerSemaphore',
 		'ReadyForBuffer',
@@ -14,6 +15,7 @@ Class {
 		'SamplingRate',
 		'SoundJustStarted',
 		'SoundSupported',
+		'SoundsShouldStartQuick',
 		'Stereo',
 		'UseReadySemaphore',
 		'UseReverb'
@@ -80,10 +82,8 @@ SoundPlayer class >> bufferMSecs [
 SoundPlayer class >> canStartPlayer [
 	"Some platforms do no support simultaneous record and play. If this is one of those platforms, return false if there is a running SoundRecorder."
 
-	Preferences canRecordWhilePlaying ifTrue: [^ true].
-	SoundRecorder anyActive ifTrue:[^false].
-	^ true
-
+	^SoundRecorder canRecordWhilePlaying 
+		or: [SoundRecorder anyActive not]
 ]
 
 { #category : #initialization }
@@ -162,7 +162,7 @@ SoundPlayer class >> playLoop [
 	"The sound player process loop."
 
 	| bytesPerSlice count willStop mayStop |
-	mayStop := Preferences soundStopWhenDone.
+	mayStop := self soundStopWhenDone.
 	bytesPerSlice := Stereo ifTrue: [4] ifFalse: [2].
 	[true] whileTrue: [
 		[(count := self primSoundAvailableBytes // bytesPerSlice) > 100]
@@ -318,9 +318,9 @@ SoundPlayer class >> resumePlaying: aSound quickStart: quickStart [
 	"Start playing the given sound without resetting it; it will resume playing from where it last stopped. If quickStart is true, then try to start playing the given sound immediately."
 
 	| doQuickStart |
-	Preferences soundsEnabled ifFalse: [^ self].
+	SoundService soundsEnabled ifFalse: [^ self].
 	doQuickStart := quickStart.
-	Preferences soundQuickStart ifFalse: [doQuickStart := false].
+	self soundQuickStart ifFalse: [doQuickStart := false].
 	PlayerProcess == nil ifTrue: [
 		self canStartPlayer ifFalse: [^ self].
 		^self startUpWithSound: aSound].
@@ -376,6 +376,28 @@ SoundPlayer class >> sineTable: size [
 
 	^ table
 
+]
+
+{ #category : #settings }
+SoundPlayer class >> soundQuickStart [
+	"Attempt to start sounds immediately"
+	^SoundsShouldStartQuick ifNil: [true]
+]
+
+{ #category : #settings }
+SoundPlayer class >> soundQuickStart: aBoolean [
+	"Attempt to start sounds immediately"
+	SoundsShouldStartQuick := aBoolean
+]
+
+{ #category : #settings }
+SoundPlayer class >> soundStopWhenDone [
+	^(LoopSounds ifNil: [false]) not
+]
+
+{ #category : #settings }
+SoundPlayer class >> soundStopWhenDone: aBoolean [
+	LoopSounds:= aBoolean not
 ]
 
 { #category : #accessing }
