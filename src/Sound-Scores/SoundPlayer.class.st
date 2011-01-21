@@ -1,3 +1,7 @@
+"
+I contain setting builders for the Sound package
+
+"
 Class {
 	#name : #SoundPlayer,
 	#superclass : #Object,
@@ -86,6 +90,17 @@ SoundPlayer class >> canStartPlayer [
 		or: [SoundRecorder anyActive not]
 ]
 
+{ #category : #settings }
+SoundPlayer class >> infinitelyLoopSounds [
+	"If true, sounds will repeat when done playing"
+	^(LoopSounds ifNil: [false]) 
+]
+
+{ #category : #settings }
+SoundPlayer class >> infinitelyLoopSounds: aBoolean [
+	LoopSounds := aBoolean
+]
+
 { #category : #initialization }
 SoundPlayer class >> initialize [
 	"SoundPlayer initialize; shutDown; startUp"
@@ -162,7 +177,7 @@ SoundPlayer class >> playLoop [
 	"The sound player process loop."
 
 	| bytesPerSlice count willStop mayStop |
-	mayStop := self soundStopWhenDone.
+	mayStop := self infinitelyLoopSounds not.
 	bytesPerSlice := Stereo ifTrue: [4] ifFalse: [2].
 	[true] whileTrue: [
 		[(count := self primSoundAvailableBytes // bytesPerSlice) > 100]
@@ -380,7 +395,7 @@ SoundPlayer class >> sineTable: size [
 
 { #category : #settings }
 SoundPlayer class >> soundQuickStart [
-	"Attempt to start sounds immediately"
+	"Attempt to start sounds immediately. Should always be on unless it causes vm to crash"
 	^SoundsShouldStartQuick ifNil: [true]
 ]
 
@@ -388,16 +403,6 @@ SoundPlayer class >> soundQuickStart [
 SoundPlayer class >> soundQuickStart: aBoolean [
 	"Attempt to start sounds immediately"
 	SoundsShouldStartQuick := aBoolean
-]
-
-{ #category : #settings }
-SoundPlayer class >> soundStopWhenDone [
-	^(LoopSounds ifNil: [false]) not
-]
-
-{ #category : #settings }
-SoundPlayer class >> soundStopWhenDone: aBoolean [
-	LoopSounds:= aBoolean not
 ]
 
 { #category : #accessing }
