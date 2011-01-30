@@ -11,7 +11,7 @@ Class {
 
 { #category : #initialization }
 BaseSoundSystem class >> initialize [
-	SoundService default: self new
+	SoundService default: self
 ]
 
 { #category : #initialization }
@@ -25,14 +25,14 @@ BaseSoundSystem >> beep [
 	"There is sound support, so we use the default
 	sampled sound for a beep."
 
-	SoundSettings soundsEnabled ifTrue: [
+	self class soundEnabled ifTrue: [
 		SampledSound beep]
 ]
 
 { #category : #playing }
 BaseSoundSystem >> playSampledSound: samples rate: rate [
 
-	SoundSettings soundsEnabled ifTrue: [
+	self class soundsEnabled ifTrue: [
 		(SampledSound samples: samples samplingRate: rate) play]
 ]
 
@@ -40,14 +40,14 @@ BaseSoundSystem >> playSampledSound: samples rate: rate [
 BaseSoundSystem >> playSoundNamed: soundName [
 	"There is sound support, so we play the given sound."
 
-	SoundSettings soundsEnabled ifTrue: [
+	self class soundsEnabled ifTrue: [
 		SampledSound playSoundNamed: soundName asString]
 ]
 
 { #category : #playing }
 BaseSoundSystem >> playSoundNamed: soundName ifAbsentReadFrom: aifFileName [
 
-	SoundSettings soundsEnabled ifTrue: [
+	self class soundsEnabled ifTrue: [
 		(SampledSound soundNames includes: soundName) ifFalse: [
 			(FileDirectory default fileExists: aifFileName) ifTrue: [
 				SampledSound
@@ -62,7 +62,7 @@ BaseSoundSystem >> playSoundNamedOrBeep: soundName [
 	"There is sound support, so we play the given sound
 	instead of beeping."
 
-	SoundSettings soundsEnabled ifTrue: [
+	self class soundsEnabled ifTrue: [
 		^self playSoundNamed: soundName]
 ]
 
