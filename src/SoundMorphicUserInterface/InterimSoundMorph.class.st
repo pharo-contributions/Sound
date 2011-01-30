@@ -11,10 +11,9 @@ Class {
 { #category : #'as yet unclassified' }
 InterimSoundMorph >> addGraphic [
 
-	graphic := SketchMorph withForm: self speakerGraphic.
+	graphic := self speakerGraphic asMorph.
 	graphic position: bounds center - (graphic extent // 2).
 	self addMorph: graphic.
-
 ]
 
 { #category : #initialization }
