@@ -71,7 +71,7 @@ PianoRollScoreMorph >> addKeyboard [
 PianoRollScoreMorph >> addNotes [
 	"Recompute the set of morphs that should be visible at the current scroll position."
 
-	| visibleMorphs rightEdge topEdge trackColor i done n nLeft nTop nRight rightEdgeTime |
+	| visibleMorphs rightEdge topEdge rightEdgeTime |
 	visibleMorphs := OrderedCollection new: 500.
 	rightEdge := self right - borderWidth.
 	rightEdgeTime := self timeForX: rightEdge.
@@ -84,7 +84,7 @@ PianoRollScoreMorph >> addNotes [
 
 	"Then add note morphs"
 	score tracks withIndexDo:
-		[:track :trackIndex |
+		[:track :trackIndex | | done n i nRight nTop nLeft trackColor |
 		trackColor := colorForTrack at: trackIndex.
 		i := indexInTrack at: trackIndex.
 		done := scorePlayer mutedForTrack: trackIndex.
@@ -451,7 +451,7 @@ PianoRollScoreMorph >> midiKeyForY: y [
 { #category : #'event handling' }
 PianoRollScoreMorph >> mouseDown: evt [
 
-	| noteMorphs chordRect sound |
+	| noteMorphs chordRect |
 	(self notesInRect: ((evt cursorPoint extent: 1@0) expandBy: 2@30)) isEmpty
 		ifTrue: ["If not near a note, then put up score edit menu"
 				^ self invokeScoreMenu: evt].
@@ -464,7 +464,7 @@ PianoRollScoreMorph >> mouseDown: evt [
 	
 	soundsPlaying := IdentityDictionary new.
 	noteMorphs do:
-		[:m | sound := m soundOfDuration: 999.0.
+		[:m | | sound | sound := m soundOfDuration: 999.0.
 		soundsPlaying at: m put: sound.
 		SoundPlayer resumePlaying: sound quickStart: false].
 
@@ -474,7 +474,7 @@ PianoRollScoreMorph >> mouseDown: evt [
 { #category : #'event handling' }
 PianoRollScoreMorph >> mouseMove: evt [
 
-	| noteMorphs chordRect sound |
+	| noteMorphs chordRect |
 	soundsPlaying ifNil: [^ self].
 	self autoScrollForX: evt cursorPoint x.
 
@@ -486,7 +486,7 @@ PianoRollScoreMorph >> mouseMove: evt [
 	self addMorphBack: soundsPlayingMorph.
 	
 	noteMorphs do:
-		[:m |  "Add any new sounds"
+		[:m | | sound |  "Add any new sounds"
 		(soundsPlaying includesKey: m)
 			ifFalse: [sound := m soundOfDuration: 999.0.
 					soundsPlaying at: m put: sound.
@@ -684,9 +684,9 @@ PianoRollScoreMorph >> timeSignature: num over: denom [
 PianoRollScoreMorph >> updateLowestNote [
 	"find the actual lowest note in the score"
 
-	| n |
+	
 	lowestNote := 128 - (self innerBounds height // 3).
-	score tracks do: [:track |
+	score tracks do: [:track | | n |
 		1 to: track size do: [:i |
 			n := track at: i.
 			(n isNoteEvent and: [n midiKey < lowestNote])

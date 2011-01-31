@@ -60,12 +60,12 @@ ScorePlayerMorph class >> openOn: aScore title: aString [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ScorePlayerMorph class >> playMidiFile: fullName [
 	"Play a MIDI file."
  
-	| f score |
 	Smalltalk at: #MIDIFileReader ifPresent: [:midiReader |
+			| f score |
 			f := (FileStream oldFileNamed: fullName) binary.
 			score := (midiReader new readMIDIFrom: f) asScore.
 			f close.
@@ -165,10 +165,11 @@ ScorePlayerMorph >> initialize [
 
 { #category : #menu }
 ScorePlayerMorph >> instrumentChoicesForTrack: trackIndex [
-	| names inst |
+	| names |
 
 	names := AbstractSound soundNames asOrderedCollection.
 	names := names collect: [:n |
+		| inst |
 		inst := AbstractSound soundNamed: n.
 		(inst isKindOf: UnloadedSound)
 			ifTrue: [n, '(out)']
@@ -543,10 +544,8 @@ ScorePlayerMorph >> setLogRate: logOfRate [
 
 { #category : #layout }
 ScorePlayerMorph >> showResumeButtonInTheWorld [
-
-	| w |
-
 	WorldState addDeferredUIMessage: [
+		| w |
 		w := self world.
 		w ifNotNil: [
 			w addMorphFront:
