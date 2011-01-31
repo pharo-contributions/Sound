@@ -25,10 +25,8 @@ SoundInputStream >> allocateBuffer [
 SoundInputStream >> bufferCount [
 	"Answer the number of sound buffers that have been queued."
 
-	| n |
 	mutex ifNil: [^ 0].  "not recording"
-	mutex critical: [n := recordedBuffers size].
-	^ n
+	^mutex critical: [recordedBuffers size].
 
 ]
 
@@ -76,13 +74,11 @@ SoundInputStream >> isRecording [
 SoundInputStream >> nextBufferOrNil [
 	"Answer the next input buffer or nil if no buffer is available."
 
-	| result |
 	mutex ifNil: [^ nil].  "not recording"
-	mutex critical: [
+	^mutex critical: [
 		recordedBuffers size > 0
-			ifTrue: [result := recordedBuffers removeFirst]
-			ifFalse: [result := nil]].
-	^ result
+			ifTrue: [recordedBuffers removeFirst]
+			ifFalse: [nil]].
 
 ]
 

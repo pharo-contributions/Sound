@@ -146,7 +146,7 @@ SampledInstrument >> allNotes [
 	sustainedSoft ~~ sustainedLoud ifTrue: [r addAll: sustainedSoft].
 	staccatoLoud ~~ sustainedLoud ifTrue: [r addAll: staccatoLoud].
 	staccatoSoft ~~ staccatoLoud ifTrue: [r addAll: staccatoSoft].
-	^ (r asSortedCollection: [:n1 :n2 | n1 pitch < n2 pitch]) asArray
+	^ r asArray sort: [:n1 :n2 | n1 pitch < n2 pitch]
 
 ]
 
@@ -280,32 +280,33 @@ SampledInstrument >> pruneToSingleNote: aNote [
 ]
 
 { #category : #other }
-SampledInstrument >> readSampleSetFrom: dirName [ 
+SampledInstrument >> readSampleSetFrom: dirName [
 	"Answer a collection of sounds read from AIFF files in the given directory and sorted in ascending pitch order."
-	| all dir fullName snd |
-	all := SortedCollection sortBlock: [ :s1 :s2 | s1 pitch < s2 pitch ].
+
+	| all dir |
+	all := SortedCollection sortBlock: [:s1 :s2 | s1 pitch < s2 pitch].
 	dir := FileDirectory default on: dirName.
-	dir fileNames do: 
-		[ :n | 
+	dir fileNames do: [:n | | fullName snd |
 		fullName := dir fullNameFor: n.
-		UIManager default 
-			informUser: 'Reading AIFF file ' translated, n
-			during: 
-				[ snd := LoopedSampledSound new 
+		Utilities
+			informUser: 'Reading AIFF file ', n
+			during:
+				[snd := LoopedSampledSound new
 					fromAIFFFileNamed: fullName
-					mergeIfStereo: true ].
-		all add: snd ].
+					mergeIfStereo: true].
+		all add: snd].
 	^ all asArray
+
 ]
 
 { #category : #other }
 SampledInstrument >> readSampleSetInfoFrom: dirName [
 	"MessageTally spyOn: [SampledInstrument new readSampleSetFrom: 'Tosh:Desktop Folder:AAA Squeak2.0 Beta:Organ Samples:Flute8'] timeToRun"
 
-	| all dir fullName info |
+	| all dir |
 	all := OrderedCollection new.
 	dir := FileDirectory default on: dirName.
-	dir fileNames do: [:n |
+	dir fileNames do: [:n | | info fullName |
 		fullName := dir fullNameFor: n.
 		info := AIFFFileReader new readFromFile: fullName
 			mergeIfStereo: false

@@ -220,8 +220,8 @@ MIDIFileReader >> endAllNotesAt: endTicks [
 	"End of score; end any notes still sounding."
 	"Details: Some MIDI files have missing note-off events, resulting in very long notes. Truncate any such notes encountered."
 
-	| dur |
-	activeEvents do: [:e |
+	
+	activeEvents do: [:e | | dur |
 		dur := endTicks - e time.
 		dur > maxNoteTicks ifTrue: [dur := ticksPerQuarter].  "truncate long note"
 		e duration: dur].
@@ -616,9 +616,9 @@ MIDIFileReader >> startNote: midiKey vel: vel chan: chan at: startTicks [
 	"Record the beginning of a note."
 	"Details: Some MIDI scores have missing note-off events, causing a note-on to be received for a (key, channel) that is already sounding. If the previous note is suspiciously long, truncate it."
 
-	| newActiveEvents dur noteOnEvent |
+	| noteOnEvent newActiveEvents |
 	newActiveEvents := nil.
-	activeEvents do: [:e |
+	activeEvents do: [:e | | dur |
 		((e midiKey = midiKey) and: [e channel = chan]) ifTrue: [
 			"turn off key already sounding"
 			dur := startTicks - e time.

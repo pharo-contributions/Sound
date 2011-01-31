@@ -31,10 +31,10 @@ Class {
 MIDISynthChannel >> adjustPitch: bend [
 	"Handle a pitch-bend change."
 
-	| snd pitchAdj centerPitch |
+	| pitchAdj |
 	pitchBend := bend.
 	pitchAdj := 2.0 raisedTo: (bend asFloat / 8192.0) / 6.0.
-	activeSounds copy do: [:entry |
+	activeSounds copy do: [:entry | | snd centerPitch |
 		snd := entry at: 2.
 		centerPitch := entry at: 3.
 		snd pitch: pitchAdj * centerPitch.
@@ -146,8 +146,8 @@ MIDISynthChannel >> keyDown: key vel: vel [
 MIDISynthChannel >> keyUp: key vel: vel [
 	"Handle a key up event."
 
-	| snd |
-	activeSounds copy do: [:entry |
+	
+	activeSounds copy do: [:entry | | snd |
 		(entry at: 1) = key ifTrue: [
 			snd := entry at: 2.
 			snd stopGracefully.
@@ -188,10 +188,10 @@ MIDISynthChannel >> muted: aBoolean [
 MIDISynthChannel >> newVolume: valueByte [
 	"Set the channel volume to the level given by the given number in the range 0..127."
 
-	| snd newVolume |
+	| newVolume |
 	channelVolume := valueByte asFloat / 127.0.
 	newVolume := masterVolume * channelVolume.
-	activeSounds do: [:entry |
+	activeSounds do: [:entry | | snd |
 		snd := entry at: 2.
 		snd adjustVolumeTo: newVolume overMSecs: 10].
 

@@ -104,6 +104,29 @@ FFT >> permuteData [
 		i := i + 2]
 ]
 
+{ #category : #testing }
+FFT >> plot: samples in: rect [
+	"Throw-away code just to check out a couple of examples"
+	| dx pen min max x |
+	Display fillWhite: rect; border: (rect expandBy: 2) width: 2.
+	min := 1.0e30.  max := -1.0e30.
+	samples do:
+		[:v |
+		min := min min: v.
+		max := max max: v].
+	pen := Pen new.  pen up.
+	x := rect left.
+	dx := rect width asFloat / samples size.
+	samples do:
+		[:v | | y |
+		y := (max-v) / (max-min) * rect height asFloat.
+		pen goto: x asInteger @ (rect top + y asInteger).
+		pen down.
+		x := x + dx].
+	max printString displayOn: Display at: (x+2) @ (rect top-9).
+	min printString displayOn: Display at: (x+2) @ (rect bottom - 9)
+]
+
 { #category : #'plugin-testing' }
 FFT >> pluginPrepareData [
 	"The FFT plugin requires data to be represented in WordArrays or FloatArrays"
@@ -188,7 +211,7 @@ FFT >> transformDataFrom: anIndexableCollection startingAt: index [
 		realData at: (j := j + 1) put: (anIndexableCollection at: i)].
 	realData *= window.
 	imagData := FloatArray new: n.
-	self pluginTransformData: true.
+	self transformForward: true.
 
 	"compute the magnitudes of the complex results"
 	"note: the results are in bottom half; the upper half is just its mirror image"
@@ -203,6 +226,7 @@ FFT >> transformDataFrom: anIndexableCollection startingAt: index [
 { #category : #transforming }
 FFT >> transformForward: forward [
 	| lev lev1 ip theta realU imagU realT imagT i |
+	<primitive: 'primitiveFFTTransformData' module: 'FFTPlugin'>
 	self permuteData.
 	1 to: nu do:
 		[:level |

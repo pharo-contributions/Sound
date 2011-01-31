@@ -35,14 +35,6 @@ SequentialSound >> compressWith: codecClass atRate: aSamplingRate [
 ]
 
 { #category : #copying }
-SequentialSound >> copy [
-	"Copy my component sounds."
-
-	^ super copy copySounds
-
-]
-
-{ #category : #copying }
 SequentialSound >> copySounds [
 	"Private! Support for copying. Copy my component sounds."
 
@@ -63,9 +55,7 @@ SequentialSound >> doControl [
 SequentialSound >> duration [
 	"Answer the duration of this sound in seconds."
 
-	"7 dec 2000 - handle compressed sounds. better way??"
-
-	 ^sounds inject: 0 into: [:totalDuration :snd | totalDuration + snd asSound duration]
+	^sounds inject: 0 into: [:totalDuration :snd | totalDuration + snd asSound duration]
 ]
 
 { #category : #initialization }
@@ -101,6 +91,15 @@ SequentialSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex l
 		remaining < count ifTrue: [count := remaining].
 		snd mixSampleCount: count into: aSoundBuffer startingAt: i leftVol: leftVol rightVol: rightVol.
 		i := i + count].
+
+]
+
+{ #category : #copying }
+SequentialSound >> postCopy [
+	"Copy my component sounds."
+
+	super postCopy.
+	self copySounds
 
 ]
 

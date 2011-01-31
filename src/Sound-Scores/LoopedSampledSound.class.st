@@ -428,9 +428,9 @@ LoopedSampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startInde
 
 	| lastIndex sampleIndex i s compositeLeftVol compositeRightVol nextSampleIndex m isInStereo rightVal leftVal |
 	<primitive:'primitiveMixLoopedSampledSound' module:'SoundGenerationPlugin'>
-	self var: #aSoundBuffer declareC: 'short int *aSoundBuffer'.
-	self var: #leftSamples declareC: 'short int *leftSamples'.
-	self var: #rightSamples declareC: 'short int *rightSamples'.
+	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
+	<var: #leftSamples declareC: 'short int *leftSamples'>
+	<var: #rightSamples declareC: 'short int *rightSamples'>
 
 	isInStereo := leftSamples ~~ rightSamples.
 	compositeLeftVol := (leftVol * scaledVol) // ScaleFactor.

@@ -393,8 +393,8 @@ FMSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: 
 
 	| doingFM lastIndex sample offset i s |
 	<primitive:'primitiveMixFMSound' module:'SoundGenerationPlugin'>
-	self var: #aSoundBuffer declareC: 'short int *aSoundBuffer'.
-	self var: #waveTable declareC: 'short int *waveTable'.
+	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
+	<var: #waveTable declareC: 'short int *waveTable'>
 
 	doingFM := (normalizedModulation ~= 0) and: [scaledOffsetIndexIncr ~= 0].
 	lastIndex := (startIndex + n) - 1.

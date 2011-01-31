@@ -61,14 +61,6 @@ ScorePlayer >> closeMIDIPort [
 ]
 
 { #category : #copying }
-ScorePlayer >> copy [
-	"Copy my component sounds."
-
-	^ super copy copySounds
-
-]
-
-{ #category : #copying }
 ScorePlayer >> copySounds [
 	"Private! Support for copying."
 
@@ -411,6 +403,15 @@ ScorePlayer >> positionInScore: pos [
 
 ]
 
+{ #category : #copying }
+ScorePlayer >> postCopy [
+	"Copy my component sounds."
+
+	super postCopy.
+	self copySounds
+
+]
+
 { #category : #'sound generation' }
 ScorePlayer >> processAllAtTick: scoreTick [
 
@@ -732,10 +733,10 @@ ScorePlayer >> trackCount [
 ScorePlayer >> turnOffActiveMIDINotesAt: scoreTick [
 	"Turn off any active MIDI notes that should be turned off at the given score tick."
 
-	| evt someNoteEnded |
+	| someNoteEnded |
 	midiPort ifNil: [^ self].
 	someNoteEnded := false. 
-	activeMIDINotes do: [:pair |
+	activeMIDINotes do: [:pair | | evt |
 		evt := pair first.
 		evt endTime <= scoreTick ifTrue: [
 			evt endNoteOnMidiPort: midiPort.

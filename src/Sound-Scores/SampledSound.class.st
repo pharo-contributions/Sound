@@ -91,8 +91,8 @@ SampledSound class >> convert8bitSignedFrom: aByteArray to16Bit: aSoundBuffer [
 
 	| n s |
 	<primitive: 'primitiveConvert8BitSigned' module: 'MiscPrimitivePlugin'>
-	self var: #aByteArray declareC: 'unsigned char *aByteArray'.
-	self var: #aSoundBuffer declareC: 'unsigned short *aSoundBuffer'.
+	<var: #aByteArray declareC: 'unsigned char *aByteArray'>
+	<var: #aSoundBuffer declareC: 'unsigned short *aSoundBuffer'>
 	n := aByteArray size.
 	1 to: n do: [:i |
 		s := aByteArray at: i.
@@ -574,8 +574,8 @@ SampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 	| lastIndex outIndex sampleIndex sample i s overflow |
 	<primitive:'primitiveMixSampledSound' module:'SoundGenerationPlugin'>
-	self var: #aSoundBuffer declareC: 'short int *aSoundBuffer'.
-	self var: #samples declareC: 'short int *samples'.
+	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
+	<var: #samples declareC: 'short int *samples'>
 
 	lastIndex := (startIndex + n) - 1.
 	outIndex := startIndex.    "index of next stereo output sample pair"
@@ -732,7 +732,7 @@ SampledSound >> sonogramMorph: height from: start to: stop nPoints: nPoints [
 	"In an inspector of a samplesSound...
 		self currentWorld addMorph: (self sonogramMorph: 32 from: 1 to: 50000 nPoints: 256)
 	"
-	| fft sonogramMorph data width |
+	| fft sonogramMorph width |
 	fft := FFT new: nPoints.
 	width := stop-start//nPoints.
 	sonogramMorph := Sonogram new
@@ -741,7 +741,7 @@ SampledSound >> sonogramMorph: height from: start to: stop nPoints: nPoints [
 			maxVal: 1.0
 			scrollDelta: width.
 	start to: stop-nPoints by: nPoints do:
-		[:i |
+		[:i | | data |
 		data := fft transformDataFrom: samples startingAt: i.
 		data := data collect: [:v | v sqrt].  "square root compresses dynamic range"
 		data /= 200.0.
@@ -786,11 +786,13 @@ SampledSound >> volumeForm: height from: start to: stop nSamplesPerPixel: nPerPi
 		self currentWorld addMorph: (ImageMorph new image:
 			(self volumeForm: 32 from: 1 to: samples size nSamplesPerPixel: 225))
 	"
-	| volPlot width sample min max vol |
+	| volPlot width max |
 	width := stop-start//nPerPixel.
 	volPlot := Form extent: width@height.
 	(start max: 1) to: (stop min: samples size)-nPerPixel by: nPerPixel do:
-		[:i | min:= max:= 0.
+		[:i | 
+		| sample min vol | 
+		min:= max:= 0.
 		i asInteger to: (i+nPerPixel-1) asInteger by: 4 do:  "by: 4 makes it faster yet looks the same"
 			[:j | sample := samples at: j.
 			sample < min ifTrue: [min := sample].

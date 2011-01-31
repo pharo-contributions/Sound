@@ -427,7 +427,7 @@ SoundPlayer class >> startPlayerProcessBufferSize: bufferSize rate: samplesPerSe
 SoundPlayer class >> startPlayingImmediately: aSound [
 	"Private! Start playing the given sound as soon as possible by mixing it into the sound output buffers of the underlying sound driver."
 
-	| totalSamples buf n leftover src rest |
+	| totalSamples buf |
 	"first, fill a double-size buffer with samples"
 	"Note: The code below assumes that totalSamples contains two
 	 buffers worth of samples, and the insertSamples primitive is
@@ -437,10 +437,10 @@ SoundPlayer class >> startPlayingImmediately: aSound [
 	totalSamples := Buffer stereoSampleCount * 2.  "two buffer's worth"
 	buf := SoundBuffer newStereoSampleCount: totalSamples.
 	aSound playSampleCount: totalSamples into: buf startingAt: 1.
-	ReverbState isNil ifFalse: [
+	ReverbState == nil ifFalse: [
 		ReverbState applyReverbTo: buf startingAt: 1 count: totalSamples].
 
-	PlayerSemaphore critical: [
+	PlayerSemaphore critical: [ | n src leftover rest |
 		"insert as many samples as possible into the sound driver's buffers"
 		n := self primSoundInsertSamples: totalSamples
 			from: buf

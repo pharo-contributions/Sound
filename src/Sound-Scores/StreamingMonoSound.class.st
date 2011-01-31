@@ -445,7 +445,7 @@ StreamingMonoSound >> startOver [
 StreamingMonoSound >> storeSunAudioOn: aBinaryStream compressionType: compressionName [
 	"Store myself on the given stream as a monophonic sound compressed with the given type of compression. The sampling rate is reduced to 22050 samples/second if it is higher."
 
-	| fmt inBufSize samplesPerFrame outCodec compressed outSamplingRate audioWriter samplesRemaining inBuf outBuf counts byteCount |
+	| fmt inBufSize samplesPerFrame outCodec compressed outSamplingRate audioWriter |
 	self pause; reset.  "stop playing and return to beginning"
 
 	fmt := SunAudioFileWriter formatCodeForCompressionType: compressionName.
@@ -468,7 +468,7 @@ StreamingMonoSound >> storeSunAudioOn: aBinaryStream compressionType: compressio
 
 	"convert and write sound data"
 	'Storing audio...' displayProgressAt: Sensor cursorPoint
-		from: 0 to: totalSamples during: [:bar |
+		from: 0 to: totalSamples during: [:bar | | outBuf counts inBuf samplesRemaining byteCount |
 			samplesRemaining := totalSamples.
 			[samplesRemaining > 0] whileTrue: [
 				bar value: totalSamples - samplesRemaining.

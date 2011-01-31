@@ -544,7 +544,7 @@ SoundRecorder >> scanForStartThreshold: threshold dcOffset: dcOffset minDur: dur
 SoundRecorder >> segmentsAbove: threshold normalizedVolume: percentOfMaxVolume [
 	"Break the current recording up into a sequence of sound segments separated by silences."
 
-	| max min sum totalSamples bufSize s dcOffset firstPlace endPlace resultBuf nFactor lastPlace segments gapSize minDur minLull soundSize restSize |
+	| dcOffset firstPlace endPlace resultBuf nFactor lastPlace segments gapSize minDur minLull soundSize restSize max min sum totalSamples |
 	stereo ifTrue: [self error: 'stereo trimming is not yet supported'].
 	paused ifFalse: [self error: 'must stop recording before trimming'].
 	(recordedSound == nil or: [recordedSound sounds isEmpty]) ifTrue:[^ self].
@@ -553,7 +553,7 @@ SoundRecorder >> segmentsAbove: threshold normalizedVolume: percentOfMaxVolume [
 	soundSize := restSize := 0.
 
 	max := min := sum := totalSamples := 0.
-	recordedBuffers do: [:buf |
+	recordedBuffers do: [:buf | | bufSize s |
 		bufSize := buf size.
 		totalSamples := totalSamples + buf size.
 		1 to: bufSize do: [:i |
@@ -668,14 +668,14 @@ SoundRecorder >> suppressSilence [
 SoundRecorder >> trim: threshold normalizedVolume: percentOfMaxVolume [
 	"Remove the leading and trailing parts of this recording that are below the given threshold. Remove any DC offset and scale the recording so that its peaks are the given percent of the maximum volume."
 
-	| max min sum totalSamples bufSize s dcOffset startPlace endPlace resultBuf nFactor |
+	| dcOffset startPlace endPlace resultBuf nFactor max min sum totalSamples |
 	stereo ifTrue: [self error: 'stereo trimming is not yet supported'].
 	paused ifFalse: [self error: 'must stop recording before trimming'].
 	recordedBuffers := recordedSound sounds collect: [:snd | snd samples].
 	recordedBuffers isEmpty ifTrue: [^ self].
 
 	max := min := sum := totalSamples := 0.
-	recordedBuffers do: [:buf |
+	recordedBuffers do: [:buf | | bufSize s |
 		bufSize := buf size.
 		totalSamples := totalSamples + buf size.
 		1 to: bufSize do: [:i |

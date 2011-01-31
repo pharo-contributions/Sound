@@ -19,11 +19,11 @@ ReverbSound >> applyReverbTo: aSoundBuffer startingAt: startIndex count: n [
 
 	| delayedLeft delayedRight i tapGain j out |
 	<primitive: 'primitiveApplyReverb' module:'SoundGenerationPlugin'>
-	self var: #aSoundBuffer declareC: 'short int *aSoundBuffer'.
-	self var: #tapDelays declareC: 'int *tapDelays'.
-	self var: #tapGains declareC: 'int *tapGains'.
-	self var: #leftBuffer declareC: 'short int *leftBuffer'.
-	self var: #rightBuffer declareC: 'short int *rightBuffer'.
+	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
+	<var: #tapDelays declareC: 'int *tapDelays'>
+	<var: #tapGains declareC: 'int *tapGains'>
+	<var: #leftBuffer declareC: 'short int *leftBuffer'>
+	<var: #rightBuffer declareC: 'short int *rightBuffer'>
 
 	startIndex to: ((startIndex + n) - 1) do: [:sliceIndex |
 		delayedLeft := delayedRight := 0.
@@ -55,14 +55,6 @@ ReverbSound >> applyReverbTo: aSoundBuffer startingAt: startIndex count: n [
 ]
 
 { #category : #copying }
-ReverbSound >> copy [
-	"Copy my component sound."
-
-	^ super copy copySound
-
-]
-
-{ #category : #copying }
 ReverbSound >> copySound [
 	"Private! Support for copying. Copy my component sound."
 
@@ -90,6 +82,15 @@ ReverbSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftV
 		leftVol: leftVol
 		rightVol: rightVol.
 	self applyReverbTo: aSoundBuffer startingAt: startIndex count: n.
+
+]
+
+{ #category : #copying }
+ReverbSound >> postCopy [
+	"Copy my component sound."
+
+	super postCopy.
+	self copySound
 
 ]
 

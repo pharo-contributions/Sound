@@ -34,13 +34,6 @@ PluckedSound class >> default [
 ]
 
 { #category : #copying }
-PluckedSound >> copy [
-
-	^ super copy copyRing
-
-]
-
-{ #category : #copying }
 PluckedSound >> copyRing [
 	"Private! Support for copying"
 
@@ -71,8 +64,8 @@ PluckedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 	| lastIndex scaledThisIndex scaledNextIndex average sample i s |
 	<primitive:'primitiveMixPluckedSound' module:'SoundGenerationPlugin'>
-	self var: #aSoundBuffer declareC: 'short int *aSoundBuffer'.
-	self var: #ring declareC: 'short int *ring'.
+	<var: #aSoundBuffer declareC: 'short int *aSoundBuffer'>
+	<var: #ring declareC: 'short int *ring'>
 
 	lastIndex := (startIndex + n) - 1.
 	scaledThisIndex := scaledNextIndex := scaledIndex.
@@ -110,6 +103,14 @@ PluckedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 	scaledIndex := scaledNextIndex.
 	count := count - n.
+
+]
+
+{ #category : #copying }
+PluckedSound >> postCopy [
+
+	super postCopy.
+	self copyRing
 
 ]
 

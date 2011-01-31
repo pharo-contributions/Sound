@@ -140,9 +140,9 @@ MIDISynth >> panForChannel: channelIndex put: newPan [
 MIDISynth >> processMIDI [
 	"Process some MIDI commands. Answer true if any commands were processed."
 
-	| didSomething cmdByte byte1 byte2 cmd chan |
+	| didSomething |
 	didSomething := false.
-	midiParser midiDo: [:item |
+	midiParser midiDo: [:item | | cmdByte byte1 chan cmd byte2 |
 		didSomething := true.
 		cmdByte := item at: 2.
 		byte1 := byte2 := nil.
