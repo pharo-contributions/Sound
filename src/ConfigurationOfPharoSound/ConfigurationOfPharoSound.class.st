@@ -182,7 +182,7 @@ ConfigurationOfPharoSound >> version30: spec [
 	spec for: #pharo do: [
 		spec 
 			package: 'Sound' with: 'Sound-GuillermoPolito.63';
-			package: 'Collection-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.3';
+			package: 'Collection-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
 			
 	]		
