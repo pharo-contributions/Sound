@@ -182,7 +182,7 @@ ConfigurationOfPharoSound >> version30: spec [
 	spec for: #pharo do: [
 		spec 
 			package: 'Sound' with: 'Sound-StephaneDucasse.62';
-			package: 'Collection-Arithmetic' with: 'Collections-Arithmetic-HenrikSperreJohansen.2';
+			package: 'Collection-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.3';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-HenrikSperreJohansen.19'.
 			
 	]		
