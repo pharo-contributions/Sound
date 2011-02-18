@@ -85,7 +85,8 @@ ConfigurationOfPharoSound >> baseline10: spec [
 		spec repository: 'http://www.squeaksource.com/PharoSound'.
 		spec 
 			package: 'Sound';
-			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound' ].
+			package: 'Collection-Arithmetic' with: [ spec repository: 'http://www.squeaksource.com/CollectionArithmetic' ];
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'; requires: 'Collection-Arithmetic' ].
 			
 	]
 ]
@@ -126,6 +127,7 @@ ConfigurationOfPharoSound >> stable: spec [
 	
 	spec for: #'pharo1.0.x' version: '1.0'. 
 	spec for: #'pharo1.1.x' version: '3.0'. 
+	spec for: #'pharo1.2.x' version: '3.0'. 
 
 ]
 
@@ -179,8 +181,9 @@ ConfigurationOfPharoSound >> version30: spec [
 	
 	spec for: #pharo do: [
 		spec 
-			package: 'Sound' with: 'Sound-StephaneDucasse.61';
-			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.17'.
+			package: 'Sound' with: 'Sound-StephaneDucasse.62';
+			package: 'Collection-Arithmetic' with: 'Collections-Arithmetic-HenrikSperreJohansen.2';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-HenrikSperreJohansen.19'.
 			
 	]		
 ]
