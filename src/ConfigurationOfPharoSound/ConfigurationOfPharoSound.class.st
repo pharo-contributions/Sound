@@ -103,7 +103,7 @@ ConfigurationOfPharoSound >> baseline30: spec [
 		spec 
 			package: 'Sound';
 			package: 'Collections-Arithmetic' with: [ spec repository: 'http://www.squeaksource.com/CollectionArithmetic' ];
-			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'; requires: 'Collection-Arithmetic' ].
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'; requires: 'Collections-Arithmetic' ].
 			
 	]
 ]
