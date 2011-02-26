@@ -82,28 +82,28 @@ ConfigurationOfPharoSound >> baseline10: spec [
 	].	
 		
 	spec for: #pharo do: [
-		spec repository: 'http://www.squeaksource.com/PharoSound'.
+		spec repository: 'http://www.squeaksource.com/PharoNonCorePackages'.
 		spec 
 			package: 'Sound';
-			package: 'Collection-Arithmetic' with: [ spec repository: 'http://www.squeaksource.com/CollectionArithmetic' ];
-			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'; requires: 'Collection-Arithmetic' ].
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound' ].
 			
 	]
 ]
 
 { #category : #baselines }
-ConfigurationOfPharoSound >> baseline20: spec [ 
-	<version: '1.0-baseline'>
+ConfigurationOfPharoSound >> baseline30: spec [ 
+	<version: '3.0-baseline'>
 	
 	spec for: #common do: [
 		spec blessing: #baseline.
 	].	
 		
 	spec for: #pharo do: [
-		spec repository: 'http://www.squeaksource.com/PharoNonCorePackages'.
+		spec repository: 'http://www.squeaksource.com/PharoSound'.
 		spec 
 			package: 'Sound';
-			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound' ].
+			package: 'Collections-Arithmetic' with: [ spec repository: 'http://www.squeaksource.com/CollectionArithmetic' ];
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'; requires: 'Collection-Arithmetic' ].
 			
 	]
 ]
@@ -170,7 +170,7 @@ ConfigurationOfPharoSound >> version20: spec [
 
 { #category : #versions }
 ConfigurationOfPharoSound >> version30: spec [
-	<version: '3.0' imports: #('1.0-baseline')>
+	<version: '3.0' imports: #('3.0-baseline')>
 
 	spec for: #common do: [
 		spec blessing: #development.
@@ -182,7 +182,7 @@ ConfigurationOfPharoSound >> version30: spec [
 	spec for: #pharo do: [
 		spec 
 			package: 'Sound' with: 'Sound-GuillermoPolito.63';
-			package: 'Collection-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
+			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
 			
 	]		
