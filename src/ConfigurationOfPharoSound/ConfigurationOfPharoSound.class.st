@@ -173,7 +173,7 @@ ConfigurationOfPharoSound >> version30: spec [
 	<version: '3.0' imports: #('3.0-baseline')>
 
 	spec for: #common do: [
-		spec blessing: #development.
+		spec blessing: #release.
 		spec author: 'MarianoMartinezPeck'.
 		spec description: '- Changed the repository.
 		- Some fixes to work with Pharo 1.1  '.
