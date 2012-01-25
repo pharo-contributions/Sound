@@ -214,12 +214,14 @@ ConfigurationOfPharoSound >> version40: spec [
 	spec for: #common do: [
 		spec blessing: #release.
 		spec author: 'MarianoMartinezPeck'.
-		spec description: ' Move Sound-Scores to a separate package SoundScores  '.
+		spec description: ' 
+		- Move Sound-Scores to a separate package SoundScores.
+		- Adapt for Pharo 1.4  '.
 	].
 	
 	spec for: #pharo do: [
 		spec 
-			package: 'Sound' with: 'Sound-MarianoMartinezPeck.66';
+			package: 'Sound' with: 'Sound-MarianoMartinezPeck.67';
 			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
