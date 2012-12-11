@@ -358,7 +358,7 @@ ADPCMCodec >> nextBits: n put: anInteger [
 				bufBits := bufBits - bitsAvailable]
 			ifFalse: [  "still some bits available in currentByte buffer"
 				bitPosition := bitPosition + bufBits.
-				^ self]].
+				^nil ] ].
 
 ]
 
