@@ -311,25 +311,26 @@ ADPCMCodec >> initializeForBitsPerSample: sampleBits samplesPerFrame: frameSize 
 ADPCMCodec >> nextBits: n [
 	"Answer the next n bits of my bit stream as an unsigned integer."
 
-	<inline: true>
-
 	| result remaining shift |
+	<inline: true>
 
 	result := 0.
 	remaining := n.
-	[true] whileTrue: [
+	
+	[
 		shift := remaining - bitPosition.
-		result := result + (currentByte bitShift: shift).
 		shift > 0
 			ifTrue: [  "consumed currentByte buffer; fetch next byte"
+				result := result + (currentByte << shift).
 				remaining := remaining - bitPosition.			
 				currentByte := (encodedBytes at: (byteIndex := byteIndex + 1)).
 				bitPosition := 8]
 			ifFalse: [  "still some bits left in currentByte buffer"
+				result := result + (currentByte >> (0 - shift)).
 				bitPosition := bitPosition - remaining.
 				"mask out the consumed bits:"
-				currentByte := currentByte bitAnd: (255 bitShift: (bitPosition - 8)).
-				^ result]].
+				currentByte := currentByte bitAnd: (255 >> (8 - bitPosition)).
+				^ result]] repeat
 
 ]
 
@@ -337,28 +338,28 @@ ADPCMCodec >> nextBits: n [
 ADPCMCodec >> nextBits: n put: anInteger [
 	"Write the next n bits to my bit stream."
 
-	<inline: true>
-
 	| buf bufBits bitsAvailable shift |
+	<inline: true>
 
 	buf := anInteger.
 	bufBits := n.
-	[true] whileTrue: [
+	[
 		bitsAvailable := 8 - bitPosition.
 		shift := bitsAvailable - bufBits.  "either left or right shift"
 		"append high bits of buf to end of currentByte:"
-		currentByte := currentByte + (buf bitShift: shift).
 		shift < 0
 			ifTrue: [  "currentByte buffer filled; output it"
+				currentByte := currentByte + (buf >> (0 - shift)).
 				encodedBytes at: (byteIndex := byteIndex + 1) put: currentByte.
 				bitPosition := 0.
 				currentByte := 0.
 				"clear saved high bits of buf:"
-				buf := buf bitAnd: (1 bitShift: 0 - shift) - 1.
+				buf := buf bitAnd: (1 << (0 - shift)) - 1.
 				bufBits := bufBits - bitsAvailable]
 			ifFalse: [  "still some bits available in currentByte buffer"
+				currentByte := currentByte + (buf << shift).
 				bitPosition := bitPosition + bufBits.
-				^nil ] ].
+				^ self]] repeat
 
 ]
 
