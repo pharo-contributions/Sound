@@ -1,13 +1,3 @@
-"
-I'm a kind of choice menu. 
-
-PopUpChoiceMorph new openInHand
-
-Better use MenuMorph
-
-
-
-"
 Class {
 	#name : #PopUpChoiceMorph,
 	#superclass : #StringMorph,
@@ -22,14 +12,14 @@ Class {
 	#category : #SoundMorphicUserInterface
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> actionSelector [
 
 	^ actionSelector
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> actionSelector: aSymbolOrString [
 
 	(nil = aSymbolOrString or:
@@ -41,46 +31,47 @@ PopUpChoiceMorph >> actionSelector: aSymbolOrString [
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> arguments [
 
 	^ arguments
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> arguments: aCollection [
 
 	arguments := aCollection asArray copy.
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> getItemsArgs [
 
 	^ getItemsArgs
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> getItemsArgs: aCollection [
 
 	getItemsArgs := aCollection asArray copy.
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> getItemsSelector [
 
 	^ getItemsSelector
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> getItemsSelector: aSymbolOrString [
 
-	(nil = aSymbolOrString or: ['nil' = aSymbolOrString or:
-										 [aSymbolOrString isEmpty]])
+	(nil = aSymbolOrString or:
+	 ['nil' = aSymbolOrString or:
+	 [aSymbolOrString isEmpty]])
 		ifTrue: [^ getItemsSelector := nil].
 
 	getItemsSelector := aSymbolOrString asSymbol.
@@ -96,9 +87,9 @@ PopUpChoiceMorph >> handlesMouseDown: evt [
 
 { #category : #initialization }
 PopUpChoiceMorph >> initialize [
-	"initialize the state of the receiver"
-
+"initialize the state of the receiver"
 	super initialize.
+""
 	self contents: 'PopUpChoice of Colors'.
 	target := Color.
 	actionSelector := nil.
@@ -112,11 +103,9 @@ PopUpChoiceMorph >> mouseDown: evt [
 	| items menu selectedItem |
 	(target isNil or: [getItemsSelector isNil]) ifTrue: [^self].
 	items := target perform: getItemsSelector withArguments: getItemsArgs.
-	selectedItem := MenuMorph
-					chooseFrom: items
-					values: items
-					lines: #()
-					title: 'Pick a color'.		
+	menu := CustomMenu new.
+	items do: [:item | menu add: item action: item].
+	selectedItem := menu startUp.
 	selectedItem ifNil: [^self].
 	self contentsClipped: selectedItem.	"Client can override this if necess"
 	actionSelector ifNotNil: 
@@ -124,14 +113,14 @@ PopUpChoiceMorph >> mouseDown: evt [
 				withArguments: (arguments copyWith: selectedItem)]
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> target [
 
 	^ target
 
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 PopUpChoiceMorph >> target: anObject [
 
 	target := anObject

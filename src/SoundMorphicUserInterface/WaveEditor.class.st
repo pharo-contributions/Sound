@@ -168,19 +168,17 @@ WaveEditor >> autoCorrolationBetween: index1 and: index2 length: length [
 { #category : #menu }
 WaveEditor >> chooseLoopStart [ 
 
-	| bestLoops menu secs choice start col colVa |
+	| bestLoops menu secs choice start |
 	possibleLoopStarts ifNil: [
 		UIManager default
 			informUser: 'Finding possible loop points...' translated
 			during: [possibleLoopStarts := self findPossibleLoopStartsFrom: graph cursor]].
 	bestLoops := possibleLoopStarts copyFrom: 1 to: (100 min: possibleLoopStarts size).
-	col := OrderedCollection new.
-	colVa := OrderedCollection new.
+	menu := CustomMenu new.
 	bestLoops do: [:entry |
 		secs := ((loopEnd - entry first) asFloat / self samplingRate) roundTo: 0.01.
-		col add: ('{1} ', 'cycles' translated, '; {2} secs' translated format:{entry third. secs}).
-		colVa add:  entry].
-	choice :=MenuMorph chooseFrom: col values: colVa  lines: #()  title: 'Pick up a cycle' . 
+		menu add: ('{1} ', 'cycles' translated, '; {2} secs' translated format:{entry third. secs}) action: entry].
+	choice := menu startUp.
 	choice ifNil: [^ self].
 	loopCycles := choice third.
 	start := self fractionalLoopStartAt: choice first.
@@ -343,7 +341,7 @@ WaveEditor >> invokeMenu [
 	"Invoke a menu of additonal functions for this WaveEditor."
 
 	| aMenu |
-	aMenu := MenuMorph new target: self.
+	aMenu := CustomMenu new.
 	aMenu addList:	{
 		{'play straight through' translated.	#play}.
 		{'play before cursor' translated.	#playBeforeCursor}.
@@ -359,7 +357,7 @@ WaveEditor >> invokeMenu [
 		{'make unpitched' translated.		#setUnpitched}.
 		{'show envelope' translated.		#showEnvelope}.
 		{'show FFT' translated.				#showFFTAtCursor}}.
-	aMenu popUpInWorld
+	aMenu invokeOn: self defaultSelection: nil.
 
 ]
 

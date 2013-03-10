@@ -1,3 +1,7 @@
+"
+PianoKeyboardMorph new openInWorld
+
+"
 Class {
 	#name : #PianoKeyboardMorph,
 	#superclass : #RectangleMorph,
@@ -113,13 +117,14 @@ PianoKeyboardMorph >> mouseMovePitch: pitch event: event noteMorph: noteMorph [
 PianoKeyboardMorph >> mouseUpEvent: arg1 noteMorph: arg2 pitch: arg3 [
 	"Reorder the arguments for existing event handlers"
 	(arg3 isMorph and:[arg3 eventHandler notNil]) ifTrue:[arg3 eventHandler fixReversedValueMessages].
+	
 	^self mouseUpPitch: arg1 event: arg2 noteMorph: arg3
 ]
 
 { #category : #'simple keyboard' }
 PianoKeyboardMorph >> mouseUpPitch: pitch event: event noteMorph: noteMorph [
 
-	noteMorph color: ((#(0 1 3 5 6 8 10) includes: pitch\\12)
+	noteMorph color: ((#(0 1 3 5 6 8 10) includes: pitch \\12)
 					ifTrue: [whiteKeyColor]
 					ifFalse: [blackKeyColor]).
 	soundPlaying ifNotNil: [soundPlaying stopGracefully].

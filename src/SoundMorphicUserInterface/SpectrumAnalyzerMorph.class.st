@@ -125,12 +125,13 @@ SpectrumAnalyzerMorph >> invokeMenu [
 	"Invoke the settings menu."
 
 	| aMenu |
-	aMenu := MenuMorph new target: self.
+	aMenu := CustomMenu new.
 	aMenu addList:	{
 		{'set sampling rate' translated.		#setSamplingRate}.
 		{'set FFT size' translated.			#setFFTSize}.
 		{'set display type' translated.		#setDisplayType}}.
-	aMenu popUpInWorld
+	aMenu invokeOn: self defaultSelection: nil.
+
 ]
 
 { #category : #private }
@@ -200,11 +201,15 @@ SpectrumAnalyzerMorph >> resetDisplay [
 SpectrumAnalyzerMorph >> setDisplayType [
 	"Set the display type."
 
-	|  choices choice on |
-	choices := #('signal' 'spectrum' 'sonogram').
-	choice := MenuMorph 
-				chooseFrom: choices values: choices lines: #() title:  ('display type (currently {1})' translated format:{displayType}).
+	| aMenu choice on |
+	aMenu := CustomMenu new title: ('display type (currently {1})' translated format:{displayType}).
+	aMenu addList:	{
+		{'signal' translated.	'signal'}.
+		{'spectrum' translated.	'spectrum'}.
+		{'sonogram' translated.	'sonogram'}}.
+	choice := aMenu startUp.
 	choice ifNil: [^ self].
+
 	on := soundInput isRecording.
 	self stop.
 	displayType := choice.
@@ -218,14 +223,14 @@ SpectrumAnalyzerMorph >> setDisplayType [
 SpectrumAnalyzerMorph >> setFFTSize [
 	"Set the size of the FFT used for frequency analysis."
 
-	|  choices choice on  |
-	choices := #(128 256 512 1024).
-	choice := MenuMorph 
-				chooseFrom: choices values: choices lines: #() title:  ('FFT size (currently {1})' translated format:{fft n}).
-	choice ifNil: [^ self].	
+	| aMenu sz on |
+	aMenu := CustomMenu new title: ('FFT size (currently {1})' translated format:{fft n}).
+	((7 to: 10) collect: [:n | 2 raisedTo: n]) do:[:r | aMenu add: r printString action: r].
+	sz := aMenu startUp.
+	sz ifNil: [^ self].
 	on := soundInput isRecording.
 	self stop.
-	fft := FFT new: choice.
+	fft := FFT new: sz.
 	self resetDisplay.
 	on ifTrue: [self start].
 
@@ -235,10 +240,11 @@ SpectrumAnalyzerMorph >> setFFTSize [
 SpectrumAnalyzerMorph >> setSamplingRate [
 	"Set the sampling rate to be used for incoming sound data."
 
-	| aMenu rate on choices |
-	choices := #(11025 22050 44100).
-	rate := MenuMorph 
-				chooseFrom: choices values: choices lines: #() title: ('Sampling rate (currently {1})' translated format:{soundInput samplingRate}).
+	| aMenu rate on |
+	aMenu := CustomMenu new title:
+		('Sampling rate (currently {1})' translated format:{soundInput samplingRate}).
+	#(11025 22050 44100) do:[:r | aMenu add: r printString action: r].
+	rate := aMenu startUp.
 	rate ifNil: [^ self].
 	on := soundInput isRecording.
 	self stop.
