@@ -1,4 +1,10 @@
 "
+(ConfigurationOfPharoSound project version: '5.1') load
+	- starting to work on 2.0
+
+(ConfigurationOfPharoSound project version: '5.0') load
+	- adding settings
+
 (ConfigurationOfPharoSound project version: '4.2') load
 	- update to SmalltalkHub move
 
@@ -213,7 +219,8 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.0.x' version: '1.0'. 
 	spec for: #'pharo1.1.x' version: '3.0'. 
 	spec for: #'pharo1.2.x' version: '3.0'. 
-	spec for: #'pharo1.4.x' version: '4.1'. 
+	spec for: #'pharo1.4.x' version: '5.0'. 
+	spec for: #'pharo2.0.x' version: '5.1'. 
 
 ]
 
@@ -356,6 +363,28 @@ ConfigurationOfPharoSound >> version50: spec [
 			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version51: spec [
+	<version: '5.1' imports: #('5.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: ' 
+		starting to make things works for 2.0.'.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.70';
+			package: 'Settings-Sound' with: 'Settings-Sound';
+			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
+			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.21'.
 			
 	]		
 ]
