@@ -136,7 +136,7 @@ ConfigurationOfPharoSound >> baseline40: spec [
 
 { #category : #baselines }
 ConfigurationOfPharoSound >> baseline41: spec [ 
-	<version: '4.0-baseline'>
+	<version: '4.1-baseline'>
 	
 	spec for: #common do: [
 		spec blessing: #baseline.
@@ -155,7 +155,7 @@ ConfigurationOfPharoSound >> baseline41: spec [
 
 { #category : #baselines }
 ConfigurationOfPharoSound >> baseline42: spec [ 
-	<version: '4.0-baseline'>
+	<version: '4.2-baseline'>
 	
 	spec for: #common do: [
 		spec blessing: #baseline.
@@ -165,6 +165,27 @@ ConfigurationOfPharoSound >> baseline42: spec [
 		spec repository: 'http://smalltalkhub.com/mc/PharoExtras/Sound/main'.
 		spec 
 			package: 'Sound';
+			package: 'SoundScores' with: [ spec requires: 'Sound' ];
+			package: 'Collections-Arithmetic' with: [ spec repository: 'http://smalltalkhub.com/mc/PharoExtras/CollectionArithmetic/main' ];
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'; requires: 'Collections-Arithmetic' ].
+			
+	]
+]
+
+{ #category : #baselines }
+ConfigurationOfPharoSound >> baseline50: spec [ 
+	<version: '50-baseline'>
+	
+	spec for: #common do: [
+		spec blessing: #baseline.
+		spec description: 'Adding Settings'.
+	].	
+		
+	spec for: #pharo do: [
+		spec repository: 'http://smalltalkhub.com/mc/PharoExtras/Sound/main'.
+		spec 
+			package: 'Sound';
+			package: 'Settings-Sound';
 			package: 'SoundScores' with: [ spec requires: 'Sound' ];
 			package: 'Collections-Arithmetic' with: [ spec repository: 'http://smalltalkhub.com/mc/PharoExtras/CollectionArithmetic/main' ];
 			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'; requires: 'Collections-Arithmetic' ].
@@ -255,7 +276,7 @@ ConfigurationOfPharoSound >> version30: spec [
 
 { #category : #versions }
 ConfigurationOfPharoSound >> version40: spec [
-	<version: '4.0' imports: #('3.0-baseline')>
+	<version: '4.0' imports: #('4.0-baseline')>
 
 	spec for: #common do: [
 		spec blessing: #release.
@@ -277,7 +298,7 @@ ConfigurationOfPharoSound >> version40: spec [
 
 { #category : #versions }
 ConfigurationOfPharoSound >> version41: spec [
-	<version: '4.1' imports: #('3.0-baseline')>
+	<version: '4.1' imports: #('4.1-baseline')>
 
 	spec for: #common do: [
 		spec blessing: #release.
@@ -298,7 +319,7 @@ ConfigurationOfPharoSound >> version41: spec [
 
 { #category : #versions }
 ConfigurationOfPharoSound >> version42: spec [
-	<version: '4.2' imports: #('3.0-baseline')>
+	<version: '4.2' imports: #('4.2-baseline')>
 
 	spec for: #common do: [
 		spec blessing: #release.
@@ -310,6 +331,28 @@ ConfigurationOfPharoSound >> version42: spec [
 	spec for: #pharo do: [
 		spec 
 			package: 'Sound' with: 'Sound-HenrikSperreJohansen.69';
+			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
+			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version50: spec [
+	<version: '5.0' imports: #('5.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: ' 
+		adding settings '.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-HenrikSperreJohansen.69';
+			package: 'Settings-Sound' with: 'Settings-Sound';
 			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
