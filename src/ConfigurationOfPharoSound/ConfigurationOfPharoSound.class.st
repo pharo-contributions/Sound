@@ -1,5 +1,5 @@
 "
-(ConfigurationOfPharoSound project version: '5.1') load
+(ConfigurationOfPharoSound project version: '5.2') load
 	- starting to work on 2.0
 
 (ConfigurationOfPharoSound project version: '5.0') load
@@ -220,7 +220,7 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.1.x' version: '3.0'. 
 	spec for: #'pharo1.2.x' version: '3.0'. 
 	spec for: #'pharo1.4.x' version: '5.0'. 
-	spec for: #'pharo2.0.x' version: '5.1'. 
+	spec for: #'pharo2.0.x' version: '5.2'. 
 
 ]
 
@@ -385,6 +385,28 @@ ConfigurationOfPharoSound >> version51: spec [
 			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.21'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version52: spec [
+	<version: '5.2' imports: #('5.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: ' 
+		Removing SimpleSwicthMorph since it is in Morphic'.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.70';
+			package: 'Settings-Sound' with: 'Settings-Sound';
+			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
+			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.22'.
 			
 	]		
 ]
