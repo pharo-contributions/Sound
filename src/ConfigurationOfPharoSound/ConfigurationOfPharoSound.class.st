@@ -174,7 +174,7 @@ ConfigurationOfPharoSound >> baseline42: spec [
 
 { #category : #baselines }
 ConfigurationOfPharoSound >> baseline50: spec [ 
-	<version: '50-baseline'>
+	<version: '5.0-baseline'>
 	
 	spec for: #common do: [
 		spec blessing: #baseline.
