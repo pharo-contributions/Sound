@@ -1,3 +1,6 @@
+"
+(ConfigurationOfPharoSound project version: '4.1') load
+"
 Class {
 	#name : #ConfigurationOfPharoSound,
 	#superclass : #Object,
@@ -147,7 +150,8 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.0.x' version: '1.0'. 
 	spec for: #'pharo1.1.x' version: '3.0'. 
 	spec for: #'pharo1.2.x' version: '3.0'. 
-
+	spec for: #'pharo1.4.x' version: '4.1'. 
+	spec for: #'pharo2.0.x' version: '4.1'. 
 ]
 
 { #category : #versions }
@@ -222,6 +226,27 @@ ConfigurationOfPharoSound >> version40: spec [
 	spec for: #pharo do: [
 		spec 
 			package: 'Sound' with: 'Sound-MarianoMartinezPeck.67';
+			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
+			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version41: spec [
+	<version: '4.1' imports: #('3.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: ' 
+		- uses latest published versions of the files '.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-HenrikSperreJohansen.69';
 			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-GuillermoPolito.20'.
