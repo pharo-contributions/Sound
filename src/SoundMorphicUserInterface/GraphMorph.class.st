@@ -3,7 +3,6 @@ I display a graph of numbers, normalized so the full range of values just fits m
 
 Implementation notes: Some operations on me may be done at sound sampling rates (e.g. 11-44 thousand times/second). To allow such high bandwidth application, certain operations that change my appearance do not immediately report a damage rectangle. Instead, a flag is set indicating that my display needs to refreshed and a step method reports the damage rectangle if that flag is set. Also, I cache a bitmap of my graph to allow the cursor to be moved without redrawing the graph.
 
-	GraphMorph new openInWorld 
 "
 Class {
 	#name : #GraphMorph,
@@ -368,9 +367,11 @@ GraphMorph >> loadSound: aSound [
 { #category : #commands }
 GraphMorph >> loadSoundData: aCollection [
 
-	| scale absV newData |
+	| newData scale |
 	scale := 0.
-	aCollection do: [:v | (absV := v abs) > scale ifTrue: [scale := absV]].
+	aCollection do: [:v |
+		| absV |
+		(absV := v abs) > scale ifTrue: [scale := absV]].
 	scale := 100.0 / scale.
 	newData := OrderedCollection new: aCollection size.
 	1 to: aCollection size do: [:i | newData addLast: (scale * (aCollection at: i))].
@@ -414,10 +415,12 @@ GraphMorph >> newValueFrom: aPointOrNumber [
 { #category : #commands }
 GraphMorph >> playOnce [
 
-	| scale absV scaledData |
+	| scaledData scale |
 	data isEmpty ifTrue: [^ self].  "nothing to play"
 	scale := 1.
-	data do: [:v | (absV := v abs) > scale ifTrue: [scale := absV]].
+	data do: [:v |
+		| absV |
+		(absV := v abs) > scale ifTrue: [scale := absV]].
 	scale := 32767.0 / scale.
 	scaledData := SoundBuffer newMonoSampleCount: data size.
 	1 to: data size do: [:i | scaledData at: i put: (scale * (data at: i)) truncated].
