@@ -18,23 +18,6 @@ Morph >> encounteredAtTime: ticks inScorePlayer: scorePlayer atIndex: index inEv
 ]
 
 { #category : #'*sound-piano rolls' }
-Morph >> justDroppedIntoPianoRoll: pianoRoll event: evt [
-	
-	| ambientEvent startTimeInScore |
-	startTimeInScore := pianoRoll timeForX: self left.
-
-	ambientEvent := AmbientEvent new 
-		morph: self;
-		time: startTimeInScore.
-
-	pianoRoll score addAmbientEvent: ambientEvent.
-
-	"self endTime > pianoRoll scorePlayer durationInTicks ifTrue:
-		[pianoRoll scorePlayer updateDuration]"
-
-]
-
-{ #category : #'*sound-piano rolls' }
 Morph >> pauseFrom: scorePlayer [
 
 	"subclasses should take five"
