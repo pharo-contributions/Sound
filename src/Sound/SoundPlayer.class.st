@@ -11,6 +11,7 @@ Class {
 		'BufferIndex',
 		'BufferMSecs',
 		'LastBuffer',
+		'PausedSounds',
 		'PlayerProcess',
 		'PlayerSemaphore',
 		'ReadyForBuffer',

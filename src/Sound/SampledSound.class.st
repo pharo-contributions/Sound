@@ -9,7 +9,8 @@ Class {
 		'samplesSize',
 		'scaledIndex',
 		'indexHighBits',
-		'scaledIncrement'
+		'scaledIncrement',
+		'scaledInitialIndex'
 	],
 	#classVars : [
 		'CoffeeCupClink',

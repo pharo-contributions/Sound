@@ -285,7 +285,7 @@ SampledInstrument >> readSampleSetFrom: dirName [
 
 	| all dir |
 	all := SortedCollection sortBlock: [:s1 :s2 | s1 pitch < s2 pitch].
-	dir := FileDirectory default on: dirName.
+	dir := dirName asFileReference.
 	dir fileNames do: [:n | | fullName snd |
 		fullName := dir fullNameFor: n.
 		UIManager default
@@ -305,7 +305,7 @@ SampledInstrument >> readSampleSetInfoFrom: dirName [
 
 	| all dir |
 	all := OrderedCollection new.
-	dir := FileDirectory default on: dirName.
+	dir := dirName asFileReference.
 	dir fileNames do: [:n | | info fullName |
 		fullName := dir fullNameFor: n.
 		info := AIFFFileReader new readFromFile: fullName
