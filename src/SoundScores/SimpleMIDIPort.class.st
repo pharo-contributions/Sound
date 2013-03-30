@@ -52,29 +52,23 @@ SimpleMIDIPort class >> initialize [
 
 { #category : #utilities }
 SimpleMIDIPort class >> inputPortNumFromUser [
-	"Prompt the user for a MIDI input port. Answer a port number, or nil if
-	the user does not select a port or if MIDI is not supported on this
-	platform. "
+	"Prompt the user for a MIDI input port. Answer a port number, or nil if the user does not select a port or if MIDI is not supported on this platform."
 	"SimpleMIDIPort inputPortNumFromUser"
-	| portCount dir portList |
-	portCount := self primPortCount.
-	portCount = 0
-		ifTrue: [^ nil].
-	portList := OrderedCollection new.
-	0
-		to: portCount - 1
-		do: [:i | 
-			dir := self primPortDirectionalityOf: i.
-			dir = 1 | (dir = 3)
-				ifTrue: [portList add: i]].
-	"Only output ports"
-	portList ifEmpty: [^nil].
-	^ UIManager default
-		chooseFrom: (portList
-				collect: [:i | self portDescription: i])
-		values: portList
-		title: 'MIDI port for input:' translated
 
+	| portCount aMenu dir col colVa colVal |
+	portCount := self primPortCount.
+	portCount = 0 ifTrue: [^ nil].
+	col := OrderedCollection new. 
+	colVa := OrderedCollection new. 
+	0 to: portCount - 1 do:[:i |
+		dir := self primPortDirectionalityOf: i.
+		(dir = 1) | (dir = 3) ifTrue:[
+			col add: (self portDescription: i).
+			colVa add:  i]].
+	^ MenuMorph 
+		chooseFrom: col values: colVa lines: #()  title: 'MIDI port for input:' translated.
+	
+	 
 ]
 
 { #category : #utilities }
@@ -118,24 +112,18 @@ SimpleMIDIPort class >> outputPortNumFromUser [
 	"Prompt the user for a MIDI output port. Answer a port number, or nil if the user does not select a port or if MIDI is not supported on this platform."
 	"SimpleMIDIPort outputPortNumFromUser"
 
-	| portCount dir portList |
+	| portCount aMenu dir col colVa |
 	portCount := self primPortCount.
-	portCount = 0
-		ifTrue: [^ nil].
-	portList := OrderedCollection new.
-	0
-		to: portCount - 1
-		do: [:i | 
-			dir := self primPortDirectionalityOf: i.
-			dir = 2 | (dir = 3)
-				ifTrue: [portList add: i]].
-	"Only input ports"
-	portList ifEmpty: [^nil].
-	^ UIManager default
-		chooseFrom: (portList
-				collect: [:i | self portDescription: i])
-		values: portList
-		title: 'MIDI port for input:' translated
+	portCount = 0 ifTrue: [^ nil].
+	col := OrderedCollection new. 
+	colVa := OrderedCollection new. 
+	0 to: portCount - 1 do:[:i |
+		dir := self primPortDirectionalityOf: i.
+		(dir = 2) | (dir = 3) ifTrue:[
+			col add: (self portDescription: i).
+			colVa add: i]].
+	^ MenuMorph 
+		chooseFrom: col values: colVa lines: #() title: 'MIDI port for output:' translated.
 
 ]
 

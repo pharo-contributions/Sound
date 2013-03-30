@@ -4,7 +4,7 @@ This is a real-time player for MIDI scores (i.e., scores read from MIDI files). 
 "
 Class {
 	#name : #ScorePlayer,
-	#superclass : #AbstractSound,
+	#superclass : #ProtoObject,
 	#instVars : [
 		'score',
 		'instruments',
@@ -242,8 +242,8 @@ ScorePlayer >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftV
 		pair := activeSounds at: i.
 		snd := pair at: 1.
 		trk := pair at: 2.
-		left := (myLeftVol * (leftVols at: trk)) // ScaleFactor.
-		right := (myRightVol * (rightVols at: trk)) // ScaleFactor.
+		left := (myLeftVol * (leftVols at: trk)).
+		right := (myRightVol * (rightVols at: trk)).
 		snd samplesRemaining > 0
 			ifTrue: [
 				snd mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: left rightVol: right]
@@ -303,8 +303,8 @@ ScorePlayer >> onScore: aMIDIScore [
 
 	trackCount = 0 ifTrue: [^ self].
 	1 to: trackCount do: [:i |
-		leftVols at: i put: ScaleFactor // 4.
-		rightVols at: i put: ScaleFactor // 4].
+		leftVols at: i put: 1 // 4.
+		rightVols at: i put: 1 // 4].
 
 	"distribute inital panning of tracks left-to-right"
 	totalVol := 1.0.
@@ -764,7 +764,7 @@ ScorePlayer >> volumeForTrack: i [
 
 	| vol |
 	vol := (leftVols at: i) max: (rightVols at: i).
-	^ (vol asFloat / ScaleFactor) roundTo: 0.0001
+	^ (vol asFloat) roundTo: 0.0001
 
 ]
 
