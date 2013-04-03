@@ -19,6 +19,8 @@ Class {
 		'SamplingRate',
 		'SoundJustStarted',
 		'SoundSupported',
+		'SoundsShouldStartQuick',
+		'SoundsStopWhenDone',
 		'Stereo',
 		'UseReadySemaphore',
 		'UseReverb'
@@ -404,7 +406,7 @@ SoundPlayer class >> sineTable: size [
 { #category : #settings }
 SoundPlayer class >> soundQuickStart [
 	"Attempt to start sounds immediately. Should always be on unless it causes vm to crash"
-	^SoundsShouldStartQuick  ifNil: [self defaultQuickStartForPlatform]
+	^SoundsShouldStartQuick ifNil: [self defaultQuickStartForPlatform]
 ]
 
 { #category : #settings }
