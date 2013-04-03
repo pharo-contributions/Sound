@@ -773,7 +773,7 @@ ScorePlayer >> volumeForTrack: trackIndex put: aNumber [
 
 	| newVol oldLeft oldRight oldFullVol left right |
 	trackIndex > leftVols size ifTrue: [^ self].
-	newVol := ((aNumber asFloat max: 0.0) min: 1.0) * ScaleFactor.
+	newVol := ((aNumber asFloat max: 0.0) min: 1.0) *  32768 "ScaleFactor".
 	oldLeft := leftVols at: trackIndex.
 	oldRight := rightVols at: trackIndex.
 	oldFullVol := oldLeft max: oldRight.
