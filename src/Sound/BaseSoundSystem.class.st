@@ -11,7 +11,7 @@ Class {
 
 { #category : #initialization }
 BaseSoundSystem class >> initialize [
-	SoundService default: self new
+	SoundService default: self
 ]
 
 { #category : #initialization }
