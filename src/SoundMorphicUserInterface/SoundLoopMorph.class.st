@@ -1,6 +1,6 @@
 Class {
 	#name : #SoundLoopMorph,
-	#superclass : #RectangleMorph,
+	#superclass : #BorderedMorph,
 	#instVars : [
 		'samplesUntilNextControl',
 		'seqSound',
@@ -13,7 +13,7 @@ Class {
 { #category : #'as yet unclassified' }
 SoundLoopMorph >> addCursorMorph [
 	self addMorph:
-		(cursor := (RectangleMorph
+		(cursor := (BorderedMorph
 				newBounds: (self innerBounds topLeft extent: 1@self innerBounds height)
 				color: Color red)
 						borderWidth: 0)

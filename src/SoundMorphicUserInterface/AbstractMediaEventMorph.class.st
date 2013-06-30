@@ -3,7 +3,7 @@ An abstract representation of media events to be placed in a PianoRollScoreMorph
 "
 Class {
 	#name : #AbstractMediaEventMorph,
-	#superclass : #RectangleMorph,
+	#superclass : #BorderedMorph,
 	#instVars : [
 		'startTimeInScore',
 		'endTimeInScore'

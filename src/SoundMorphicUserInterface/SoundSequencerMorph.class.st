@@ -1,6 +1,6 @@
 Class {
 	#name : #SoundSequencerMorph,
-	#superclass : #RectangleMorph,
+	#superclass : #BorderedMorph,
 	#instVars : [
 		'controlPanel'
 	],

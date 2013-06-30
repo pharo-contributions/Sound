@@ -6,7 +6,7 @@ Implementation notes: Some operations on me may be done at sound sampling rates 
 "
 Class {
 	#name : #GraphMorph,
-	#superclass : #RectangleMorph,
+	#superclass : #BorderedMorph,
 	#instVars : [
 		'data',
 		'dataColor',
