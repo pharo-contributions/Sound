@@ -1,6 +1,6 @@
 Class {
 	#name : #PianoKeyboardMorph,
-	#superclass : #RectangleMorph,
+	#superclass : #BorderedMorph,
 	#instVars : [
 		'whiteKeyColor',
 		'blackKeyColor',
@@ -36,7 +36,7 @@ PianoKeyboardMorph >> buildKeyboard [
 			[:j | | val |
 			keyRect := octavePt + (j-1*wtWid@0) extent: (wtWid+1)@36.
 			val := i-1*12 + (#(1 3 5 6 8 10 12) at: j).
-			self addMorph: ((RectangleMorph newBounds: keyRect color: whiteKeyColor)
+			self addMorph: ((BorderedMorph newBounds: keyRect color: whiteKeyColor)
 								borderWidth: 1;
 				on: #mouseDown send: #mouseDownPitch:event:noteMorph: to: self
 								withValue: val;

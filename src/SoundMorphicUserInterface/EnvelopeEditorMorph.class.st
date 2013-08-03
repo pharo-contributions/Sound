@@ -1,6 +1,6 @@
 Class {
 	#name : #EnvelopeEditorMorph,
-	#superclass : #RectangleMorph,
+	#superclass : #BorderedMorph,
 	#instVars : [
 		'sound',
 		'soundName',
@@ -170,7 +170,7 @@ EnvelopeEditorMorph >> addHandlesIn: frame [
 	handle := PolygonMorph
 		vertices: (Array with: 0@0 with: 8@0 with: 4@8)
 		color: Color orange borderWidth: 1 borderColor: Color black.
-	handle addMorph: ((RectangleMorph
+	handle addMorph: ((BorderedMorph
 			newBounds: ((self handleOffset: handle)-(2@0) extent: 1@(graphArea height-2))
 			color: Color orange) borderWidth: 0).
 
@@ -218,7 +218,7 @@ EnvelopeEditorMorph >> adjustScale: evt [
 { #category : #construction }
 EnvelopeEditorMorph >> buildGraphAreaIn: frame [
 	| r y |
-	graphArea := RectangleMorph
+	graphArea := BorderedMorph
 		newBounds: ((frame left + 40) @ (frame top + 40)
 		corner: (frame right+1) @ (frame bottom - 60))
 		color: Color lightGreen lighter lighter.
@@ -230,7 +230,7 @@ EnvelopeEditorMorph >> buildGraphAreaIn: frame [
 		0.0 to: 1.0 by: 1.0/12.0/envelope scale do:
 			[:val |
 			y := self yFromValue: val.
-			graphArea addMorph: ((RectangleMorph
+			graphArea addMorph: ((BorderedMorph
 					newBounds: (r left@y extent: r width@1)
 					color: Color veryLightGray)
 						borderWidth: 0)]].
@@ -240,7 +240,7 @@ EnvelopeEditorMorph >> buildGraphAreaIn: frame [
 		(0.0 to: 1.0 by: 1.0/denominator/envelope scale) do:
 			[:v |
 			y := self yFromValue: v.
-			graphArea addMorph: ((RectangleMorph
+			graphArea addMorph: ((BorderedMorph
 					newBounds: (r left@y extent: r width@1)
 					color: Color veryLightGray)
 						borderWidth: 0)]].
@@ -618,7 +618,7 @@ EnvelopeEditorMorph >> readFileNamed: fileName [
 EnvelopeEditorMorph >> readFromDisk: evt [
 	| menu |
 	menu := MenuMorph new.
-	(FileDirectory default fileNamesMatching: '*.fmp') do:
+	(FileSystem workingDirectory files collect:[:e | (e basename endsWith: '.fmp') ]) do:
 		[:fileName |
 		menu add: fileName
 			target: self selector: #readFileNamed:
