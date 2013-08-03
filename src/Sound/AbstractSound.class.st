@@ -1064,7 +1064,7 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 		ifFalse: [self error: 'arg should be a dictionary of sounds'].
 	fileName := UIManager default request: 'Sound library file name?'.
 	fileName isEmptyOrNil ifTrue: [^ self].
-	refStream := SmartRefStream fileNamed: fileName, '.sounds'.
+	refStream := StandardFileStream fileNamed: fileName, '.sounds'.
 	[ refStream nextPut: aDictionary ]
 		ensure: [ refStream close ]
 ]
@@ -1525,10 +1525,10 @@ AbstractSound class >> updateScorePlayers [
 
 	ScorePlayer allSubInstancesDo: [:p | p pause].
 	SoundPlayer shutDown.
-	Smalltalk at: #EnvelopeEditorMorph ifPresent: [ :class |
+	Smalltalk globals at: #EnvelopeEditorMorph ifPresent: [ :class |
 		soundsBeingEdited := class allSubInstances
 			collect: [:ed | ed soundBeingEdited ] ].
-	Smalltalk at: #ScorePlayerMorph ifPresent: [ :class |
+	Smalltalk globals at: #ScorePlayerMorph ifPresent: [ :class |
 		class allSubInstancesDo:
 			[:p | p updateInstrumentsFromLibraryExcept: soundsBeingEdited ] ]
 ]
