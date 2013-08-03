@@ -1,7 +1,12 @@
 "
+(ConfigurationOfPharoSound project version: '5.3') load
+	- Jannik cleans for 2.0
+	- Work on 3.0 30321 (ready to work on SoundService refactorings as suggested by Pavel.)
+
 (ConfigurationOfPharoSound project version: '5.2') load
 	- starting to work on 2.0
-
+	- does not work on 3.0 alpha
+	
 (ConfigurationOfPharoSound project version: '5.0') load
 	- adding settings
 
@@ -424,11 +429,11 @@ ConfigurationOfPharoSound >> version53: spec [
 	
 	spec for: #pharo do: [
 		spec 
-			package: 'Sound' with: 'Sound-StephaneDucasse.73';
+			package: 'Sound' with: 'Sound-StephaneDucasse.75';
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
-			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.26'.
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.27'.
 			
 	]		
 ]
