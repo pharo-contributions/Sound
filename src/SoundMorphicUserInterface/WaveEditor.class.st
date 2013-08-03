@@ -288,8 +288,8 @@ WaveEditor >> graph [
 { #category : #initialization }
 WaveEditor >> initialize [
 	"initialize the state of the receiver"
+	
 	super initialize.
-	""
 	samplingRate := SoundPlayer samplingRate.
 	loopEnd := loopLength := 0.
 	loopCycles := 1.
@@ -313,7 +313,7 @@ WaveEditor >> initialize [
 				newBounds: (0 @ 0 extent: 0 @ 3)
 				color: Color transparent).
 	self addMorphBack: (keyboard := PianoKeyboardMorph new).
-	self sound: (SampledSound soundNamed: 'croak').
+	self sound: (SampledSound beepSound).
 
 ]
 
