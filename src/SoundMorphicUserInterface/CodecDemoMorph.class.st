@@ -1,6 +1,6 @@
 Class {
 	#name : #CodecDemoMorph,
-	#superclass : #BorderedMorph,
+	#superclass : #RectangleMorph,
 	#instVars : [
 		'codecClassName'
 	],

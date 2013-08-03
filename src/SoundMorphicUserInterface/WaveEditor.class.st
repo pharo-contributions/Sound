@@ -168,20 +168,19 @@ WaveEditor >> autoCorrolationBetween: index1 and: index2 length: length [
 { #category : #menu }
 WaveEditor >> chooseLoopStart [ 
 
-	| bestLoops choice start labels values |
+	| bestLoops menu secs choice start col colVa |
 	possibleLoopStarts ifNil: [
-		Utilities
+		UIManager default
 			informUser: 'Finding possible loop points...' translated
 			during: [possibleLoopStarts := self findPossibleLoopStartsFrom: graph cursor]].
 	bestLoops := possibleLoopStarts copyFrom: 1 to: (100 min: possibleLoopStarts size).
-	labels := OrderedCollection new.
-	values := OrderedCollection new.
+	col := OrderedCollection new.
+	colVa := OrderedCollection new.
 	bestLoops do: [:entry |
-		| secs |
 		secs := ((loopEnd - entry first) asFloat / self samplingRate) roundTo: 0.01.
-		labels add: ('{1} cycles; {2} secs' translated format:{entry third. secs}).
-		values add: entry].
-	choice := UIManager default chooseFrom: labels values: values.
+		col add: ('{1} ', 'cycles' translated, '; {2} secs' translated format:{entry third. secs}).
+		colVa add:  entry].
+	choice :=MenuMorph chooseFrom: col values: colVa  lines: #()  title: 'Pick up a cycle' . 
 	choice ifNil: [^ self].
 	loopCycles := choice third.
 	start := self fractionalLoopStartAt: choice first.
@@ -256,7 +255,8 @@ WaveEditor >> findPossibleLoopStartsFrom: index [
 			i := self zeroCrossingAfter: oldI - (1.1 * cycleLength) asInteger.
 			cycleLength := oldI - i.	"will be zero when start of data is encountered"
 			cycleCount := cycleCount + 1].
-	^r asArray sort: [:e1 :e2 | e1 second < e2 second]
+	r := r asSortedCollection: [:e1 :e2 | (e1 second) < (e2 second)].
+	^r asArray
 ]
 
 { #category : #other }
@@ -321,7 +321,7 @@ WaveEditor >> initialize [
 WaveEditor >> interpolatedWindowAt: index width: nSamples [
 	"Return an array of N samples starting at the given index in my data."
 
-	| scale data baseIndex scaledFrac scaledOneMinusFrac prevSample |
+	| scale data baseIndex scaledFrac scaledOneMinusFrac prevSample nextSample v |
 	scale := 10000.
 	data := graph data.
 	index isInteger
@@ -330,7 +330,7 @@ WaveEditor >> interpolatedWindowAt: index width: nSamples [
 	scaledFrac := ((index asFloat - baseIndex) * scale) truncated.
 	scaledOneMinusFrac := scale - scaledFrac.
 	prevSample := data at: baseIndex.
-	^ (baseIndex + 1 to: baseIndex + nSamples) collect: [:i | | v nextSample |
+	^ (baseIndex + 1 to: baseIndex + nSamples) collect: [:i |
 		nextSample := data at: i.
 		v := ((nextSample * scaledFrac) + (prevSample * scaledOneMinusFrac)) // scale.
 		prevSample := nextSample.
@@ -605,7 +605,7 @@ WaveEditor >> saveInstrument [
 
 	| name |
 	name := UIManager default request: 'Instrument name?' translated.
-	name isEmpty ifTrue: [^ self].
+	name isEmptyOrNil ifTrue: [^ self].
 	AbstractSound soundNamed: name put: self makeLoopedSampledSound.
 
 ]

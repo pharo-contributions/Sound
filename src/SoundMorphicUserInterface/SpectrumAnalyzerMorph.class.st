@@ -137,7 +137,7 @@ SpectrumAnalyzerMorph >> invokeMenu [
 SpectrumAnalyzerMorph >> makeLevelMeter [
 
 	| outerBox |
-	outerBox := BorderedMorph new extent: 125@14; color: Color lightGray.
+	outerBox := RectangleMorph new extent: 125@14; color: Color lightGray.
 	levelMeter := Morph new extent: 2@10; color: Color yellow.
 	levelMeter position: outerBox topLeft + (2@2).
 	outerBox addMorph: levelMeter.
@@ -149,7 +149,7 @@ SpectrumAnalyzerMorph >> makeLevelMeter [
 SpectrumAnalyzerMorph >> makeStatusLight [
 
 	| s |
-	statusLight := BorderedMorph new extent: 24@19.
+	statusLight := RectangleMorph new extent: 24@19.
 	statusLight color: Color gray.
 	s := StringMorph contents: 'On' translated.
 	s position: statusLight center - (s extent // 2).

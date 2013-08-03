@@ -1,6 +1,6 @@
 Class {
 	#name : #InterimSoundMorph,
-	#superclass : #BorderedMorph,
+	#superclass : #RectangleMorph,
 	#instVars : [
 		'graphic',
 		'sound'

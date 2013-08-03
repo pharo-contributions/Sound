@@ -7,7 +7,7 @@ Currently the ambient track (for synchronizing thumbnails, eg) is treated specia
 "
 Class {
 	#name : #PianoRollScoreMorph,
-	#superclass : #BorderedMorph,
+	#superclass : #RectangleMorph,
 	#instVars : [
 		'scorePlayer',
 		'score',
