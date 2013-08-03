@@ -1,3 +1,8 @@
+"
+A SampledSound class represents sounds that are sampled.
+Its class side in addition manages a library of sounds (and may be could be extracted as a separate class).
+
+"
 Class {
 	#name : #SampledSound,
 	#superclass : #AbstractSound,
@@ -65,15 +70,24 @@ SampledSound class >> assimilateSoundsFrom: aDictionary [
  			[SoundLibrary add: assoc]]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'coffee cup clink' }
 SampledSound class >> beep [
 	"Beep in the presence of the sound system.
 	Not to be used directly - use Beeper class>>beep
 	or Beeper class>>beepPrimitive instead."
 
-	(self new
-			setSamples: self coffeeCupClink
-			samplingRate: 12000) play
+	self beepSound play
+			
+]
+
+{ #category : #'coffee cup clink' }
+SampledSound class >> beepSound [
+	"Beep in the presence of the sound system. Not to be used directly - use Beeper class>>beep
+	or Beeper class>>beepPrimitive instead."
+
+	^ self new
+		setSamples: self coffeeCupClink samplingRate: 12000;
+		yourself 
 			
 ]
 
@@ -255,10 +269,6 @@ SampledSound class >> initialize [
 	self useCoffeeCupClink.
 	SoundLibrary ifNil: [SoundLibrary := Dictionary new].
 	
-	"Beeper setDefault: (self new
-						setSamples: self coffeeCupClink
-						samplingRate: 12000).
-	"
 ]
 
 { #category : #'coffee cup clink' }
@@ -642,7 +652,6 @@ SampledSound >> playSilentlyUntil: startTime [
 	"Used to fast foward to a particular starting time.
 	Overridden to be instant for sampled sounds."
 
-"true ifTrue: [^ super playSilentlyUntil: startTime]."
 	indexHighBits := (startTime * originalSamplingRate) asInteger.
 	scaledIndex := IncrementScaleFactor.
 	count := initialCount - (startTime * self samplingRate).

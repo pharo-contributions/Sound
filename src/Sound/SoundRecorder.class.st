@@ -1,3 +1,8 @@
+"
+The recorder is used for example by 
+
+	RecordingControlsMorph new openInWorld
+"
 Class {
 	#name : #SoundRecorder,
 	#superclass : #Object,

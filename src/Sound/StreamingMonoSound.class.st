@@ -30,7 +30,7 @@ StreamingMonoSound class >> onFileNamed: fileName [
 
 	| f |
 	f := fileName asFileReference.
-	f ifNil: [^ self error: 'could not open ', fileName].
+	f exists ifFalse: [^ self error: 'could not open ', fileName].
 	^ self new initStream: f headerStart: 0
 
 ]
@@ -41,7 +41,7 @@ StreamingMonoSound class >> onFileNamed: fileName headerStart: anInteger [
 
 	| f |
 	f := fileName asFileReference.
-	f ifNil: [^ self error: 'could not open ', fileName].
+	f exists ifFalse: [^ self error: 'could not open ', fileName].
 	^ self new initStream: f headerStart: anInteger
 
 ]

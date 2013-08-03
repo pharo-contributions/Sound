@@ -4,7 +4,7 @@ Class {
 	#category : #'Sound-Synthesis'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 FMBassoonSound >> setPitch: pitchNameOrNumber dur: d loudness: l [
 	"Select a modulation ratio and modulation envelope scale based on my pitch."
 
