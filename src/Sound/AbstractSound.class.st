@@ -1,3 +1,14 @@
+"
+An AbstractSound class is a class to represent sound.
+
+BaseSoundSystem soundEnabled: true.
+BaseSoundSystem initialize.
+FMSound bassoon1 play
+
+
+SoundPlayer initialize.
+PluckedSound bachFugue play
+"
 Class {
 	#name : #AbstractSound,
 	#superclass : #Object,
