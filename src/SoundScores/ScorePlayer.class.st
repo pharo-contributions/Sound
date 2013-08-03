@@ -4,7 +4,7 @@ This is a real-time player for MIDI scores (i.e., scores read from MIDI files). 
 "
 Class {
 	#name : #ScorePlayer,
-	#superclass : #ProtoObject,
+	#superclass : #AbstractSound,
 	#instVars : [
 		'score',
 		'instruments',
