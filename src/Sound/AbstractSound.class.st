@@ -1064,7 +1064,7 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 		ifFalse: [self error: 'arg should be a dictionary of sounds'].
 	fileName := UIManager default request: 'Sound library file name?'.
 	fileName isEmptyOrNil ifTrue: [^ self].
-	refStream := StandardFileStream fileNamed: fileName, '.sounds'.
+	refStream := SmartRefStream fileNamed: fileName, '.sounds'.
 	[ refStream nextPut: aDictionary ]
 		ensure: [ refStream close ]
 ]
@@ -1516,6 +1516,21 @@ AbstractSound class >> updateFMSounds [
 	(FMSound class organization listAtCategoryNamed: #instruments) do:
 		[:sel | Sounds at: sel asString put: (FMSound perform: sel)].
 
+]
+
+{ #category : #'sound library-file in/out' }
+AbstractSound class >> updateScorePlayers [
+	| soundsBeingEdited |
+	"Force all ScorePlayers to update their instrument list from the sound library. This may done after loading, unloading, or replacing a sound to make all ScorePlayers feel the change."
+
+	ScorePlayer allSubInstancesDo: [:p | p pause].
+	SoundPlayer shutDown.
+	Smalltalk at: #EnvelopeEditorMorph ifPresent: [ :class |
+		soundsBeingEdited := class allSubInstances
+			collect: [:ed | ed soundBeingEdited ] ].
+	Smalltalk at: #ScorePlayerMorph ifPresent: [ :class |
+		class allSubInstancesDo:
+			[:p | p updateInstrumentsFromLibraryExcept: soundsBeingEdited ] ]
 ]
 
 { #category : #composition }

@@ -11,7 +11,7 @@ Class {
 
 { #category : #initialization }
 BaseSoundSystem class >> initialize [
-	SoundService default: self
+	SoundService default: self new
 ]
 
 { #category : #initialization }
@@ -49,7 +49,7 @@ BaseSoundSystem >> playSoundNamed: soundName ifAbsentReadFrom: aifFileName [
 
 	SoundService soundEnabled ifTrue: [
 		(SampledSound soundNames includes: soundName) ifFalse: [
-			(FileSystem workingDirectory / aifFileName) exists ifTrue: [
+			(FileDirectory default fileExists: aifFileName) ifTrue: [
 				SampledSound
 					addLibrarySoundNamed: soundName
 					fromAIFFfileNamed: aifFileName]].

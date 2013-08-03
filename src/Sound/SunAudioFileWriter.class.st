@@ -114,7 +114,7 @@ SunAudioFileWriter >> closeFile [
 	self updateHeaderDataSize.
 	(stream isKindOf: StandardFileStream) ifTrue: [
 		stream close.
-		FilePluginPrims new setMacFileNamed: stream name type: 'ULAW' creator: 'SCPL'].
+		FileDirectory default setMacFileNamed: stream name type: 'ULAW' creator: 'SCPL'].
 
 ]
 
