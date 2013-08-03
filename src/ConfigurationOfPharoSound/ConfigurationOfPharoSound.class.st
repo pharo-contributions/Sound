@@ -220,7 +220,7 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.1.x' version: '3.0'. 
 	spec for: #'pharo1.2.x' version: '3.0'. 
 	spec for: #'pharo1.4.x' version: '5.0'. 
-	spec for: #'pharo2.0.x' version: '5.2'. 
+	spec for: #'pharo2.0.x' version: '5.3'. 
 
 ]
 
@@ -407,6 +407,28 @@ ConfigurationOfPharoSound >> version52: spec [
 			package: 'SoundScores' with: 'SoundScores-MarianoMartinezPeck.2';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.22'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version53: spec [
+	<version: '5.3' imports: #('5.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: ' 
+		Integrating some cleaning of Jannik and making sure UI loads in 30.'.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.73';
+			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
+			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
+			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.26'.
 			
 	]		
 ]
