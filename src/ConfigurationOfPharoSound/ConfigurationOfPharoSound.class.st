@@ -1,4 +1,7 @@
 "
+(ConfigurationOfPharoSound project version: '5.4') load
+	- Work on 3.0 post 30321. Should not load on Pharo20 because (subclass AbstractSoundSystem into SoundSystem if you want and add current: to call default...)
+
 (ConfigurationOfPharoSound project version: '5.3') load
 	- Jannik cleans for 2.0
 	- Work on 3.0 30321 (ready to work on SoundService refactorings as suggested by Pavel.)
@@ -226,6 +229,7 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.2.x' version: '3.0'. 
 	spec for: #'pharo1.4.x' version: '5.0'. 
 	spec for: #'pharo2.0.x' version: '5.3'. 
+	spec for: #'pharo3.0.x' version: '5.4'. 
 
 ]
 
@@ -434,6 +438,29 @@ ConfigurationOfPharoSound >> version53: spec [
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
 			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.27'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version54: spec [
+	<version: '5.4' imports: #('5.0-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: ' 
+		Does not work anymore in Pharo20 only in Pharo30
+		because of the changes on SoundSystem as suggested by Pavel.'.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.76';
+			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
+			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
+			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.29'.
 			
 	]		
 ]
