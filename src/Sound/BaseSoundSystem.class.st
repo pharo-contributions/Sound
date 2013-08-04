@@ -5,34 +5,31 @@ More information available in superclass.
 "
 Class {
 	#name : #BaseSoundSystem,
-	#superclass : #AbstractSoundSystem,
+	#superclass : #SoundSystem,
 	#category : #'Sound-Synthesis'
 }
 
 { #category : #initialization }
 BaseSoundSystem class >> initialize [
-	SoundService default: self
+	self current: self new.
 ]
 
 { #category : #initialization }
 BaseSoundSystem class >> unload [
-	SoundService registeredClasses do: [:ss |
-		(ss isKindOf: self) ifTrue: [SoundService unregister: ss]].
+	self resetSoundSystem
 ]
 
-{ #category : #playing }
+{ #category : #beep }
 BaseSoundSystem >> beep [
-	"There is sound support, so we use the default
-	sampled sound for a beep."
+	"There is sound support, so we use the default sampled sound for a beep."
 
-	SoundService soundEnabled ifTrue: [
-		SampledSound beep]
+	self soundEnabled ifTrue: [ SampledSound beep]
 ]
 
 { #category : #playing }
 BaseSoundSystem >> playSampledSound: samples rate: rate [
 
-	SoundService soundEnabled ifTrue: [
+	self soundEnabled ifTrue: [
 		(SampledSound samples: samples samplingRate: rate) play]
 ]
 
@@ -40,14 +37,14 @@ BaseSoundSystem >> playSampledSound: samples rate: rate [
 BaseSoundSystem >> playSoundNamed: soundName [
 	"There is sound support, so we play the given sound."
 
-	SoundService soundEnabled ifTrue: [
+	self soundEnabled ifTrue: [
 		SampledSound playSoundNamed: soundName asString]
 ]
 
 { #category : #playing }
 BaseSoundSystem >> playSoundNamed: soundName ifAbsentReadFrom: aifFileName [
 
-	SoundService soundEnabled ifTrue: [
+	self soundEnabled ifTrue: [
 		(SampledSound soundNames includes: soundName) ifFalse: [
 			(FileSystem workingDirectory / aifFileName) exists ifTrue: [
 				SampledSound
@@ -62,7 +59,7 @@ BaseSoundSystem >> playSoundNamedOrBeep: soundName [
 	"There is sound support, so we play the given sound
 	instead of beeping."
 
-	SoundService soundEnabled ifTrue: [
+	self soundEnabled ifTrue: [
 		^self playSoundNamed: soundName]
 ]
 
@@ -105,13 +102,13 @@ BaseSoundSystem >> sampledSoundChoices [
 	^ SampledSound soundNames
 ]
 
-{ #category : #misc }
+{ #category : #'activation hooks' }
 BaseSoundSystem >> shutDown [
 	SoundPlayer shutDown
 
 ]
 
-{ #category : #misc }
+{ #category : #query }
 BaseSoundSystem >> soundNamed: soundName [
 	^ SampledSound soundNamed: soundName
 ]

@@ -1,8 +1,8 @@
 "
 An AbstractSound class is a class to represent sound.
 
-BaseSoundSystem soundEnabled: true.
-BaseSoundSystem initialize.
+SoundSystem soundEnabled: true.
+SoundSystem initialize.
 FMSound bassoon1 play
 
 
