@@ -424,7 +424,7 @@ GraphMorph >> playOnce [
 	scale := 32767.0 / scale.
 	scaledData := SoundBuffer newMonoSampleCount: data size.
 	1 to: data size do: [:i | scaledData at: i put: (scale * (data at: i)) truncated].
-	SoundService default playSampledSound: scaledData rate: 11025.
+	SoundSystem current playSampledSound: scaledData rate: 11025.
 
 ]
 
