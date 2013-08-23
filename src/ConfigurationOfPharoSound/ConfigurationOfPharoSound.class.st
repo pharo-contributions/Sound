@@ -207,6 +207,25 @@ ConfigurationOfPharoSound >> baseline50: spec [
 	]
 ]
 
+{ #category : #baselines }
+ConfigurationOfPharoSound >> baseline51: spec [ 
+	<version: '5.1-baseline'>
+	
+	spec for: #common do: [
+		spec blessing: #baseline.
+		spec description: 'Remove Collections-Arithmetic'.
+	].	
+		
+	spec for: #pharo do: [
+		spec repository: 'http://smalltalkhub.com/mc/PharoExtras/Sound/main'.
+		spec 
+			package: 'Sound';
+			package: 'Settings-Sound';
+			package: 'SoundScores' with: [ spec requires: 'Sound' ];
+			package: 'SoundMorphicUserInterface' with: [ spec requires: 'Sound'].
+	]
+]
+
 { #category : #accessing }
 ConfigurationOfPharoSound >> project [
 
@@ -422,7 +441,7 @@ ConfigurationOfPharoSound >> version52: spec [
 
 { #category : #versions }
 ConfigurationOfPharoSound >> version53: spec [
-	<version: '5.3' imports: #('5.0-baseline')>
+	<version: '5.3' imports: #('5.1-baseline')>
 
 	spec for: #common do: [
 		spec blessing: #release.
@@ -436,7 +455,6 @@ ConfigurationOfPharoSound >> version53: spec [
 			package: 'Sound' with: 'Sound-StephaneDucasse.75';
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
-			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.27'.
 			
 	]		
@@ -444,7 +462,7 @@ ConfigurationOfPharoSound >> version53: spec [
 
 { #category : #versions }
 ConfigurationOfPharoSound >> version54: spec [
-	<version: '5.4' imports: #('5.0-baseline')>
+	<version: '5.4' imports: #('5.1-baseline')>
 
 	spec for: #common do: [
 		spec blessing: #release.
@@ -459,7 +477,6 @@ ConfigurationOfPharoSound >> version54: spec [
 			package: 'Sound' with: 'Sound-StephaneDucasse.76';
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
-			package: 'Collections-Arithmetic' with: 'Collections-Arithmetic-GuillermoPolito.4';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.29'.
 			
 	]		
