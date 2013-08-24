@@ -46,6 +46,53 @@ ConfigurationOfPharoSound class >> bootstrapPackage: aString from: aPath [
 			version workingCopy repositoryGroup addRepository: repository]
 ]
 
+{ #category : #catalog }
+ConfigurationOfPharoSound class >> catalogChangeLog [
+	^ '-2013-08-24 Version 5.4. 
+	Work on 3.0 post 30321. Should not load on Pharo20 because (subclass AbstractSoundSystem into SoundSystem if you want and add current: to call default...). Removed the dependency to Collection-Arithmetic since it confuses metacello because the package is in the image. 
+[[[
+	(ConfigurationOfPharoSound project version: ''5.4'') load
+]]]
+- 2013-07 Version 5.3
+   Jannik cleans for 2.0 and work on 3.0 30321 (ready to work on SoundService refactorings as suggested by Pavel.)
+[[[ 
+	(ConfigurationOfPharoSound project version: ''5.3'') load
+]]]	
+
+- 2013-07 Version 5.2
+	 starting to work on 2.0
+	does not work on 3.0 alpha
+[[[ 
+	(ConfigurationOfPharoSound project version: ''5.2'') load
+]]]	
+	
+- Version 5.0: adding settings	
+- version 4.2: update to SmalltalkHub move
+- version 4.1: updated to latest files'
+]
+
+{ #category : #catalog }
+ConfigurationOfPharoSound class >> catalogDescription [
+
+	^ 'Sound is a package offers multiple different ways to create and manipulate sounds. MIDI, sampled are typical examples.'
+]
+
+{ #category : #catalog }
+ConfigurationOfPharoSound class >> catalogKeyClassesAndExample [
+
+	^ ' To be filled up with more care
+- SampledSound
+- AbstractSound
+- MidiPlayer
+- 
+'
+]
+
+{ #category : #catalog }
+ConfigurationOfPharoSound class >> catalogKeywords [
+	^ #(sound sample midi piano scores sonogram)
+]
+
 { #category : #private }
 ConfigurationOfPharoSound class >> ensureMetacello [
 	"Bootstrap Gofer (if necessary), bootstrap ConfigurationOfMetacello (using old Gofer API), then load the latest 
