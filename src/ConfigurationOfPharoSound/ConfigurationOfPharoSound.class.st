@@ -1,4 +1,7 @@
 "
+(ConfigurationOfPharoSound project version: '5.5') load
+	- adding UpdatingStringMorph to the package
+
 (ConfigurationOfPharoSound project version: '5.4') load
 	- Work on 3.0 post 30321. Should not load on Pharo20 because (subclass AbstractSoundSystem into SoundSystem if you want and add current: to call default...)
 
@@ -525,6 +528,27 @@ ConfigurationOfPharoSound >> version54: spec [
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.29'.
+			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version55: spec [
+	<version: '5.4' imports: #('5.1-baseline')>
+
+	spec for: #common do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: ' 
+		Now adding updatingStringMorph'.
+	].
+	
+	spec for: #pharo do: [
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.76';
+			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
+			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.30'.
 			
 	]		
 ]
