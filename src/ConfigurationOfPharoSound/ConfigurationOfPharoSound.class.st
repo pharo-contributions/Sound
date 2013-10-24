@@ -534,7 +534,7 @@ ConfigurationOfPharoSound >> version54: spec [
 
 { #category : #versions }
 ConfigurationOfPharoSound >> version55: spec [
-	<version: '5.4' imports: #('5.1-baseline')>
+	<version: '5.5' imports: #('5.1-baseline')>
 
 	spec for: #common do: [
 		spec blessing: #release.
