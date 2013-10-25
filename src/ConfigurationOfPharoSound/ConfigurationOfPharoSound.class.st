@@ -540,12 +540,12 @@ ConfigurationOfPharoSound >> version55: spec [
 		spec blessing: #release.
 		spec author: 'StephaneDucasse'.
 		spec description: ' 
-		Now adding updatingStringMorph'.
+		Now adding updatingStringMorph and cleaning FM sound'.
 	].
 	
 	spec for: #pharo do: [
 		spec 
-			package: 'Sound' with: 'Sound-StephaneDucasse.76';
+			package: 'Sound' with: 'Sound-StephaneDucasse.77';
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.30'.
