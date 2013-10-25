@@ -910,21 +910,6 @@ AbstractSound class >> bachFugueVoice4On: aSound [
 
 ]
 
-{ #category : #utilities }
-AbstractSound class >> busySignal: count [
-	"AbstractSound busySignal: 3"
-	| m s |
-	s := SequentialSound new.
-	m := MixedSound new.
-	m	add: (FMSound new setPitch: 480 dur: 0.5 loudness: 0.5);
-		add: (FMSound new setPitch: 620 dur: 0.5 loudness: 0.5).
-	s add: m.
-	s add: (FMSound new setPitch: 1 dur: 0.5 loudness: 0).
-	^ (RepeatingSound repeat: s count: count) play.
-
-
-]
-
 { #category : #examples }
 AbstractSound class >> chromaticPitchesFrom: aPitch [
 
@@ -1759,9 +1744,9 @@ AbstractSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex lef
 AbstractSound >> nameOrNumberToPitch: aStringOrNumber [
 	"Answer the pitch in cycles/second for the given pitch specification. The specification can be either a numeric pitch or pitch name such as 'c4'."
 
-	aStringOrNumber isNumber
-		ifTrue: [^ aStringOrNumber asFloat]
-		ifFalse: [^ AbstractSound pitchForName: aStringOrNumber]
+	^ aStringOrNumber isNumber
+		ifTrue: [ aStringOrNumber asFloat]
+		ifFalse: [ AbstractSound pitchForName: aStringOrNumber]
 
 ]
 

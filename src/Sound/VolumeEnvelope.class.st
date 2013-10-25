@@ -1,3 +1,6 @@
+"
+A VolumeEnvelope is an envelope handling the volume of a sound.
+"
 Class {
 	#name : #VolumeEnvelope,
 	#superclass : #Envelope,
