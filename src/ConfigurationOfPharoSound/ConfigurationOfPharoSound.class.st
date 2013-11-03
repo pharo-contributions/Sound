@@ -298,7 +298,7 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.2.x' version: '3.0'. 
 	spec for: #'pharo1.4.x' version: '5.0'. 
 	spec for: #'pharo2.0.x' version: '5.3'. 
-	spec for: #'pharo3.0.x' version: '5.4'. 
+	spec for: #'pharo3.0.x' version: '5.5'. 
 
 ]
 
