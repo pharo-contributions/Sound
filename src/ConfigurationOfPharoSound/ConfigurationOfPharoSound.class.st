@@ -276,6 +276,23 @@ ConfigurationOfPharoSound >> baseline51: spec [
 	]
 ]
 
+{ #category : #baselines }
+ConfigurationOfPharoSound >> baseline60: spec [ 
+	<version: '6.0-baseline'>
+		
+	spec for: #pharo do: [
+		spec blessing: #baseline.
+		spec description: 'Adding MorphExtension'.
+		spec repository: 'http://smalltalkhub.com/mc/PharoExtras/Sound/main'.
+		spec 
+			package: 'SoundMorphicExtension';
+			package: 'Sound' "with: [ spec requires: 'SoundMorphicExtension' ]" ;
+			package: 'Settings-Sound';
+			package: 'SoundScores' with: [ spec requires: 'Sound' ];
+			package: 'SoundMorphicUserInterface' with: [ spec requires: #('Sound' 'SoundMorphicExtension') ].
+	]
+]
+
 { #category : #accessing }
 ConfigurationOfPharoSound >> project [
 
@@ -550,5 +567,22 @@ ConfigurationOfPharoSound >> version55: spec [
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.30'.
 			
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version60: spec [
+	<version: '6.0' imports: #('6.0-baseline')>
+
+	spec for: #pharo do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: 'Extracting updatingStringMorph'.
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.77';
+			package: 'SoundMorphicExtension' with:'SoundMorphicExtension-StephaneDucasse.1';
+			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
+			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.31'.
 	]		
 ]
