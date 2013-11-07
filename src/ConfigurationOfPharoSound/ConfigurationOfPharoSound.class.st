@@ -1,4 +1,8 @@
 "
+(ConfigurationOfPharoSound project version: '6.0') load
+	- adding UpdatingStringMorph to a separate package
+
+
 (ConfigurationOfPharoSound project version: '5.5') load
 	- adding UpdatingStringMorph to the package
 
@@ -315,7 +319,7 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.2.x' version: '3.0'. 
 	spec for: #'pharo1.4.x' version: '5.0'. 
 	spec for: #'pharo2.0.x' version: '5.3'. 
-	spec for: #'pharo3.0.x' version: '5.5'. 
+	spec for: #'pharo3.0.x' version: '6.0'. 
 
 ]
 
