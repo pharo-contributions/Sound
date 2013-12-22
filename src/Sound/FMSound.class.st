@@ -84,13 +84,11 @@ FMSound class >> brass1 [
 	sound addEnvelope: (VolumeEnvelope 
 								points: { 0@0.0 . 30@0.8 . 90@1.0  .  120@0.9. 220@0.7 . 320@0.9 . 360@0.0} 
 								loopStart: 4 loopEnd: 6).
-
 	env := Envelope 
 				points: { 0@0.5 . 60@1.0 . 120@0.8 . 220@0.65 . 320@0.8 . 360@0.0} 
 				loopStart: 3 loopEnd: 5.
 	env target: sound; updateSelector: #modulation:; scale: 5.0.
 	sound addEnvelope: env.
-
 	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
@@ -102,17 +100,14 @@ FMSound class >> brass2 [
 
 	| sound  env |
 	sound := FMSound new modulation: 1 ratio: 1.
-
 	sound addEnvelope: (VolumeEnvelope 
 							points: {  0@0.0 . 20@1.0 . 40@0.9 . 100@0.7 . 160@0.9 . 200@0.0 } 
 							loopStart: 3 loopEnd: 5).
-
 	env := Envelope 
 				points: {0@0.5 . 30@1.0 . 40@0.8 . 100@0.7 . 160@0.8 . 200@0.0} 
 				loopStart: 3 loopEnd: 5.
 	env updateSelector: #modulation:; scale: 5.0.
 	sound addEnvelope: env.
-
 	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
@@ -125,11 +120,9 @@ FMSound class >> clarinet [
 	| sound  env |
 	sound := FMSound new modulation: 0 ratio: 2.	
 	sound addEnvelope: (VolumeEnvelope points: { 0@0.0 . 60@1.0 . 310@1.0 . 350@0.0} loopStart: 2 loopEnd: 3).
-
 	env := Envelope points: {0@0.0167 . 60@0.106 . 310@0.106 . 350@0.0 } loopStart: 2 loopEnd: 3.
 	env updateSelector: #modulation:; scale: 10.0.
 	sound addEnvelope: env.
-
 	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
@@ -170,7 +163,6 @@ FMSound class >> flute1 [
 
 	| sound  |
 	sound := FMSound new.
-	
 	sound addEnvelope: (VolumeEnvelope points: {0@0 . 20@1.0 . 100@1.0 . 120@0.0} loopStart: 2 loopEnd: 3).
 	^ sound setPitch: 440.0 duration: 1.0 loudness: 0.5
 
@@ -215,7 +207,6 @@ FMSound class >> marimba [
 	env := Envelope points: { 0@1.2 . 80@0.85 . 120@1.0 . 160@0.85 . 220@0.0} loopStart: 2 loopEnd: 4.
 	env updateSelector: #modulation:.
 	sound addEnvelope: env.
-
 	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
@@ -227,14 +218,10 @@ FMSound class >> mellowBrass [
 
 	| sound  env |
 	sound := FMSound new modulation: 0 ratio: 1.
-
-
 	sound addEnvelope: (VolumeEnvelope points: 	{ 0@0.0 . 70@0.325 . 120@0.194 . 200@0.194 . 320@0.194 . 380@0.0} loopStart: 3 loopEnd: 5).
-
 	env := Envelope points: { 0@0.1 . 70@0.68 . 120@0.528 . 200@0.519 . 320@0.528 . 380@0.0} loopStart: 3 loopEnd: 5.
 	env updateSelector: #modulation:; scale: 5.0.
 	sound addEnvelope: env.
-
 	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
@@ -246,7 +233,6 @@ FMSound class >> oboe1 [
 
 	| sound  |
 	sound := FMSound new modulation: 1 ratio: 1.
-	
 	sound addEnvelope: (VolumeEnvelope points: {0@0.0 . 10@1.0 . 100@1.0 . 120@0.0} loopStart: 2 loopEnd: 3).
 	^ sound setPitch: 440.0 duration: 1.0 loudness: 0.5
 
@@ -259,7 +245,6 @@ FMSound class >> oboe2 [
 
 	| sound  |
 	sound := FMSound new modulation: 1 ratio: 1.
-	
 	sound addEnvelope: (VolumeEnvelope points: {  0@0 . 20@1.0 . 100@1.0 . 120@0.0} loopStart: 2 loopEnd: 3).
 	sound addEnvelope: (RandomEnvelope for: #pitch:).
 	^ sound setPitch: 440.0 duration: 1.0 loudness: 0.5

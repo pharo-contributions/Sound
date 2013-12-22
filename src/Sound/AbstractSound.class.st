@@ -985,10 +985,10 @@ AbstractSound class >> dial: aString [
 						lo := #(697 770 852 941) at: (index - 1 // 4 + 1).
 						hi := #(1209 1336 1477 1633) at: (index - 1 \\ 4 + 1).
 						m := MixedSound new.
-						m add: (FMSound new setPitch: lo duration: 0.15 loudness: 0.5).
-						m add: (FMSound new setPitch: hi duration: 0.15 loudness: 0.5).
+						m add: (FMSound pitch: lo duration: 0.15 loudness: 0.5).
+						m add: (FMSound pitch: hi duration: 0.15 loudness: 0.5).
 						s add: m.
-						s add: (FMSound new setPitch: 1 duration: 0.05 loudness: 0)]]].
+						s add: (FMSound pitch: 1 duration: 0.05 loudness: 0)]]].
 	^ s play.
 
 
@@ -1072,9 +1072,9 @@ AbstractSound class >> hangUpWarning: count [
 	| m s |
 	s := SequentialSound new.
 	m := MixedSound new.
-	m	add: (FMSound new setPitch: 1400 duration: 0.1 loudness: 0.5);
-		add: (FMSound new setPitch: 2060 duration: 0.1 loudness: 0.5).
-	s add: m; add: (FMSound new setPitch: 1 duration: 0.1 loudness: 0).
+	m	add: (FMSound pitch: 1400 duration: 0.1 loudness: 0.5);
+		add: (FMSound pitch: 2060 duration: 0.1 loudness: 0.5).
+	s add: m; add: (FMSound pitch: 1 duration: 0.1 loudness: 0).
 	^ (RepeatingSound repeat: s count: count) play
 
 
@@ -1438,7 +1438,7 @@ AbstractSound class >> testFMInteractively [
 
 	| s mousePt lastVal status mod ratio |
 	SoundPlayer startPlayerProcessBufferSize: 1100 rate: 11025 stereo: false.
-	s := FMSound pitch: 440.0 dur: 200.0 loudness: 0.2.
+	s := FMSound pitch: 440.0 duration: 200.0 loudness: 0.2.
 
 	SoundPlayer playSound: s.
 	lastVal := nil.
