@@ -448,7 +448,7 @@ SoundBuffer >> trimmedThreshold: threshold [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #reading }
 SoundBuffer >> writeOnGZIPByteStream: aStream [ 
 	
 	aStream nextPutAllWordArray: self
