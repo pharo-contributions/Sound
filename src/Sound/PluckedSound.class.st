@@ -29,7 +29,7 @@ PluckedSound class >> default [
 	env target: snd; scale: 0.3.
 	^ snd
 		addEnvelope: env;
-		setPitch: 220 dur: 3.0 loudness: 0.3
+		setPitch: 220 duration: 3.0 loudness: 0.3
 
 ]
 
@@ -141,8 +141,15 @@ PluckedSound >> samplesRemaining [
 { #category : #initialization }
 PluckedSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
 
+	self setPitch: pitchNameOrNumber duration: d loudness: vol
+
+]
+
+{ #category : #initialization }
+PluckedSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
+
 	| p sz |
-	super setPitch: pitchNameOrNumber dur: d loudness: vol.
+	super setPitch: pitchNameOrNumber duration: d loudness: vol.
 	p := self nameOrNumberToPitch: pitchNameOrNumber.
 	initialCount := (d * self samplingRate asFloat) asInteger.
 	ring := SoundBuffer newMonoSampleCount:

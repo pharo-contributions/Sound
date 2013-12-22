@@ -17,6 +17,6 @@ UnloadedSound class >> default [
 	p := OrderedCollection new.
 	p add: 0@0.0; add: 10@1.0; add: 100@1.0; add: 120@0.0.
 	snd addEnvelope: (VolumeEnvelope points: p loopStart: 2 loopEnd: 3).
-	^ snd setPitch: 440.0 dur: 1.0 loudness: 0.5
+	^ snd setPitch: 440.0 duration: 1.0 loudness: 0.5
 
 ]

@@ -180,7 +180,7 @@ SoundCodec >> decompressSound: aCompressedSound [
 			gain: aCompressedSound gain.
 		sound
 			setPitch: 100.0
-			dur: (channels first size / aCompressedSound samplingRate)
+			duration: (channels first size / aCompressedSound samplingRate)
 			loudness: 1.0.
 		^ sound].
 	self error: 'unknown sound class'.

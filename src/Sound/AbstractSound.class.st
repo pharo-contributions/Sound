@@ -978,17 +978,17 @@ AbstractSound class >> dial: aString [
 	s := SequentialSound new.
 	aString do: [ :c | | lo m index hi |
 		c = $,
-			ifTrue: [ s add: (FMSound new setPitch: 1 dur: 1 loudness: 0) ]
+			ifTrue: [ s add: (FMSound pitch: 1 duration: 1 loudness: 0) ]
 			ifFalse: [
 				(index := ('123A456B789C*0#D' indexOf: c)) > 0
 					ifTrue: [
 						lo := #(697 770 852 941) at: (index - 1 // 4 + 1).
 						hi := #(1209 1336 1477 1633) at: (index - 1 \\ 4 + 1).
 						m := MixedSound new.
-						m add: (FMSound new setPitch: lo dur: 0.15 loudness: 0.5).
-						m add: (FMSound new setPitch: hi dur: 0.15 loudness: 0.5).
+						m add: (FMSound new setPitch: lo duration: 0.15 loudness: 0.5).
+						m add: (FMSound new setPitch: hi duration: 0.15 loudness: 0.5).
 						s add: m.
-						s add: (FMSound new setPitch: 1 dur: 0.05 loudness: 0)]]].
+						s add: (FMSound new setPitch: 1 duration: 0.05 loudness: 0)]]].
 	^ s play.
 
 
@@ -997,12 +997,13 @@ AbstractSound class >> dial: aString [
 { #category : #utilities }
 AbstractSound class >> dialTone: duration [
 	"AbstractSound dialTone: 2"
-	| m |
-	m := MixedSound new.
-	m add: (FMSound new setPitch: 350 dur: duration loudness: 0.5).
-	m add: (FMSound new setPitch: 440 dur: duration loudness: 0.5).
-	m play.
-	^ m
+	
+	^ MixedSound new
+		add: (FMSound pitch: 350 duration: duration loudness: 0.5);
+		add: (FMSound pitch: 440 duration: duration loudness: 0.5);
+		play; 
+		yourself
+
 ]
 
 { #category : #'instance creation' }
@@ -1071,9 +1072,9 @@ AbstractSound class >> hangUpWarning: count [
 	| m s |
 	s := SequentialSound new.
 	m := MixedSound new.
-	m	add: (FMSound new setPitch: 1400 dur: 0.1 loudness: 0.5);
-		add: (FMSound new setPitch: 2060 dur: 0.1 loudness: 0.5).
-	s add: m; add: (FMSound new setPitch: 1 dur: 0.1 loudness: 0).
+	m	add: (FMSound new setPitch: 1400 duration: 0.1 loudness: 0.5);
+		add: (FMSound new setPitch: 2060 duration: 0.1 loudness: 0.5).
+	s add: m; add: (FMSound new setPitch: 1 duration: 0.1 loudness: 0).
 	^ (RepeatingSound repeat: s count: count) play
 
 
@@ -1272,7 +1273,7 @@ AbstractSound class >> noteSequenceOn: aSound from: anArray [
 AbstractSound class >> pitch: p dur: d loudness: l [
 	"Return a new sound object for a note with the given parameters."
 
-	^ self new setPitch: p dur: d loudness: l
+	^ self new setPitch: p duration: d loudness: l
 
 ]
 
@@ -1917,8 +1918,15 @@ AbstractSound >> samplingRate [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'backward compatibility' }
 AbstractSound >> setPitch: pitchNameOrNumber dur: d loudness: l [
+	"Initialize my envelopes for the given parameters. Subclasses overriding this method should include a resend to super."
+
+	self setPitch: pitchNameOrNumber duration: d loudness: l
+]
+
+{ #category : #initialization }
+AbstractSound >> setPitch: pitchNameOrNumber duration: d loudness: l [
 	"Initialize my envelopes for the given parameters. Subclasses overriding this method should include a resend to super."
 
 	| p |
@@ -1937,7 +1945,7 @@ AbstractSound >> soundForMidiKey: midiKey dur: d loudness: l [
 
 	^ self copy
 		setPitch: (AbstractSound pitchForMIDIKey: midiKey)
-		dur: d
+		duration: d
 		loudness: l
 
 ]
@@ -1946,7 +1954,7 @@ AbstractSound >> soundForMidiKey: midiKey dur: d loudness: l [
 AbstractSound >> soundForPitch: pitchNameOrNumber dur: d loudness: l [
 	"Answer an initialized sound object (a copy of the receiver) that generates a note of the given pitch, duration, and loudness. Pitch may be a numeric pitch or a string pitch name such as 'c4'. Duration is in seconds and loudness is in the range 0.0 to 1.0."
 
-	^ self copy setPitch: pitchNameOrNumber dur: d loudness: l
+	^ self copy setPitch: pitchNameOrNumber duration: d loudness: l
 
 ]
 

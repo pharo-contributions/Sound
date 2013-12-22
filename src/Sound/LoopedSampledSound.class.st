@@ -76,7 +76,7 @@ LoopedSampledSound class >> unloopedSamples: aSoundBuffer pitch: perceivedPitchI
 
 ]
 
-{ #category : #initialization }
+{ #category : #operations }
 LoopedSampledSound >> addReleaseEnvelope [
 	"Add a simple release envelope to this sound."
 
@@ -113,7 +113,7 @@ LoopedSampledSound >> comeFullyUpOnReload: smartRefStream [
 
 ]
 
-{ #category : #initialization }
+{ #category : #operations }
 LoopedSampledSound >> computeSampleCountForRelease [
 	"Calculate the number of samples before the end of the note after which looping back will be be disabled. The units of this value, sampleCountForRelease, are samples at the original sampling rate. When playing a specific note, this value is converted to releaseCount, which is number of samples to be computed at the current pitch and sampling rate."
 	"Details: For short loops, set the sampleCountForRelease to the loop length plus the number of samples between loopEnd and lastSample. Otherwise, set it to 1/10th of a second worth of samples plus the number of samples between loopEnd and lastSample. In this case, the trailing samples will be played only if the last loop-back occurs within 1/10th of a second of the total note duration, and the note may be shortened by up to 1/10th second. For long loops, this is the best we can do."
@@ -375,7 +375,7 @@ LoopedSampledSound >> initialize [
 		pitch: 1.0
 		samplingRate: samples size.
 	self addReleaseEnvelope.
-	self setPitch: 440.0 dur: 1.0 loudness: 0.5.
+	self setPitch: 440.0 duration: 1.0 loudness: 0.5.
 
 ]
 
@@ -576,7 +576,7 @@ LoopedSampledSound >> samples [
 
 ]
 
-{ #category : #initialization }
+{ #category : #operations }
 LoopedSampledSound >> samples: aSoundBuffer loopEnd: loopEndIndex loopLength: loopSampleCount pitch: perceivedPitchInHz samplingRate: samplingRateInHz [
 	"Make this sound use the given samples array with a loop of the given length starting at the given index. The loop length may have a fractional part; this is necessary to achieve pitch accuracy for short loops."
 
@@ -612,11 +612,18 @@ LoopedSampledSound >> samplesRemaining [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'backward compatibility' }
 LoopedSampledSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
 	"(LoopedSampledSound pitch: 440.0 dur: 2.5 loudness: 0.4) play"
 
-	super setPitch: pitchNameOrNumber dur: d loudness: vol.
+	self setPitch: pitchNameOrNumber duration: d loudness: vol
+]
+
+{ #category : #initialization }
+LoopedSampledSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
+	"(LoopedSampledSound pitch: 440.0 dur: 2.5 loudness: 0.4) play"
+
+	super setPitch: pitchNameOrNumber duration: d loudness: vol.
 	self pitch: (self nameOrNumberToPitch: pitchNameOrNumber).
 	self reset.
 
@@ -650,7 +657,7 @@ LoopedSampledSound >> storeSampleCount: samplesToStore bigEndian: bigEndianFlag 
 
 ]
 
-{ #category : #initialization }
+{ #category : #operations }
 LoopedSampledSound >> unloopedSamples: aSoundBuffer pitch: perceivedPitchInHz samplingRate: samplingRateInHz [
 	"Make this sound play the given samples unlooped. The samples have the given perceived pitch when played at the given sampling rate. By convention, unpitched sounds such as percussion sounds should specify a pitch of nil or 100 Hz."
 

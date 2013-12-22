@@ -1,3 +1,25 @@
+"
+I represent a sound that is generated based on a modulation, pitch and duration. 
+
+To create instances of me use:
+
+(FMSound pitch: 'a4' duration: 2.5 loudness: 0.4) play
+
+
+
+Instance Variables
+	count:		<Object>
+	initialCount:		<Object>
+	modulation:		<Object>
+	multiplier:		<Object>
+	normalizedModulation:		<Object>
+	scaledIndex:		<Object>
+	scaledIndexIncr:		<Object>
+	scaledOffsetIndex:		<Object>
+	scaledOffsetIndexIncr:		<Object>
+	scaledWaveTableSize:		<Object>
+	waveTable:		<Object>
+"
 Class {
 	#name : #FMSound,
 	#superclass : #AbstractSound,
@@ -28,7 +50,7 @@ FMSound class >> bass1 [
 	| sound |
 	sound := self new modulation: 0 ratio: 0.
 	sound addEnvelope: (VolumeEnvelope exponentialDecay: 0.95).
-	^ sound setPitch: 220 dur: 1.0 loudness: 0.3
+	^ sound setPitch: 220 duration: 1.0 loudness: 0.3
 
 ]
 
@@ -48,7 +70,7 @@ FMSound class >> bassoon1 [
 	env updateSelector: #modulation:; scale: 5.05.
 	sound addEnvelope: env.
 
-	^ sound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -69,7 +91,7 @@ FMSound class >> brass1 [
 	env target: sound; updateSelector: #modulation:; scale: 5.0.
 	sound addEnvelope: env.
 
-	^ sound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -91,7 +113,7 @@ FMSound class >> brass2 [
 	env updateSelector: #modulation:; scale: 5.0.
 	sound addEnvelope: env.
 
-	^ sound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -108,7 +130,7 @@ FMSound class >> clarinet [
 	env updateSelector: #modulation:; scale: 10.0.
 	sound addEnvelope: env.
 
-	^ sound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -129,7 +151,7 @@ FMSound class >> clarinet2 [
 	env updateSelector: #modulation:; scale: 10.0.
 	sound addEnvelope: env.
 
-	^ sound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 
 ]
@@ -150,7 +172,7 @@ FMSound class >> flute1 [
 	sound := FMSound new.
 	
 	sound addEnvelope: (VolumeEnvelope points: {0@0 . 20@1.0 . 100@1.0 . 120@0.0} loopStart: 2 loopEnd: 3).
-	^ sound setPitch: 440.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 440.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -163,7 +185,7 @@ FMSound class >> flute2 [
 	sound := FMSound new.
 	sound addEnvelope: (VolumeEnvelope points: {0@0 . 20@1.0 . 100@1.0 . 120@0.0} loopStart: 2 loopEnd: 3).
 	sound addEnvelope: (RandomEnvelope for: #pitch:).
-	^ sound setPitch: 440.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 440.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -194,7 +216,7 @@ FMSound class >> marimba [
 	env updateSelector: #modulation:.
 	sound addEnvelope: env.
 
-	^ sound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -213,7 +235,7 @@ FMSound class >> mellowBrass [
 	env updateSelector: #modulation:; scale: 5.0.
 	sound addEnvelope: env.
 
-	^ sound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -226,7 +248,7 @@ FMSound class >> oboe1 [
 	sound := FMSound new modulation: 1 ratio: 1.
 	
 	sound addEnvelope: (VolumeEnvelope points: {0@0.0 . 10@1.0 . 100@1.0 . 120@0.0} loopStart: 2 loopEnd: 3).
-	^ sound setPitch: 440.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 440.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -240,7 +262,7 @@ FMSound class >> oboe2 [
 	
 	sound addEnvelope: (VolumeEnvelope points: {  0@0 . 20@1.0 . 100@1.0 . 120@0.0} loopStart: 2 loopEnd: 3).
 	sound addEnvelope: (RandomEnvelope for: #pitch:).
-	^ sound setPitch: 440.0 dur: 1.0 loudness: 0.5
+	^ sound setPitch: 440.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -256,9 +278,21 @@ FMSound class >> organ1 [
 				points: {0@0 . 60@1.0 . 110@0.8 . 200@1.0 . 250@0.0} 
 				loopStart: 2 
 				loopEnd: 4).
-	sound setPitch: 440.0 dur: 1.0 loudness: 0.5.
+	sound setPitch: 440.0 duration: 1.0 loudness: 0.5.
 	^ sound
 
+]
+
+{ #category : #'instance creation' }
+FMSound class >> pitch: pitchNameOrNumber duration: d loudness: vol [
+	"Creates a sound for a giving note, a duration in second and a volume expressed as a float between 0 and 1.0. The note can be expressed either by a frequency or a pitchName e.g. 'a4, g#3"
+	
+	"(self pitch: 'a4' duration: 2.5 loudness: 0.4) play"
+	
+	^ self new 
+		setPitch: pitchNameOrNumber 
+		duration: d 
+		loudness: vol
 ]
 
 { #category : #instruments }
@@ -278,7 +312,7 @@ FMSound class >> pluckedElecBass [
 	env updateSelector: #ratio:.
 	soound addEnvelope: env.
 
-	^ soound setPitch: 220.0 dur: 1.0 loudness: 0.5
+	^ soound setPitch: 220.0 duration: 1.0 loudness: 0.5
 
 ]
 
@@ -290,7 +324,7 @@ FMSound class >> randomWeird1 [
 	sound := FMSound new.
 	sound addEnvelope: (VolumeEnvelope exponentialDecay: 0.96).
 	sound addEnvelope: (PitchEnvelope points: { 0@0 . 100@1.0 . 250@0.7 . 400@1.0 . 500@0} loopStart: 2 loopEnd: 4).
-	^ sound setPitch: (150 + 2000 atRandom) dur: 2.0 loudness: 0.5
+	^ sound setPitch: (150 + 2000 atRandom) duration: 2.0 loudness: 0.5
 
 ]
 
@@ -302,7 +336,7 @@ FMSound class >> randomWeird2 [
 	sound := FMSound new.
 	sound addEnvelope: (VolumeEnvelope exponentialDecay: 0.96).
 	sound addEnvelope: (PitchEnvelope exponentialDecay: 0.98).
-	^ sound setPitch: (150 + 2000 atRandom) dur: 2.0 loudness: 0.5
+	^ sound setPitch: (150 + 2000 atRandom) duration: 2.0 loudness: 0.5
 
 ]
 
@@ -335,7 +369,7 @@ FMSound >> initialize [
 	super initialize.
 	waveTable := SineTable.
 	scaledWaveTableSize := waveTable size * ScaleFactor.
-	self setPitch: 440.0 dur: 1.0 loudness: 0.2.
+	self setPitch: 440.0 duration: 1.0 loudness: 0.2.
 
 ]
 
@@ -506,11 +540,21 @@ FMSound >> samplesRemaining [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'backward compatibility' }
 FMSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
-	"(FMSound pitch: 'a4' dur: 2.5 loudness: 0.4) play"
+	"For compatibility"
 
-	super setPitch: pitchNameOrNumber dur: d loudness: vol.
+	self setPitch: pitchNameOrNumber duration: d loudness: vol
+]
+
+{ #category : #initialization }
+FMSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
+	"Creates a sound for a giving note, a duration in second and a volume expressed as a float between 0 and 1.0. The note can be expressed either by a frequency or a pitchName e.g. 'a4, g#3"
+	
+	"(FMSound pitch: 'a4' duration: 2.5 loudness: 0.4) play"
+
+
+	super setPitch: pitchNameOrNumber duration: d loudness: vol.
 	modulation ifNil: [modulation := 0.0].
 	multiplier ifNil: [multiplier := 0.0].
 		"ugly!"
@@ -534,7 +578,7 @@ FMSound >> setWavetable: anArray [
 	vol := self loudness.
 	waveTable := samples.
 	scaledWaveTableSize := waveTable size * ScaleFactor.
-	self setPitch: p dur: dur loudness: vol.
+	self setPitch: p duration: dur loudness: vol.
 
 ]
 

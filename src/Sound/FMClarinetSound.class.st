@@ -4,8 +4,15 @@ Class {
 	#category : #'Sound-Synthesis'
 }
 
-{ #category : #initialization }
+{ #category : #'backward compatibility' }
 FMClarinetSound >> setPitch: pitchNameOrNumber dur: d loudness: l [
+	"Select a modulation ratio and modulation envelope scale based on my pitch."
+
+	self setPitch: pitchNameOrNumber duration: d loudness: l
+]
+
+{ #category : #initialization }
+FMClarinetSound >> setPitch: pitchNameOrNumber duration: d loudness: l [
 	"Select a modulation ratio and modulation envelope scale based on my pitch."
 
 	| p modScale |
@@ -20,6 +27,6 @@ FMClarinetSound >> setPitch: pitchNameOrNumber dur: d loudness: l [
 			(e updateSelector = #modulation:)
 				ifTrue: [e scale: modScale]]].
 
-	super setPitch: p dur: d loudness: l.
+	super setPitch: p duration: d loudness: l.
 
 ]

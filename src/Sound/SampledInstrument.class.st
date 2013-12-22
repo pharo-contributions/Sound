@@ -334,7 +334,7 @@ SampledInstrument >> soundForMidiKey: midiKey dur: d loudness: l [
 	note := (keymap at: midiKey) copy.
 	^ note
 		setPitch: (AbstractSound pitchForMIDIKey: midiKey)
-		dur: d
+		duration: d
 		loudness: (l * note gain)
 
 ]

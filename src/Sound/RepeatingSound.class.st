@@ -32,7 +32,7 @@ RepeatingSound class >> carMotorSound: speed [
 			unloopedSamples: CarMotorSamples
 			pitch: 20.0
 			samplingRate: 22050)
-				setPitch: speed dur: 100.0 loudness: 1.0)
+				setPitch: speed duration: 100.0 loudness: 1.0)
 
 ]
 
@@ -155,6 +155,13 @@ RepeatingSound >> samplesRemaining [
 
 { #category : #initialization }
 RepeatingSound >> setPitch: p dur: d loudness: l [
+
+	self error: 'RepeatingSounds do not support playing notes'.
+
+]
+
+{ #category : #initialization }
+RepeatingSound >> setPitch: p duration: d loudness: l [
 
 	self error: 'RepeatingSounds do not support playing notes'.
 
