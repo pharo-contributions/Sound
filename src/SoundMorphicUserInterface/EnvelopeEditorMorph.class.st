@@ -1,3 +1,10 @@
+"
+I'm an editor to modify the envelops of a sound.
+
+Here is a typical example of how to open me.
+
+EnvelopeEditorMorph openOn: (FMsound brass1) copy title: 'brass1'
+"
 Class {
 	#name : #EnvelopeEditorMorph,
 	#superclass : #BorderedMorph,
@@ -22,9 +29,9 @@ Class {
 	#category : #SoundMorphicUserInterface
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #open }
 EnvelopeEditorMorph class >> openOn: aSound title: aString [
-	"EnvelopeEditorMorph openOn: (AbstractSound soundNamed: 'brass1') copy title: 'brass1'"
+	"EnvelopeEditorMorph openOn: (FMsound brass1) copy title: 'brass1'"
 	(self basicNew initOnSound: aSound title: aString) openInWorld
 ]
 

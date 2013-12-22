@@ -1,3 +1,6 @@
+"
+I'm a little graphic associated with a sound.
+"
 Class {
 	#name : #InterimSoundMorph,
 	#superclass : #BorderedMorph,
