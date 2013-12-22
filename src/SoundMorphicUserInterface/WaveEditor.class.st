@@ -560,7 +560,7 @@ WaveEditor >> playLoop [
 
 	"sustain for the longer of four loops or two seconds"
 	snd setPitch: 100.0
-		dur: (((4.0 * loopLength) / samplingRate) max: 2.0)
+		duration: (((4.0 * loopLength) / samplingRate) max: 2.0)
 		loudness: 0.5.
 	snd play.
 
@@ -581,7 +581,7 @@ WaveEditor >> playTestNote [
 	dur := (data size / samplingRate) + loopDur.
 	(snd
 		addReleaseEnvelope;
-		setPitch: 100.0 dur: dur loudness: 0.5) play.
+		setPitch: 100.0 duration: dur loudness: 0.5) play.
 
 ]
 
