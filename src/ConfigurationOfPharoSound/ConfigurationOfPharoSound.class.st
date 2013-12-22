@@ -1,4 +1,7 @@
 "
+(ConfigurationOfPharoSound project version: '6.1') load
+	- adding ScaleMorph.
+
 (ConfigurationOfPharoSound project version: '6.0') load
 	- adding UpdatingStringMorph to a separate package
 
@@ -319,7 +322,7 @@ ConfigurationOfPharoSound >> stable: spec [
 	spec for: #'pharo1.2.x' version: '3.0'. 
 	spec for: #'pharo1.4.x' version: '5.0'. 
 	spec for: #'pharo2.0.x' version: '5.3'. 
-	spec for: #'pharo3.0.x' version: '6.0'. 
+	spec for: #'pharo3.0.x' version: '6.1'. 
 
 ]
 
@@ -588,5 +591,22 @@ ConfigurationOfPharoSound >> version60: spec [
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.31'.
+	]		
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version61: spec [
+	<version: '6.1' imports: #('6.0-baseline')>
+
+	spec for: #pharo do: [
+		spec blessing: #release.
+		spec author: 'StephaneDucasse'.
+		spec description: 'Adding ScaleMorph and making sure that EnvelopeEditorMorph works again'.
+		spec 
+			package: 'Sound' with: 'Sound-StephaneDucasse.80';
+			package: 'SoundMorphicExtension' with: 'SoundMorphicExtension-StephaneDucasse.1';
+			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
+			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.34'.
 	]		
 ]
