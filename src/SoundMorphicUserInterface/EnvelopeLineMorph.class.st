@@ -42,7 +42,7 @@ EnvelopeLineMorph >> newVertex: ix event: evt fromHandle: handle [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 EnvelopeLineMorph >> vertices: verts borderWidth: bw borderColor: bc [ 
 	super initialize.
 	vertices := verts.
@@ -51,5 +51,6 @@ EnvelopeLineMorph >> vertices: verts borderWidth: bw borderColor: bc [
 	borderColor := bc.
 	closed := false.
 	arrows := #none.
+	self beStraightSegments.
 	self computeBounds
 ]

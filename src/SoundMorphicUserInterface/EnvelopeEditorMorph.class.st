@@ -1,9 +1,9 @@
 "
-I'm an editor to modify the envelops of a sound.
+I'm an editor to modify the eFMSound of a sound.
 
 Here is a typical example of how to open me.
 
-EnvelopeEditorMorph openOn: (FMsound brass1) copy title: 'brass1'
+EnvelopeEditorMorph openOn: (FMSound brass1) copy title: 'brass1'
 "
 Class {
 	#name : #EnvelopeEditorMorph,
@@ -101,7 +101,7 @@ EnvelopeEditorMorph >> addCurves [
 		(showAllEnvelopes or: [env == envelope]) ifTrue:
 			[verts := env points collect:
 				[:p | (self xFromMs: p x) @ (self yFromValue: p y)].
-			aLine := EnvelopeLineMorph basicNew
+			aLine := EnvelopeLineMorph new
 						vertices: verts borderWidth: 1
 						borderColor: (self colorForEnvelope: env).
 			env == envelope
@@ -256,21 +256,18 @@ EnvelopeEditorMorph >> buildGraphAreaIn: frame [
 
 { #category : #editing }
 EnvelopeEditorMorph >> buildScalesIn: frame [
-	| env |
+	| env hmajortick hminortick |
 	env := envelope.
 	pixPerTick := graphArea width // (self maxTime//10) max: 1.
-	"hminortick := ( 1 + ( self maxTime // 800 ) ) * 10.
-	hmajortick := ( 1 + ( self maxTime // 800 ) ) * 100."
-	hScale := (Morph newBounds: ((graphArea left)@(frame top) corner: (self xFromMs: self maxTime)@(graphArea top - 1))) color: Color lightGreen.
-"	hScale := (ScaleMorph newBounds: ((graphArea left)@(frame top) corner: (self xFromMs: self maxTime)@(graphArea top - 1)))
+	hminortick := ( 1 + ( self maxTime // 800 ) ) * 10.
+	hmajortick := ( 1 + ( self maxTime // 800 ) ) * 100.
+	hScale := (ScaleMorph newBounds: ((graphArea left)@(frame top) corner: (self xFromMs: self maxTime)@(graphArea top - 1)))
 		start: 0 stop: self maxTime
 		minorTick: hminortick minorTickLength: 3
 		majorTick: hmajortick majorTickLength: 10
 		caption: 'milliseconds' tickPrintBlock: [:v | v printString].
-"
 	self addMorph: hScale.
-	vScale := (Morph newBounds: (0@0 extent: (graphArea height)@(graphArea left - frame left))) color: Color lightGreen.
-	"vScale := ScaleMorph newBounds: (0@0 extent: (graphArea height)@(graphArea left - frame left))."
+	vScale := ScaleMorph newBounds: (0@0 extent: (graphArea height)@(graphArea left - frame left)).
 	env name = 'pitch'
 		ifTrue:
 		[env scale >= 2.0
