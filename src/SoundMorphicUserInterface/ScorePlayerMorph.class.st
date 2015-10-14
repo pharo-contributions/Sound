@@ -25,19 +25,19 @@ ScorePlayerMorph class >> descriptionForPartsBin [
 		documentation:	' Mediates between a score such as a MIDIScore, a PianoRollScoreMorph, and the actual SoundPlayer synthesizer'
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file service' }
 ScorePlayerMorph class >> fileReaderServicesForFile: fullName suffix: suffix [
-
-	^(suffix = 'mid') | (suffix = '*') 
-		ifTrue: [ self services]
+	<fileService>
+	
+	^ (#('midi' 'mid') includes: suffix)
+		ifTrue: [ self services ]
 		ifFalse: [#()]
-
 ]
 
 { #category : #initialization }
 ScorePlayerMorph class >> initialize [
 
-	FileServices registerFileReader: self
+	"FileServices registerFileReader: self"
 ]
 
 { #category : #'system hookup' }
@@ -73,7 +73,7 @@ ScorePlayerMorph class >> playMidiFile: fullName [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'file service' }
 ScorePlayerMorph class >> servicePlayMidiFile [
 	"Answer a service for opening player on a midi file"
 
@@ -85,18 +85,12 @@ ScorePlayerMorph class >> servicePlayMidiFile [
 		buttonLabel: 'open'
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file service' }
 ScorePlayerMorph class >> services [
 
 	^ Array with: self servicePlayMidiFile
 
 	
-]
-
-{ #category : #'initialize-release' }
-ScorePlayerMorph class >> unload [
-
-	FileServices unregisterFileReader: self 
 ]
 
 { #category : #controls }
