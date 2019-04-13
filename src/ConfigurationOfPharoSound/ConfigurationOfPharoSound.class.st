@@ -1,6 +1,6 @@
 "
 For Pharo 50.
-(ConfigurationOfPharoSound project version: '6.1.1') load
+(ConfigurationOfPharoSound project version: '6.1.2') load
 
 
 ===================================================
@@ -647,6 +647,22 @@ ConfigurationOfPharoSound >> version611: spec [
 		spec 
 			package: 'SoundMorphicExtension' with: 'SoundMorphicExtension-StephaneDucasse.1';
 			package: 'Sound' with: 'Sound-StephaneDucasse.80';
+			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
+			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-EstebanLorenzano.35'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfPharoSound >> version612: spec [
+	<version: '6.1.2' imports: #('6.1-baseline' )>
+
+	spec for: #'pharo' do: [
+		spec blessing: #'baseline'.
+		spec description: 'Merging MorphExtension'.
+		spec 
+			package: 'SoundMorphicExtension' with: 'SoundMorphicExtension-StephaneDucasse.2';
+			package: 'Sound' with: 'Sound-StephaneDucasse.81';
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
 			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-EstebanLorenzano.35'. ].
