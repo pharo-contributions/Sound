@@ -1,6 +1,9 @@
 "
-(ConfigurationOfPharoSound project version: '6.1') load
-	- adding ScaleMorph.
+For Pharo 50.
+(ConfigurationOfPharoSound project version: '6.1.1') load
+
+
+===================================================
 
 (ConfigurationOfPharoSound project version: '6.0') load
 	- adding UpdatingStringMorph to a separate package
