@@ -178,6 +178,12 @@ UpdatingStringMorph >> floatPrecision [
 
 ]
 
+{ #category : #accessing }
+UpdatingStringMorph >> floatPrecision: aNumber [
+	
+	floatPrecision := aNumber
+]
+
 { #category : #private }
 UpdatingStringMorph >> floatPrecisionForDecimalPlaces: places [
 	"Answer the floatPrecision that corresponds to the given number of decimal places"
