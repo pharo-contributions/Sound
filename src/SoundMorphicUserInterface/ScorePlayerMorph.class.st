@@ -180,7 +180,7 @@ ScorePlayerMorph >> invokeMenu [
 
 	| aMenu |
 	aMenu := MenuMorph new defaultTarget: self.
-	aMenu add: 'open a MIDI file' translated action: #openMIDIFile.
+	aMenu add: 'open a MIDI file' translated selector: #openMIDIFile.
 	aMenu addList: {
 		#-.
 		{'save as AIFF file' translated.	#saveAsAIFF}.
@@ -191,12 +191,12 @@ ScorePlayerMorph >> invokeMenu [
 	aMenu addLine.
 	scorePlayer midiPort
 		ifNil: [
-			aMenu add: 'play via MIDI' translated action: #openMIDIPort]
+			aMenu add: 'play via MIDI' translated selector: #openMIDIPort]
 		ifNotNil: [
-			aMenu add: 'play via built in synth' translated action: #closeMIDIPort.
-			aMenu add: 'new MIDI controller' translated action: #makeMIDIController:].
+			aMenu add: 'play via built in synth' translated selector: #closeMIDIPort.
+			aMenu add: 'new MIDI controller' translated selector: #makeMIDIController:].
 	aMenu addLine.
-	aMenu add: 'make a pause marker' translated action: #makeAPauseEvent:.
+	aMenu add: 'make a pause marker' translated selector: #makeAPauseEvent:.
 
 	aMenu popUpInWorld: self world.
 
@@ -350,7 +350,8 @@ ScorePlayerMorph >> onScorePlayer: aScorePlayer title: scoreName [
 ScorePlayerMorph >> openMIDIFile [
 	"Open a MIDI score and re-init controls..."
 	| score fileName f player |
-	fileName := Utilities chooseFileWithSuffixFromList: #('.mid' '.midi')
+	self flag: #toFix.
+	fileName := UIManager default chooseFileWithSuffixFromList: #('.mid' '.midi')
 					withCaption: 'Choose a MIDI file to open' translated.
 	(fileName isNil or: [ fileName == #none ])
 		ifTrue: [^ self inform: 'No .mid/.midi files found in the Pharo directory' translated].

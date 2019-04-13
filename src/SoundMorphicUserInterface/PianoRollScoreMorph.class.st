@@ -397,14 +397,14 @@ PianoRollScoreMorph >> invokeScoreMenu: evt [
 		menu add: 'sig     ' translated, notePerBeat printString subMenu: subMenu.
 	menu addLine.
 	showMeasureLines
-		ifTrue: [menu add: 'hide measure lines' translated action: #measureLinesOnOff]
-		ifFalse: [menu add: 'show measure lines' translated action: #measureLinesOnOff].
+		ifTrue: [menu add: 'hide measure lines' translated selector: #measureLinesOnOff]
+		ifFalse: [menu add: 'show measure lines' translated selector: #measureLinesOnOff].
 	showBeatLines
-		ifTrue: [menu add: 'hide beat lines' translated action: #beatLinesOnOff]
-		ifFalse: [menu add: 'show beat lines' translated action: #beatLinesOnOff].
+		ifTrue: [menu add: 'hide beat lines' translated selector: #beatLinesOnOff]
+		ifFalse: [menu add: 'show beat lines' translated selector: #beatLinesOnOff].
 
 	menu addLine.
-	menu add: 'add keyboard' translated action: #addKeyboard.
+	menu add: 'add keyboard' translated selector: #addKeyboard.
 
 	menu popUpEvent: evt in: self world.
 

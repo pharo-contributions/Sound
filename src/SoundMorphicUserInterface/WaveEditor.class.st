@@ -29,7 +29,7 @@ WaveEditor class >> descriptionForPartsBin [
 { #category : #'instance creation' }
 WaveEditor class >> openOn: dataCollection [
 	"Open a new WaveEditor on the given sequencable collection of data."
-
+	"self openOn: #()"
 	^ (self new data: dataCollection) openInWorld
 
 ]
