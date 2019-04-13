@@ -665,7 +665,7 @@ ConfigurationOfPharoSound >> version612: spec [
 			package: 'Sound' with: 'Sound-StephaneDucasse.81';
 			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
 			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.6';
-			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-EstebanLorenzano.35'. ].
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.36'. ].
 
 ]
 
