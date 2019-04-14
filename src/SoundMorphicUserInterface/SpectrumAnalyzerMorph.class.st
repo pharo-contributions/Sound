@@ -277,7 +277,7 @@ SpectrumAnalyzerMorph >> showSonogram [
 	h := h min: 512 max: 64.
 	w := 400.
 	sonogramMorph :=
-		Sonogram new
+		SonogramMorph new
 			extent: w@h
 			minVal: 0.0
 			maxVal: 1.0
