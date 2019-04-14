@@ -39,14 +39,14 @@ MIDISynth class >> example [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MIDISynth >> channel: i [
 
 	^ channels at: i
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 MIDISynth >> closeMIDIPort [
 
 	midiParser midiPort ifNil: [^ self].
@@ -55,7 +55,7 @@ MIDISynth >> closeMIDIPort [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 MIDISynth >> initialize [
 
 	super initialize.
@@ -64,49 +64,49 @@ MIDISynth >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> instrumentForChannel: channelIndex [
 
 	^ (channels at: channelIndex) instrument
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> instrumentForChannel: channelIndex put: aSoundProto [
 
 	(channels at: channelIndex) instrument: aSoundProto.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MIDISynth >> isOn [
 
 	^ process notNil
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MIDISynth >> midiParser [
 
 	^ midiParser
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MIDISynth >> midiPort [
 
 	^ midiParser midiPort
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MIDISynth >> midiPort: aMIDIPortOrNil [
 
 	midiParser midiPort: aMIDIPortOrNil.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MIDISynth >> midiTrackingLoop [
 
 	midiParser clearBuffers.
@@ -115,28 +115,28 @@ MIDISynth >> midiTrackingLoop [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> mutedForChannel: channelIndex put: aBoolean [
 
 	^ (channels at: channelIndex) muted: aBoolean
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> panForChannel: channelIndex [
 
 	^ (channels at: channelIndex) pan
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> panForChannel: channelIndex put: newPan [
 
 	(channels at: channelIndex) pan: newPan.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MIDISynth >> processMIDI [
 	"Process some MIDI commands. Answer true if any commands were processed."
 
@@ -161,7 +161,7 @@ MIDISynth >> processMIDI [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MIDISynth >> processMIDIUntilMouseDown [
 	"Used for debugging. Do MIDI processing until the mouse is pressed."
 
@@ -170,7 +170,7 @@ MIDISynth >> processMIDIUntilMouseDown [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> setAllChannelMasterVolumes: aNumber [
 
 	| vol |
@@ -179,7 +179,7 @@ MIDISynth >> setAllChannelMasterVolumes: aNumber [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MIDISynth >> startMIDITracking [
 
 	midiParser ifNil: [^ self].
@@ -193,7 +193,7 @@ MIDISynth >> startMIDITracking [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 MIDISynth >> stopMIDITracking [
 
 	process ifNotNil: [
@@ -203,14 +203,14 @@ MIDISynth >> stopMIDITracking [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> volumeForChannel: channelIndex [
 
 	^  (channels at: channelIndex) masterVolume
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing-midi' }
 MIDISynth >> volumeForChannel: channelIndex put: newVolume [
 
 	(channels at: channelIndex) masterVolume: newVolume.

@@ -38,7 +38,7 @@ Class {
 	#category : #SoundScores
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MIDIFileReader class >> scoreFromFileNamed: fileName [
 
 	| f score |
@@ -49,7 +49,7 @@ MIDIFileReader class >> scoreFromFileNamed: fileName [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MIDIFileReader class >> scoreFromStream: binaryStream [
 
 	|  score |
@@ -58,7 +58,7 @@ MIDIFileReader class >> scoreFromStream: binaryStream [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MIDIFileReader class >> scoreFromURL: urlString [
 
 	| data |
@@ -68,7 +68,7 @@ MIDIFileReader class >> scoreFromURL: urlString [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #constant }
 MIDIFileReader class >> standardMIDIInstrumentNames [
 	"Answer an array of Standard MIDI instrument names."
 
@@ -264,6 +264,11 @@ MIDIFileReader >> isTempoTrack: anEventList [
 	anEventList do: [:evt | evt isTempoEvent ifFalse: [^ false]].
 	^ true
 
+]
+
+{ #category : #'private tests' }
+MIDIFileReader >> maxNoteTicks [
+	^ maxNoteTicks 
 ]
 
 { #category : #'track reading' }
@@ -635,6 +640,11 @@ MIDIFileReader >> startNote: midiKey vel: vel chan: chan at: startTicks [
 
 ]
 
+{ #category : #'private tests' }
+MIDIFileReader >> ticksPerQuarter [
+	^ ticksPerQuarter 
+]
+
 { #category : #'track reading' }
 MIDIFileReader >> trackContainsNotes: eventList [
 	"Answer true if the given track contains at least one note event."
@@ -642,4 +652,9 @@ MIDIFileReader >> trackContainsNotes: eventList [
 	eventList do: [:e | e isNoteEvent ifTrue: [^ true]].
 	^ false
 
+]
+
+{ #category : #'private tests' }
+MIDIFileReader >> trackInfo [
+	^ trackInfo  
 ]
