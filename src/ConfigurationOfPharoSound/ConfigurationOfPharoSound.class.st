@@ -670,6 +670,22 @@ ConfigurationOfPharoSound >> version612: spec [
 ]
 
 { #category : #versions }
+ConfigurationOfPharoSound >> version613: spec [
+	<version: '6.1.3' imports: #('6.1-baseline' )>
+
+	spec for: #'pharo' do: [
+		spec blessing: #'baseline'.
+		spec description: 'Merging MorphExtension'.
+		spec 
+			package: 'SoundMorphicExtension' with: 'SoundMorphicExtension-StephaneDucasse.2';
+			package: 'Sound' with: 'Sound-StephaneDucasse.82';
+			package: 'Settings-Sound' with: 'Settings-Sound-HenrikSperreJohansen.2';
+			package: 'SoundScores' with: 'SoundScores-StephaneDucasse.7';
+			package: 'SoundMorphicUserInterface' with: 'SoundMorphicUserInterface-StephaneDucasse.37'. ].
+
+]
+
+{ #category : #versions }
 ConfigurationOfPharoSound >> version61: spec [
 	<version: '6.1' imports: #('6.0-baseline')>
 
