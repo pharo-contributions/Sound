@@ -1,8 +1,21 @@
 "
 Sonograms are imageMorphs that will repeatedly plot arrays of values as black on white columns moving to the right in time and scrolling left as necessary.
+
+	| s data |
+	s := Sonogram new 
+			extent: 200@50
+			minVal: 0.0 maxVal: 1.0 
+			scrollDelta: 20.
+	World addMorph: s.
+	data := (1 to: 133) collect: [:i | 0.0].
+	1 to: 300 do:
+		[:i | data at: (i\\133)+1 put: 1.0.
+		s plotColumn: data.
+		data at: (i\\133)+1 put: 0.0.
+		World doOneCycleNow].
 "
 Class {
-	#name : #Sonogram,
+	#name : #SonogramMorph,
 	#superclass : #ImageMorph,
 	#instVars : [
 		'lastX',
@@ -12,11 +25,11 @@ Class {
 		'maxVal',
 		'pixValMap'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Experimental'
 }
 
 { #category : #geometry }
-Sonogram >> extent: newExtent [
+SonogramMorph >> extent: newExtent [
 	super image: (Form extent: newExtent depth: Display depth).
 	lastX := -1.
 	columnForm := Form extent: (32//image depth)@(image height) depth: image depth.
@@ -27,7 +40,7 @@ Sonogram >> extent: newExtent [
 ]
 
 { #category : #all }
-Sonogram >> extent: extent minVal: min maxVal: max scrollDelta: d [
+SonogramMorph >> extent: extent minVal: min maxVal: max scrollDelta: d [
 	minVal := min.
 	maxVal := max.
 	scrollDelta := d.
@@ -49,7 +62,7 @@ Sonogram >> extent: extent minVal: min maxVal: max scrollDelta: d [
 ]
 
 { #category : #all }
-Sonogram >> plotColumn: dataArray [ 
+SonogramMorph >> plotColumn: dataArray [ 
 	| chm1 i normVal r |
 	columnForm unhibernate.
 	chm1 := columnForm height - 1.
@@ -73,7 +86,7 @@ Sonogram >> plotColumn: dataArray [
 ]
 
 { #category : #all }
-Sonogram >> scroll [
+SonogramMorph >> scroll [
 	image copy: (scrollDelta@0 extent: (image width-scrollDelta)@image height)
 			from: image to: 0@0 rule: Form over.
 	lastX := lastX - scrollDelta.

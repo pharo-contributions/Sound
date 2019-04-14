@@ -94,7 +94,7 @@ SampledSound class >> beepSound [
 { #category : #'coffee cup clink' }
 SampledSound class >> coffeeCupClink [
 	"Return the samples array for the sound of a spoon being tapped against a coffee cup."
-
+	"self coffeeCupClink"
 	CoffeeCupClink ifNil: [self initializeCoffeeCupClink].
 	^ CoffeeCupClink
 
@@ -756,7 +756,7 @@ SampledSound >> sonogramMorph: height from: start to: stop nPoints: nPoints [
 	| fft sonogramMorph width |
 	fft := FFT new: nPoints.
 	width := stop-start//nPoints.
-	sonogramMorph := Sonogram new
+	sonogramMorph := SonogramMorph new
 			extent: width@height
 			minVal: 0.0
 			maxVal: 1.0
