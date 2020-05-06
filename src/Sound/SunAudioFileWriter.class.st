@@ -9,7 +9,7 @@ Class {
 		'stream',
 		'headerStart'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'sound storing' }

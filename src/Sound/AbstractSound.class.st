@@ -29,7 +29,7 @@ Class {
 		'TopOfBottomOctave',
 		'UnloadedSnd'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'examples-bach fugue' }

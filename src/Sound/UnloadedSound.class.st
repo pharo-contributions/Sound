@@ -5,7 +5,7 @@ Instances of me, which are really just FMSounds, are used placeholders for sound
 Class {
 	#name : #UnloadedSound,
 	#superclass : #FMSound,
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'as yet unclassified' }

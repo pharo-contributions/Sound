@@ -7,7 +7,7 @@ Class {
 		'rightVols',
 		'soundDone'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #composition }

@@ -27,7 +27,7 @@ Class {
 		'CanRecordWhilePlaying',
 		'RecorderActive'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #accessing }

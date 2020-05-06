@@ -34,7 +34,7 @@ Class {
 		'alpha',
 		'beta'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'subclass responsibilities' }

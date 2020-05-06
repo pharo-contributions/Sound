@@ -25,7 +25,7 @@ Class {
 		'UseReadySemaphore',
 		'UseReverb'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'primitive test' }

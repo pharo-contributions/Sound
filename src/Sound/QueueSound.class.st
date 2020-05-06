@@ -33,7 +33,7 @@ Class {
 		'currentSound',
 		'done'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #accessing }

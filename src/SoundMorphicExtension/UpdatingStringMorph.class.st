@@ -148,9 +148,13 @@ UpdatingStringMorph >> doneWithEdits [
 
 	| editor |
 	super doneWithEdits.
-	(owner respondsTo: #parseNode) ifTrue: [minimumWidth := 8].
-	editor := (submorphs detect: [ :sm | sm isKindOf: StringMorphEditor ] ifNone: [ ^self ]).
-	editor delete.
+	(owner respondsTo: #parseNode)
+		ifTrue: [ minimumWidth := 8 ].
+	self flag: #fixme.
+	editor := submorphs
+		detect: [ :sm | sm isKindOf: 'StringMorphEditor' ]
+		ifNone: [ ^ self ].
+	editor delete
 ]
 
 { #category : #accessing }

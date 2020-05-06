@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'DecodingTable'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #initialization }

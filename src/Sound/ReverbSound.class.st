@@ -11,7 +11,7 @@ Class {
 		'leftBuffer',
 		'rightBuffer'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'centerPitch'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'as yet unclassified' }

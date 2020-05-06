@@ -26,7 +26,7 @@ Class {
 		'ScaledIndexOverflow',
 		'SoundLibrary'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'sound library' }

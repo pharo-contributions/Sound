@@ -21,7 +21,7 @@ Class {
 		'skipDataChunk',
 		'mergeIfStereo'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #accessing }

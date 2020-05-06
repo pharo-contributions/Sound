@@ -1,7 +1,7 @@
 Class {
 	#name : #FMBassoonSound,
 	#superclass : #FMSound,
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'backward compatibility' }

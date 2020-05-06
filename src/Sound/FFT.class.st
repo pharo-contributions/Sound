@@ -17,7 +17,7 @@ Class {
 		'imagData',
 		'window'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'instance creation' }

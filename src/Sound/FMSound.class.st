@@ -39,7 +39,7 @@ Class {
 	#classVars : [
 		'SineTable'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #instruments }

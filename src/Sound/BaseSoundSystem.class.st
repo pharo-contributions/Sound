@@ -6,7 +6,7 @@ More information available in superclass.
 Class {
 	#name : #BaseSoundSystem,
 	#superclass : #SoundSystem,
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #initialization }

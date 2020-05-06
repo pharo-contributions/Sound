@@ -25,7 +25,7 @@ Class {
 		'stepSizeTable',
 		'indexTable'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'instance creation' }

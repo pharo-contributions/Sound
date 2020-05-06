@@ -9,7 +9,7 @@ Class {
 		'bufferSize',
 		'mutex'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #private }

@@ -28,7 +28,7 @@ Class {
 		'nLevels',
 		'transform'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #access }

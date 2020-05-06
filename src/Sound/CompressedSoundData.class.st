@@ -18,7 +18,7 @@ Class {
 		'firstSample',
 		'cachedSound'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #assound }

@@ -21,7 +21,7 @@ Class {
 		'lastBufferMSecs',
 		'mutex'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'instance creation' }

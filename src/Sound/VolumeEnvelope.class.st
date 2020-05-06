@@ -9,7 +9,7 @@ Class {
 		'targetVol',
 		'mSecsForChange'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'as yet unclassified' }

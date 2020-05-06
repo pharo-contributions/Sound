@@ -5,7 +5,7 @@ I am an abstract class that describes the protocol for sound codecs. Each codec 
 Class {
 	#name : #SoundCodec,
 	#superclass : #Object,
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'subclass responsibilities' }

@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'CarMotorSamples'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'car motor example' }

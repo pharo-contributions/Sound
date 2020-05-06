@@ -13,7 +13,7 @@ Class {
 		'scaledIndexIncr',
 		'scaledIndexLimit'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #instruments }

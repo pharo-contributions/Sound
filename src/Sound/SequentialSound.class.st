@@ -5,7 +5,7 @@ Class {
 		'sounds',
 		'currentIndex'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #composition }

@@ -5,7 +5,7 @@ Class {
 		'initialCount',
 		'count'
 	],
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'instance creation' }

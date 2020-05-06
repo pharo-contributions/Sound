@@ -7,7 +7,7 @@ A BusySignal is a simple sound.
 Class {
 	#name : #BusySignal,
 	#superclass : #FMSound,
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'instance creation' }

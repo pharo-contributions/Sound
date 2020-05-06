@@ -1,7 +1,7 @@
 Class {
 	#name : #FMClarinetSound,
 	#superclass : #FMSound,
-	#category : #'Sound-Synthesis'
+	#category : #'Sound-Core'
 }
 
 { #category : #'backward compatibility' }
