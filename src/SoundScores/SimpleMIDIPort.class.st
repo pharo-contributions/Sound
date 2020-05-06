@@ -1,6 +1,20 @@
 "
 This is a first cut at a simple MIDI output port.
 
+It was an example of play long time ago.
+
+	SimpleMIDIPort useMIDIDeviceForOutput ifTrue: [
+		[self openMIDIPort]
+			on: Error
+			do: [
+				SimpleMIDIPort askForDefault.
+				[self openMIDIPort]
+					on: Error
+					do: [
+						self inform: 'Use of MIDI device is not working. Using custom synthesis.\Go to preferences to change again.' withCRs.
+						SimpleMIDIPort useMIDIDeviceForOutput: false]]].
+
+	self reset; resumePlaying.
 "
 Class {
 	#name : #SimpleMIDIPort,
@@ -12,7 +26,8 @@ Class {
 	],
 	#classVars : [
 		'DefaultPortNumber',
-		'InterfaceClockRate'
+		'InterfaceClockRate',
+		'UseMIDIDeviceForOutput'
 	],
 	#category : #SoundScores
 }
@@ -47,6 +62,7 @@ SimpleMIDIPort class >> initialize [
 
 	InterfaceClockRate := 1000000.
 	DefaultPortNumber := 0.
+	UseMIDIDeviceForOutput := true.
 
 ]
 
@@ -174,6 +190,18 @@ SimpleMIDIPort class >> primPortNameOf: portNum [
 	<primitive: 'primitiveMIDIGetPortName' module: 'MIDIPlugin'>
 	self primitiveFailed.
 
+]
+
+{ #category : #settings }
+SimpleMIDIPort class >> useMIDIDeviceForOutput [ 
+
+	^ UseMIDIDeviceForOutput
+]
+
+{ #category : #settings }
+SimpleMIDIPort class >> useMIDIDeviceForOutput: boolean [
+
+	UseMIDIDeviceForOutput := boolean
 ]
 
 { #category : #input }
@@ -369,4 +397,16 @@ SimpleMIDIPort >> useInstrument: aName onChannel: aChannel [
 SimpleMIDIPort >> useInstrumentNumber: aNumber onChannel: aChannel [
 	self ensureOpen.
 	self midiCmd: 192 channel: aChannel byte: aNumber 
+]
+
+{ #category : #play }
+SimpleMIDIPort >> useMIDIDeviceForOutput [ 
+
+	^ UseMIDIDeviceForOutput
+]
+
+{ #category : #play }
+SimpleMIDIPort >> useMIDIDeviceForOutput: boolean [
+
+	UseMIDIDeviceForOutput := boolean
 ]
