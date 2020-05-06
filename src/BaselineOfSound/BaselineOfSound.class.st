@@ -35,6 +35,6 @@ BaselineOfSound >> baseline: spec [
 			package: 'SoundScores' with: [ spec requires: 'Sound' ];
 			package: 'SoundMorphicUserInterface' with: [ spec requires: #('Sound' 'SoundMorphicExtension') ].
 			
-		spec postLoadDoIt: #enableSound.
+		"spec postLoadDoIt: #enableSound."
 	]
 ]
