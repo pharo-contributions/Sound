@@ -2,7 +2,7 @@
 Sonograms are imageMorphs that will repeatedly plot arrays of values as black on white columns moving to the right in time and scrolling left as necessary.
 
 	| s data |
-	s := Sonogram new 
+	s := SonogramMorph new 
 			extent: 200@50
 			minVal: 0.0 maxVal: 1.0 
 			scrollDelta: 20.
