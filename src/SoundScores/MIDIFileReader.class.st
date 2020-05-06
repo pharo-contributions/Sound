@@ -35,7 +35,7 @@ Class {
 		'activeEvents',
 		'maxNoteTicks'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #'instance creation' }

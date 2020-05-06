@@ -30,7 +30,7 @@ Class {
 	#classVars : [
 		'DefaultMidiTable'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #initialization }

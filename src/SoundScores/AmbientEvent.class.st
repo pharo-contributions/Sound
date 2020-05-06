@@ -7,7 +7,7 @@ Class {
 		'selector',
 		'arguments'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-Events'
 }
 
 { #category : #'as yet unclassified' }

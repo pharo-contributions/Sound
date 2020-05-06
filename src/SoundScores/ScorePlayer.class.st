@@ -27,7 +27,7 @@ Class {
 		'midiPlayerProcess',
 		'durationInTicks'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #'instance creation' }

@@ -5,7 +5,7 @@ Class {
 		'program',
 		'channel'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-Events'
 }
 
 { #category : #accessing }

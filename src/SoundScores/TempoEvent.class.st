@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'tempo'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-Events'
 }
 
 { #category : #'as yet unclassified' }

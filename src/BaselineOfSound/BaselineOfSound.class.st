@@ -13,6 +13,7 @@ BaselineOfSound >> baseline: spec [
 			package: 'SoundMorphicExtension';
 			package: 'Sound' "with: [ spec requires: 'SoundMorphicExtension' ]" ;
 			package: 'Settings-Sound';
+			package: 'SoundOgg' with: [ spec requires: 'Sound' ];
 			package: 'SoundScores' with: [ spec requires: 'Sound' ];
 			package: 'SoundMorphicUserInterface' with: [ spec requires: #('Sound' 'SoundMorphicExtension') ].
 			

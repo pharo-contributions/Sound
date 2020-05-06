@@ -29,7 +29,7 @@ Class {
 		'InterfaceClockRate',
 		'UseMIDIDeviceForOutput'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #utilities }

@@ -11,7 +11,7 @@ Class {
 		'tempoMap',
 		'ticksPerQuarterNote'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #'ambient track' }

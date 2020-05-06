@@ -14,7 +14,7 @@ MIDIFileReader new readMIDIFrom: (ZnBase64Encoder new decode: encoded) readStrea
 Class {
 	#name : #MIDIFileReaderTest,
 	#superclass : #TestCase,
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #resources }

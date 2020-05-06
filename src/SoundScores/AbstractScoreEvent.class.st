@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'time'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-Events'
 }
 
 { #category : #accessing }

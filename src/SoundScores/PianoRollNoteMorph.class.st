@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'SoundPlaying'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #selecting }

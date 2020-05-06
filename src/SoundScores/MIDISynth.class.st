@@ -14,7 +14,7 @@ Class {
 		'channels',
 		'process'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #examples }

@@ -24,7 +24,7 @@ Class {
 		'pitchBend',
 		'activeSounds'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-MIDI'
 }
 
 { #category : #other }

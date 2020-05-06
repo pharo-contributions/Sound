@@ -5,7 +5,7 @@ Class {
 		'bend',
 		'channel'
 	],
-	#category : #SoundScores
+	#category : #'SoundScores-Events'
 }
 
 { #category : #accessing }
