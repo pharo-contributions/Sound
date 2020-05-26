@@ -6,26 +6,18 @@ Class {
 	#name : #SoundPlayer,
 	#superclass : #Object,
 	#classVars : [
-		'ActiveSounds',
 		'Buffer',
 		'BufferIndex',
 		'BufferMSecs',
-		'LastBuffer',
-		'PausedSounds',
-		'PlayerProcess',
-		'PlayerSemaphore',
-		'ReadyForBuffer',
 		'ReverbState',
 		'SamplingRate',
-		'SoundJustStarted',
-		'SoundSupported',
 		'SoundsShouldStartQuick',
 		'SoundsStopWhenDone',
 		'Stereo',
 		'UseReadySemaphore',
 		'UseReverb'
 	],
-	#category : #'Sound-Core'
+	#category : #'Sound-Driver'
 }
 
 { #category : #'primitive test' }
@@ -36,9 +28,9 @@ SoundPlayer class >> boinkPitch: p dur: d loudness: l waveTable: waveTable pan: 
 	decay := 0.96.
 	tableSize := waveTable size.
 	amplitude := l asInteger min: 1000.
-	increment := ((p asFloat * tableSize asFloat) / SamplingRate asFloat) asInteger.
+	increment := ((p asFloat * tableSize asFloat) / self samplingRate asFloat) asInteger.
 	increment := (increment max: 1) min: (tableSize // 2).
-	cycles := (d * SamplingRate asFloat) asInteger.
+	cycles := (d * self samplingRate asFloat) asInteger.
 
 	i := 1.
 	1 to: cycles do: [:cycle |
@@ -51,10 +43,13 @@ SoundPlayer class >> boinkPitch: p dur: d loudness: l waveTable: waveTable pan: 
 
 { #category : #'primitive test' }
 SoundPlayer class >> boinkScale [
+	<script>
 	"Tests the sound output primitives by playing a scale."
-	"SoundPlayer boinkScale"
 
 	| sineTable pan |
+	self flag: 'FIXME: Fix this to not use the primitive directly.'.
+	true ifTrue: [ ^ self].
+	
 	self shutDown.
 	SamplingRate := 11025.
 	Stereo := true.
@@ -91,6 +86,11 @@ SoundPlayer class >> canStartPlayer [
 		or: [SoundRecorder anyActive not]
 ]
 
+{ #category : #playing }
+SoundPlayer class >> currentSoundSink [
+	^ SoundDriver current mainSoundSink
+]
+
 { #category : #settings }
 SoundPlayer class >> defaultQuickStartForPlatform [
 
@@ -108,9 +108,6 @@ SoundPlayer class >> initialize [
 	"SoundPlayer initialize; shutDown; startUp"
 	"Details: BufferMSecs represents a tradeoff between latency and quality. If BufferMSecs is too low, the sound will not play smoothly, especially during long-running primitives such as large BitBlts. If BufferMSecs is too high, there will be a long time lag between when a sound buffer is submitted to be played and when that sound is actually heard. BufferMSecs is typically in the range 50-200."
 	self initializeForPlatform.
-	SamplingRate := 22050.
-	BufferMSecs := 120.
-	Stereo := true.
 	UseReverb ifNil: [UseReverb := true].
 
 ]
@@ -123,18 +120,9 @@ SoundPlayer class >> initializeForPlatform [
 	self stopSoundWhenDone: self defaultStopSoundForPlatform.
 ]
 
-{ #category : #private }
-SoundPlayer class >> isAllSilence: buffer size: count [
-	"return true if the buffer is all silence after reverb has ended"
-	| value |
-	value := buffer at: 1.
-	2 to: count do:[:i| (buffer at: i) = value ifFalse:[^false]].
-	^true
-]
-
 { #category : #playing }
 SoundPlayer class >> isPlaying: aSound [
-	^ ActiveSounds includes: aSound
+	^ self currentSoundSink isPlaying: aSound
 ]
 
 { #category : #'player process' }
@@ -144,76 +132,10 @@ SoundPlayer class >> isReverbOn [
 
 ]
 
-{ #category : #'player process' }
-SoundPlayer class >> lastPlayBuffer [
-	^LastBuffer
-]
-
-{ #category : #'player process' }
-SoundPlayer class >> oldStylePlayLoop [
-	"This version of the play loop is used if the VM does not yet support sound primitives that signal a semaphore when a sound buffer becomes available."
-
-	| bytesPerSlice count |
-	bytesPerSlice := Stereo ifTrue: [4] ifFalse: [2].
-	[true] whileTrue: [
-		[(count := self primSoundAvailableBytes // bytesPerSlice) > 100]
-			whileFalse: [(Delay forMilliseconds: 1) wait].
-
-		count := count min: Buffer stereoSampleCount.
-		PlayerSemaphore critical: [
-			ActiveSounds := ActiveSounds select: [:snd | snd samplesRemaining > 0].
-			ActiveSounds do: [:snd |
-				snd ~~ SoundJustStarted ifTrue: [
-					snd playSampleCount: count into: Buffer startingAt: 1]].
-			ReverbState == nil ifFalse: [
-				ReverbState applyReverbTo: Buffer startingAt: 1 count: count].
-			self primSoundPlaySamples: count from: Buffer startingAt: 1.
-			Buffer primFill: 0.
-			SoundJustStarted := nil]].
-
-]
-
 { #category : #playing }
 SoundPlayer class >> pauseSound: aSound [
 	"Stop playing the given sound. Playing can be resumed from this point later."
-
-	PlayerSemaphore critical: [
-		ActiveSounds remove: aSound ifAbsent: []].
-
-]
-
-{ #category : #'player process' }
-SoundPlayer class >> playLoop [
-	"The sound player process loop."
-
-	| bytesPerSlice count willStop mayStop |
-	mayStop := self stopSoundWhenDone.
-	bytesPerSlice := Stereo ifTrue: [4] ifFalse: [2].
-	[true] whileTrue: [
-		[(count := self primSoundAvailableBytes // bytesPerSlice) > 100]
-			whileFalse: [ReadyForBuffer wait].
-
-		count := count min: Buffer stereoSampleCount.
-		PlayerSemaphore critical: [
-			ActiveSounds := ActiveSounds select: [:snd | snd samplesRemaining > 0].
-			ActiveSounds do: [:snd |
-				snd ~~ SoundJustStarted ifTrue: [
-					snd playSampleCount: count into: Buffer startingAt: 1]].
-			ReverbState == nil ifFalse: [
-				ReverbState applyReverbTo: Buffer startingAt: 1 count: count].
-			self primSoundPlaySamples: count from: Buffer startingAt: 1.
-			willStop := mayStop and:[
-						(ActiveSounds size = 0) and:[
-							self isAllSilence: Buffer size: count]].
-			LastBuffer ifNotNil:[
-				LastBuffer replaceFrom: 1 to: LastBuffer size with: Buffer startingAt: 1.
-			].
-			willStop
-				ifTrue:[self shutDown. PlayerProcess := nil]
-				ifFalse:[Buffer primFill: 0].
-			SoundJustStarted := nil].
-		willStop ifTrue:[^self].
-	].
+	^ self currentSoundSink pauseSound: aSound
 
 ]
 
@@ -256,77 +178,9 @@ SoundPlayer class >> playTestSample: s pan: pan [
 
 ]
 
-{ #category : #'player process' }
+{ #category : #'as yet unclassified' }
 SoundPlayer class >> playerProcess [
-	^PlayerProcess
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundAvailableBytes [
-	"Return the number of bytes of available space in the sound output buffer."
-	"Note: Squeak always uses buffers containing 4-bytes per sample (2 channels at 2 bytes per channel) regardless of the state of the Stereo flag."
-
-	<primitive: 'primitiveSoundAvailableSpace' module: 'SoundPlugin'>
-	^ self primitiveFailed
-
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundGetVolume [
-	"Return sound as array of doubles left then right channel, range is 0.0 to 1.0 but may be overdriven"
-	<primitive: 'primitiveSoundGetVolume' module: 'SoundPlugin'>
-	^Array with: 1.0 with: 1.0
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundInsertSamples: count from: aSoundBuffer samplesOfLeadTime: anInteger [
-	"Mix the given number of sample frames from the given sound buffer into the queue of samples that has already been submitted to the sound driver. This primitive is used to start a sound playing with minimum latency, even if large sound output buffers are being used to ensure smooth sound output. Returns the number of samples consumed, or zero if the primitive is not implemented or fails."
-
-	<primitive: 'primitiveSoundInsertSamples' module: 'SoundPlugin'>
-	^ 0
-
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundPlaySamples: count from: aSampleBuffer startingAt: index [
-	"Copy count bytes into the current sound output buffer from the given sample buffer starting at the given index."
-
-	<primitive: 'primitiveSoundPlaySamples' module: 'SoundPlugin'>
-	^ self primitiveFailed
-
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundSetVolumeLeft: aLeftVolume volumeRight: aRightVolume [
-	"Set sound pass in float 0.0-1.0 for left and right channel, with possible 2.0 or  higher to overdrive sound channel "
-	<primitive: 'primitiveSoundSetLeftVolume' module: 'SoundPlugin'>
-
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundStartBufferSize: bufferSize rate: samplesPerSecond stereo: stereoFlag [
-	"Start double-buffered sound output with the given buffer size and sampling rate. This version has been superceded by primitive 171 (primSoundStartBufferSize:rate:stereo:semaIndex:)."
-	"ar 12/5/1998 Turn off the sound if not supported"
-	<primitive: 'primitiveSoundStart' module: 'SoundPlugin'>
-	SoundSupported := false.
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundStartBufferSize: bufferSize rate: samplesPerSecond stereo: stereoFlag semaIndex: anInteger [
-	"Start double-buffered sound output with the given buffer size and sampling rate. If the given semaphore index is > 0, it is taken to be the index of a Semaphore in the external objects array to be signalled when the sound driver is ready to accept another buffer of samples."
-	"Details: If this primitive fails, this method tries to use the older version instead."
-
-	<primitive: 'primitiveSoundStartWithSemaphore' module: 'SoundPlugin'>
-	UseReadySemaphore := false.
-	self primSoundStartBufferSize: bufferSize rate: samplesPerSecond stereo: stereoFlag.
-
-]
-
-{ #category : #private }
-SoundPlayer class >> primSoundStop [
-	"Stop double-buffered sound output. Must not raise an error because it is used inside error handling and at system shutdown"
-
-	<primitive: 'primitiveSoundStop' module: 'SoundPlugin'>
+	^ nil
 ]
 
 { #category : #playing }
@@ -346,19 +200,7 @@ SoundPlayer class >> resumePlaying: aSound quickStart: quickStart [
 	BaseSoundSystem soundEnabled ifFalse: [^ self].
 	doQuickStart := quickStart.
 	BaseSoundSystem soundQuickStart ifFalse: [doQuickStart := false].
-	PlayerProcess == nil ifTrue: [
-		self canStartPlayer ifFalse: [^ self].
-		^self startUpWithSound: aSound].
-
-	PlayerSemaphore critical: [
-		(ActiveSounds includes: aSound)
-			ifTrue: [doQuickStart := false]
-			ifFalse: [
-				doQuickStart ifFalse: [ActiveSounds add: aSound]]].
-
-	"quick-start the given sound, unless the sound player has just started"
-	doQuickStart ifTrue: [self startPlayingImmediately: aSound].
-
+	self currentSoundSink resumePlaying: aSound quickStart: doQuickStart
 ]
 
 { #category : #accessing }
@@ -370,7 +212,7 @@ SoundPlayer class >> reverbState [
 { #category : #accessing }
 SoundPlayer class >> samplingRate [
 
-	^ SamplingRate ifNil: [ 22050 ]
+	^ self currentSoundSink samplingRate
 ]
 
 { #category : #accessing }
@@ -432,86 +274,6 @@ SoundPlayer class >> startPlayerProcessBufferSize: bufferSize rate: samplesPerSe
 ]
 
 { #category : #'player process' }
-SoundPlayer class >> startPlayerProcessBufferSize: bufferSize rate: samplesPerSecond stereo: stereoFlag sound: aSound [
-	"Start the sound player process. Terminate the old process, if any."
-	"SoundPlayer startPlayerProcessBufferSize: 1000 rate: 11025 stereo: false"
-
-	self stopPlayerProcess.
-	aSound
-		ifNil:[ActiveSounds := OrderedCollection new]
-		ifNotNil:[ActiveSounds := OrderedCollection with: aSound].
-	Buffer := SoundBuffer newStereoSampleCount: (bufferSize // 4) * 4.
-	LastBuffer ifNotNil:[LastBuffer := SoundBuffer basicNew: Buffer basicSize].
-	PlayerSemaphore := Semaphore forMutualExclusion.
-	SamplingRate := samplesPerSecond.
-	Stereo := stereoFlag.
-	ReadyForBuffer := Semaphore new.
-	SoundSupported := true. "Assume so"
-	UseReadySemaphore := true.  "set to false if ready semaphore not supported by VM"
-	self primSoundStartBufferSize: Buffer stereoSampleCount
-		rate: samplesPerSecond
-		stereo: Stereo
-		semaIndex: (Smalltalk registerExternalObject: ReadyForBuffer).
-	"Check if sound start prim was successful"
-	SoundSupported ifFalse:[^self].
-	UseReadySemaphore
-		ifTrue: [PlayerProcess := [SoundPlayer playLoop] newProcess]
-		ifFalse: [PlayerProcess := [SoundPlayer oldStylePlayLoop] newProcess].
-	UseReverb ifTrue: [self startReverb].
-
-	PlayerProcess priority: Processor userInterruptPriority.
-	PlayerProcess resume.
-]
-
-{ #category : #private }
-SoundPlayer class >> startPlayingImmediately: aSound [
-	"Private! Start playing the given sound as soon as possible by mixing it into the sound output buffers of the underlying sound driver."
-
-	| totalSamples buf |
-	"first, fill a double-size buffer with samples"
-	"Note: The code below assumes that totalSamples contains two
-	 buffers worth of samples, and the insertSamples primitive is
-	 expected to consume at least one buffer's worth of these
-	 samples. The remaining samples are guaranteed to fit into
-	 a single buffer."
-	totalSamples := Buffer stereoSampleCount * 2.  "two buffer's worth"
-	buf := SoundBuffer newStereoSampleCount: totalSamples.
-	aSound playSampleCount: totalSamples into: buf startingAt: 1.
-	ReverbState == nil ifFalse: [
-		ReverbState applyReverbTo: buf startingAt: 1 count: totalSamples].
-
-	PlayerSemaphore critical: [ | n src leftover rest |
-		"insert as many samples as possible into the sound driver's buffers"
-		n := self primSoundInsertSamples: totalSamples
-			from: buf
-			samplesOfLeadTime: 1024.
-		n > 0 ifTrue:[
-			leftover := totalSamples - n.
-
-			"copy the remainder of buf into Buffer"
-			"Note: the following loop iterates over 16-bit words, not two-word stereo slices"
-			"assert: 0 < leftover <= Buffer stereoSampleCount"
-			src := 2 * n.
-			1 to: 2 * leftover do:
-				[:dst | Buffer at: dst put: (buf at: (src := src + 1))].
-
-			"generate enough additional samples to finish filling Buffer"
-			rest := Buffer stereoSampleCount - leftover.
-			aSound playSampleCount: rest into: Buffer startingAt: leftover + 1.
-			ReverbState == nil ifFalse: [
-				ReverbState applyReverbTo: Buffer startingAt: leftover + 1 count: rest].
-
-			"record the fact that this sound has already been played into Buffer so that we don't process it again this time around"
-			SoundJustStarted := aSound.
-		] ifFalse:[
-			"quick start failed; reset the sound so we start over"
-			aSound reset.
-		].
-		ActiveSounds add: aSound].
-
-]
-
-{ #category : #'player process' }
 SoundPlayer class >> startReverb [
 	"Start a delay-line style reverb with the given tap delays and gains. Tap delays are given in samples and should be prime integers; the following comment gives an expression that generates primes."
 	"Integer primesUpTo: 22050"
@@ -526,11 +288,11 @@ SoundPlayer class >> startReverb [
 SoundPlayer class >> startUp [
 	"Start up the player process."
 
-	SoundPlayer initialize.
+	"SoundPlayer initialize.
 	SoundPlayer
 		startPlayerProcessBufferSize: (BufferMSecs * SamplingRate) // 1000
 		rate: SamplingRate
-		stereo: Stereo.
+		stereo: Stereo."
 
 ]
 
@@ -538,12 +300,12 @@ SoundPlayer class >> startUp [
 SoundPlayer class >> startUpWithSound: aSound [
 	"Start up the player process."
 
-	SoundPlayer initialize.
+	"SoundPlayer initialize.
 	SoundPlayer
 		startPlayerProcessBufferSize: (BufferMSecs * SamplingRate) // 1000
 		rate: SamplingRate
 		stereo: Stereo
-		sound: aSound.
+		sound: aSound."
 
 ]
 
@@ -554,31 +316,10 @@ SoundPlayer class >> stereo [
 
 ]
 
-{ #category : #'player process' }
-SoundPlayer class >> stopPlayerProcess [
-	"Stop the sound player process."
-	"SoundPlayer stopPlayerProcess"
-
-	(PlayerProcess == nil or:[PlayerProcess == Processor activeProcess]) 
-		ifFalse:[PlayerProcess terminate].
-	PlayerProcess := nil.
-	self primSoundStop.
-	ActiveSounds := OrderedCollection new.
-	Buffer := nil.
-	PlayerSemaphore := Semaphore forMutualExclusion.
-	ReadyForBuffer ifNotNil:
-		[Smalltalk unregisterExternalObject: ReadyForBuffer].
-	ReadyForBuffer := nil.
-
-]
-
 { #category : #playing }
 SoundPlayer class >> stopPlayingAll [
 	"Stop playing all sounds."
-
-	PlayerSemaphore critical: [
-		ActiveSounds := ActiveSounds species new].
-
+	self currentSoundSink stopPlayingAll
 ]
 
 { #category : #'player process' }
@@ -602,37 +343,22 @@ SoundPlayer class >> stopSoundWhenDone: aBoolean [
 ]
 
 { #category : #initialization }
-SoundPlayer class >> useLastBuffer [
-	^LastBuffer notNil
-]
-
-{ #category : #initialization }
-SoundPlayer class >> useLastBuffer: aBool [
-	Buffer ifNil:[^self].
-	aBool 
-		ifTrue:[LastBuffer := SoundBuffer basicNew: Buffer basicSize]
-		ifFalse:[LastBuffer := nil]	
-]
-
-{ #category : #initialization }
 SoundPlayer class >> useShortBuffer [
 	"Experimental support for real-time MIDI input. This only works on platforms whose hardware allows very short buffer sizes. It has been tested on a Macintosh Powerbook G3."
 	"SoundPlayer useShortBuffer"
 
-	self shutDown.
+	"self shutDown.
 	BufferMSecs := 15.
 	SoundPlayer
 		startPlayerProcessBufferSize: (BufferMSecs * SamplingRate) // 1000
 		rate: SamplingRate
-		stereo: Stereo.
+		stereo: Stereo."
 
 ]
 
 { #category : #playing }
 SoundPlayer class >> waitUntilDonePlaying: aSound [
 	"Wait until the given sound is no longer playing."
-
-	[PlayerSemaphore critical: [ActiveSounds includes: aSound]]
-		whileTrue: [(Delay forMilliseconds: 100) wait].
+	self currentSoundSink waitUntilDonePlaying: aSound.
 
 ]
