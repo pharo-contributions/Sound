@@ -612,8 +612,7 @@ EnvelopeEditorMorph >> playNothing [
 { #category : #menu }
 EnvelopeEditorMorph >> readFileNamed: fileName [
 	| snd |
-	snd := Compiler evaluate:
-		(FileStream readOnlyFileNamed: fileName) contentsOfEntireFile.
+	snd := self class evaluate: fileName asFileReference contents.
 	soundName := fileName copyFrom: 1 to: fileName size-4. "---.fmp"
 	self editSound: snd
 ]

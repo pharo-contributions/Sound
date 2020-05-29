@@ -4,7 +4,7 @@ Class {
 	#category : #'Sound-Driver'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mixing process' }
 NullSoundSink >> startMixingProcess [
 	"Do not start the mixing process with a null sound sink."
 ]

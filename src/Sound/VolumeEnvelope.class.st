@@ -12,7 +12,7 @@ Class {
 	#category : #'Sound-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #computation }
 VolumeEnvelope >> computeSlopeAtMSecs: mSecs [
 	"Private! Find the next inflection point of this envelope and compute its target volume and the number of milliseconds until the inflection point is reached."
 
@@ -57,7 +57,7 @@ VolumeEnvelope >> computeSlopeAtMSecs: mSecs [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #applying }
 VolumeEnvelope >> reset [
 	"Reset the state for this envelope."
 
@@ -67,7 +67,7 @@ VolumeEnvelope >> reset [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 VolumeEnvelope >> updateSelector [
 	"Needed by the envelope editor."
 
@@ -75,7 +75,7 @@ VolumeEnvelope >> updateSelector [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #applying }
 VolumeEnvelope >> updateTargetAt: mSecs [
 	"Update the volume envelope slope and limit for my target. Answer false."
 
@@ -87,7 +87,7 @@ VolumeEnvelope >> updateTargetAt: mSecs [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 VolumeEnvelope >> volume: aNumber [
 	"Set the maximum volume of a volume-controlling envelope."
 

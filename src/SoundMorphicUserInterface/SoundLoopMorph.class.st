@@ -10,7 +10,7 @@ Class {
 	#category : #SoundMorphicUserInterface
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 SoundLoopMorph >> addCursorMorph [
 	self addMorph:
 		(cursor := (BorderedMorph
@@ -19,7 +19,7 @@ SoundLoopMorph >> addCursorMorph [
 						borderWidth: 0)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 SoundLoopMorph >> buildSound [
 	"Build a compound sound for the next iteration of the loop."
 
@@ -105,7 +105,7 @@ SoundLoopMorph >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex le
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #playing }
 SoundLoopMorph >> play [
 	"Play this sound to the sound ouput port in real time."
 

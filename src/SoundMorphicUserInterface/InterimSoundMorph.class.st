@@ -11,7 +11,7 @@ Class {
 	#category : #SoundMorphicUserInterface
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 InterimSoundMorph >> addGraphic [
 
 	graphic := self speakerGraphic asMorph.
@@ -66,21 +66,21 @@ InterimSoundMorph >> mouseDown: evt [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 InterimSoundMorph >> sound [
 
 	^ sound
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 InterimSoundMorph >> sound: aSound [
 
 	sound := aSound.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 InterimSoundMorph >> speakerGraphic [
 
 	^ Form

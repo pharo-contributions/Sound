@@ -17,7 +17,7 @@ SDL2SoundSink >> audioDevice: anObject [
 	audioDevice := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mixing process' }
 SDL2SoundSink >> computeNextRequiredSampleCount [
 	| samplesInAudioDevice totalBufferSize |
 	samplesInAudioDevice := (SDL2 getQueuedAudioSize: audioDevice) // 4.
@@ -26,7 +26,7 @@ SDL2SoundSink >> computeNextRequiredSampleCount [
 	^ totalBufferSize - samplesInAudioDevice max: 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'driver interface' }
 SDL2SoundSink >> doEnqueueAudioBuffer: aBuffer count: sampleCount [
 	| result |
 	"(self isAllSilence: aBuffer size: sampleCount) ifTrue: [ ^ self ]."

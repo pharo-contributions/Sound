@@ -10,17 +10,17 @@ Class {
 	#category : #'SoundScores-Events'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AmbientEvent >> morph [ 
 	^ morph
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AmbientEvent >> morph: m [
 	morph := m
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 AmbientEvent >> occurAtTime: ticks inScorePlayer: player atIndex: index inEventTrack: track secsPerTick: secsPerTick [
 	(target isNil or: [selector isNil]) ifTrue:
 		[morph ifNil: [^ self].
@@ -29,7 +29,7 @@ AmbientEvent >> occurAtTime: ticks inScorePlayer: player atIndex: index inEventT
 	target perform: selector withArguments: arguments
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AmbientEvent >> target: t selector: s arguments: a [
 	target := t.
 	selector := s.

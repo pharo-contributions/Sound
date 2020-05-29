@@ -250,7 +250,7 @@ SimpleSliderMorph >> setArguments [
 when this button is pressed separated by periods' translated
 		initialAnswer: s contents.
 	newArgs isEmptyOrNil ifFalse: [
-		newArgsArray := Compiler evaluate: '{', newArgs, '}' for: self logged: false.
+		newArgsArray := self compiler evaluate: '{', newArgs, '}' for: self logged: false.
 		self arguments: newArgsArray].
 
 ]

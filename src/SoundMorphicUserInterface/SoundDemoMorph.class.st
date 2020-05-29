@@ -43,7 +43,7 @@ SoundDemoMorph >> initializeSoundColumn [
 	self addMorphBack: soundColumn
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 SoundDemoMorph >> makeControls [
 
 	| bb r cc |
@@ -65,7 +65,7 @@ SoundDemoMorph >> makeControls [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 SoundDemoMorph >> playAll [
 	| snd |
 	soundColumn submorphs isEmpty
@@ -83,7 +83,7 @@ SoundDemoMorph >> playAll [
 	snd play
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 SoundDemoMorph >> playV1 [
 	soundColumn submorphs isEmpty
 		ifTrue: [^ self].
@@ -92,7 +92,7 @@ SoundDemoMorph >> playV1 [
 	(SampledSound bachFugueVoice1On: SampledSound new) play
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 SoundDemoMorph >> playV2 [
 	soundColumn submorphs size < 2
 		ifTrue: [^ self].
@@ -102,7 +102,7 @@ SoundDemoMorph >> playV2 [
 		 resumePlaying
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 SoundDemoMorph >> playV3 [
 	soundColumn submorphs size < 3
 		ifTrue: [^ self].
@@ -112,7 +112,7 @@ SoundDemoMorph >> playV3 [
 		 resumePlaying
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 SoundDemoMorph >> setTimbreFromTile: aSoundTile [
 
 	SampledSound defaultSampleTable: aSoundTile sound samples.
@@ -120,7 +120,7 @@ SoundDemoMorph >> setTimbreFromTile: aSoundTile [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #speaker }
 SoundDemoMorph >> stopSound [
 
 	SoundPlayer shutDown.

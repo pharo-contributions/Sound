@@ -11,14 +11,14 @@ Class {
 	#category : #'SoundScores-Events'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #classification }
 TempoEvent >> isTempoEvent [
 
 	^ true
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 TempoEvent >> printOn: aStream [
 
 	aStream nextPut: $(.
@@ -29,14 +29,14 @@ TempoEvent >> printOn: aStream [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TempoEvent >> tempo [
 
 	^ tempo
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TempoEvent >> tempo: anInteger [
 
 	tempo := anInteger.

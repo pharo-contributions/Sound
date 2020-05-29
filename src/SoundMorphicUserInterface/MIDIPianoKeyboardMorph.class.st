@@ -25,7 +25,7 @@ MIDIPianoKeyboardMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 MIDIPianoKeyboardMorph >> closeMIDIPort [
 
 	midiPort := nil.
@@ -43,7 +43,7 @@ MIDIPianoKeyboardMorph >> initialize [
 	velocity := 100
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 MIDIPianoKeyboardMorph >> makeMIDIController: evt [
 
 	self world activeHand attachMorph:
@@ -77,7 +77,7 @@ MIDIPianoKeyboardMorph >> mouseUpPitch: midiKey event: event noteMorph: noteMorp
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 MIDIPianoKeyboardMorph >> openMIDIPort [
 
 	| portNum |
@@ -87,7 +87,7 @@ MIDIPianoKeyboardMorph >> openMIDIPort [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MIDIPianoKeyboardMorph >> turnOffNote [
 
 	midiPort notNil & soundPlaying notNil ifTrue: [
@@ -97,7 +97,7 @@ MIDIPianoKeyboardMorph >> turnOffNote [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MIDIPianoKeyboardMorph >> turnOnNote: midiKey [
 
 	midiPort midiCmd: 16r90 channel: channel byte: midiKey byte: velocity.

@@ -13,7 +13,7 @@ Class {
 	#category : #SoundMorphicUserInterface
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 MidiInputMorph >> addChannel [
 	"Add a set of controls for another channel. Prompt the user for the channel number."
 
@@ -26,7 +26,7 @@ MidiInputMorph >> addChannel [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 MidiInputMorph >> addChannelControlsFor: channelIndex [
 
 	| r divider col |
@@ -52,7 +52,7 @@ MidiInputMorph >> addChannelControlsFor: channelIndex [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MidiInputMorph >> atChannel: channelIndex from: aPopUpChoice selectInstrument: selection [ 
 	| oldSnd name snd instSelector |
 	oldSnd := midiSynth instrumentForChannel: channelIndex.
@@ -82,7 +82,7 @@ MidiInputMorph >> atChannel: channelIndex from: aPopUpChoice selectInstrument: s
 	(instrumentSelector at: channelIndex) contentsClipped: selection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 MidiInputMorph >> channelNumAndMuteButtonFor: channelIndex [
 
 	| muteButton instSelector r |
@@ -123,7 +123,7 @@ MidiInputMorph >> channelNumAndMuteButtonFor: channelIndex [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 MidiInputMorph >> closeMIDIPort [
 
 	midiSynth isOn ifTrue: [midiSynth stopMIDITracking].
@@ -143,7 +143,7 @@ MidiInputMorph >> defaultColor [
 	^ Color veryLightGray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operating }
 MidiInputMorph >> disableReverb: aBoolean [
 
 	aBoolean
@@ -174,7 +174,7 @@ MidiInputMorph >> initialize [
 	self extent: 20 @ 20
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 MidiInputMorph >> instrumentChoicesForChannel: channelIndex [
 
 	| names inst |
@@ -190,7 +190,7 @@ MidiInputMorph >> instrumentChoicesForChannel: channelIndex [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #menu }
 MidiInputMorph >> invokeMenu [
 	"Invoke a menu of additonal commands."
 
@@ -206,7 +206,7 @@ MidiInputMorph >> invokeMenu [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 MidiInputMorph >> makeControls [
 
 	| bb r reverbSwitch onOffSwitch |
@@ -244,7 +244,7 @@ MidiInputMorph >> makeControls [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 MidiInputMorph >> makeRow [
 
 	^ AlignmentMorph newRow
@@ -256,7 +256,7 @@ MidiInputMorph >> makeRow [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #layout }
 MidiInputMorph >> panAndVolControlsFor: channelIndex [
 
 	| volSlider panSlider c r middleLine |
@@ -303,7 +303,7 @@ MidiInputMorph >> panAndVolControlsFor: channelIndex [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 MidiInputMorph >> setMIDIPort [
 
 	| portNum |
@@ -313,7 +313,7 @@ MidiInputMorph >> setMIDIPort [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MidiInputMorph >> toggleOnOff [
 
 	midiSynth isOn
@@ -327,7 +327,7 @@ MidiInputMorph >> toggleOnOff [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #menu }
 MidiInputMorph >> updateInstrumentsFromLibraryExcept: soundsBeingEdited [
 	"The instrument library has been modified. Update my instruments with the new versions from the library. Use a single instrument prototype for all parts with the same name; this allows the envelope editor to edit all the parts by changing a single sound prototype."
 

@@ -178,11 +178,6 @@ SoundPlayer class >> playTestSample: s pan: pan [
 
 ]
 
-{ #category : #'as yet unclassified' }
-SoundPlayer class >> playerProcess [
-	^ nil
-]
-
 { #category : #playing }
 SoundPlayer class >> resumePlaying: aSound [
 	"Start playing the given sound without resetting it; it will resume playing from where it last stopped."

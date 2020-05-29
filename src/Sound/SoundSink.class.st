@@ -1,5 +1,5 @@
 "
-I represent a place where sound is directed to. I am a sink for sound. I can be typically something like a speaker or headphone, but in the case of some sound drivers I may represent something more abstract.
+I represent a place where sound is directed to. I am a sink for sound (i.e. I eat sound samples). I can be typically something like a speaker or headphone, but in the case of some sound drivers I may represent something more abstract.
 "
 Class {
 	#name : #SoundSink,
@@ -14,18 +14,18 @@ Class {
 	#category : #'Sound-Driver'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mixing process' }
 SoundSink >> computeNextRequiredSampleCount [
 	^ 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'driver interface' }
 SoundSink >> doEnqueueAudioBuffer: aBuffer count: sampleCount [
 	"This is the place for actually sending a buffer into the sound device sink."
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 SoundSink >> isAllSilence: aBuffer size: count [
 	"return true if the buffer is all silence after reverb has ended"
 	| value |
@@ -41,22 +41,7 @@ SoundSink >> isPlaying: aSound [
 	].
 ]
 
-{ #category : #'as yet unclassified' }
-SoundSink >> mixAndEnqueueNextAudioBuffer [
-	| sampleCount |
-	sampleCount := buffer stereoSampleCount.
-	buffer primFill: 0.
-	activeSoundsMutex critical: [
-		activeSounds := activeSounds select: [ :snd | snd samplesRemaining > 0 ].
-		activeSounds do: [ :each |
-			each playSampleCount: sampleCount into: buffer startingAt: 1
-		]
-	].
-	self doEnqueueAudioBuffer: buffer count: buffer stereoSampleCount.
-
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #'mixing process' }
 SoundSink >> mixAndEnqueueNextAudioBufferOfSize: sampleCount [
 	buffer primFill: 0.
 	activeSoundsMutex critical: [
@@ -69,7 +54,7 @@ SoundSink >> mixAndEnqueueNextAudioBufferOfSize: sampleCount [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mixing process' }
 SoundSink >> mixingProcessLoop [
 	| bufferFlyingTime |
 	
@@ -124,7 +109,7 @@ SoundSink >> samplingRate [
 	^ samplingRate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mixing process' }
 SoundSink >> startMixingProcess [
 	mixingProcess := [ self mixingProcessLoop ] newProcess.
 	mixingProcess priority: Processor userInterruptPriority.
@@ -133,7 +118,7 @@ SoundSink >> startMixingProcess [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'mixing process' }
 SoundSink >> startMixingProcessWithBufferSize: theBufferSize samplingRate: theSamplingRate numchannels: numchannels [
 	self assert: numchannels >= 1.
 	self assert: numchannels <= 2. "Until we support more than two channels."

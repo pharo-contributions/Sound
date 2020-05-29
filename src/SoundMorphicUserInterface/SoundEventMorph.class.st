@@ -74,7 +74,7 @@ SoundEventMorph >> releaseCachedState [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SoundEventMorph >> sound: aSound [
 
 	sound := aSound.
