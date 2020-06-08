@@ -28,7 +28,7 @@ CodecDemoMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CodecDemoMorph >> codecClassName: aStringOrSymbol [
 
 	| label |
@@ -60,7 +60,7 @@ CodecDemoMorph >> initialize [
 	self codecClassName: 'MuLawCodec'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 CodecDemoMorph >> selectCodec [
 
 	| codecs newCodec |

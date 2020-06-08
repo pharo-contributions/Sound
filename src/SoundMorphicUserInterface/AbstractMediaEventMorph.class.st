@@ -23,7 +23,7 @@ AbstractMediaEventMorph >> defaultColor [
 	^ Color paleYellow
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AbstractMediaEventMorph >> endTime [
 
 	^endTimeInScore ifNil: [startTimeInScore + 100]

@@ -62,14 +62,14 @@ CompressedSoundData >> codecName: aStringOrSymbol [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 CompressedSoundData >> compressWith: codecClass [
 
 	codecName == codecClass name asSymbol ifTrue: [^self].
 	^self asSound compressWith: codecClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 CompressedSoundData >> compressWith: codecClass atRate: aSamplingRate [
 
 	(codecName == codecClass name asSymbol and: [samplingRate = aSamplingRate]) ifTrue: [^self].

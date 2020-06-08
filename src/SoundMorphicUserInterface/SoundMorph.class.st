@@ -10,7 +10,7 @@ Class {
 	#category : #SoundMorphicUserInterface
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 SoundMorph >> buildImage [
 	| scale env h imageColor |
 	owner ifNil: [scale := 128@128]  "Default is 128 pix/second, 128 pix fullscale"
@@ -44,17 +44,17 @@ SoundMorph >> justDroppedInto: aMorph event: anEvent [
 	^super justDroppedInto: aMorph event: anEvent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 SoundMorph >> reset [
 	sound reset
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SoundMorph >> sound [
 	^ sound
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SoundMorph >> sound: aSound [
 	sound := aSound copy.
 	sound reset.

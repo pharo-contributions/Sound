@@ -17,7 +17,7 @@ SoundSequencerMorph >> initialize [
 	self addMorph: ((SoundLoopMorph newBounds: (10@200 extent: 512@128)) extent: 512@128).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 SoundSequencerMorph >> makeControlPanel [
 	| bb cc |
 	cc := Color black.
@@ -35,12 +35,12 @@ SoundSequencerMorph >> makeControlPanel [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #playing }
 SoundSequencerMorph >> play [
 	self submorphsDo: [:m | m == controlPanel ifFalse: [m play]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 SoundSequencerMorph >> reset [
 	self submorphsDo: [:m | m == controlPanel ifFalse: [m reset]]
 ]
