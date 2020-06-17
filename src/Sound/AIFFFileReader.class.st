@@ -182,6 +182,8 @@ AIFFFileReader >> readFrom: aBinaryStream [
 
 	| sz end chunkType chunkSize p |
 	in := aBinaryStream.
+	skipDataChunk := false.
+	mergeIfStereo := false.
 
 	"read FORM chunk"
 	(in next: 4) asString = 'FORM' ifFalse: [^ self error: 'not an AIFF file'].
