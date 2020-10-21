@@ -44,6 +44,7 @@ SoundSink >> isPlaying: aSound [
 { #category : #'mixing process' }
 SoundSink >> mixAndEnqueueNextAudioBufferOfSize: sampleCount [
 	| volume |
+	"TODO: look into placing volume calculations somwhere else, with less action"
 	volume := (SDL2SoundSink masterVolume * 100 asInteger).
 	buffer primFill: 0.
 	activeSoundsMutex critical: [
