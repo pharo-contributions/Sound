@@ -4,8 +4,26 @@ Class {
 	#instVars : [
 		'audioDevice'
 	],
+	#classVars : [
+		'masterVolume'
+	],
 	#category : #'Sound-SDL2'
 }
+
+{ #category : #accessing }
+SDL2SoundSink class >> initialize [
+	masterVolume := 100
+]
+
+{ #category : #accessing }
+SDL2SoundSink class >> masterVolume [
+	^ masterVolume
+]
+
+{ #category : #accessing }
+SDL2SoundSink class >> masterVolume: anObject [
+	masterVolume := anObject
+]
 
 { #category : #accessing }
 SDL2SoundSink >> audioDevice [
