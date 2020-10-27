@@ -23,6 +23,5 @@ AIFFFileReaderTest >> testReadFrom [
 	byteArray := self getEncodedSound base64Decoded.
 	file := (AIFFFileReader new readFrom: byteArray readStream) sound.
 	self assert: file className equals: 'MixedSound'.
-	"foo"
-	self assert: (file isStereo) equals: true.
+	self assert: file isStereo equals: true
 ]
