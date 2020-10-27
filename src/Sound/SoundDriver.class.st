@@ -48,6 +48,18 @@ SoundDriver class >> isSuitable [
 	^ self isAvailable
 ]
 
+{ #category : #testing }
+SoundDriver class >> masterVolumeFindSettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder range: #masterVolume)
+		target: #SDL2SoundSink;
+		label: 'Master Volume' translated;
+		description: 'Set the master volume between 0 and 100 percent' translated;
+		parent: #soundEnabled;
+		default: 100;
+		range: (0 to: 100)
+]
+
 { #category : #'driver selection' }
 SoundDriver class >> pickDriverClass [
 	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s ] ].
