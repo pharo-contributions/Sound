@@ -15,8 +15,8 @@ Sonograms are imageMorphs that will repeatedly plot arrays of values as black on
 		World doOneCycleNow].
 "
 Class {
-	#name : #SonogramMorph,
-	#superclass : #ImageMorph,
+	#name : 'SonogramMorph',
+	#superclass : 'ImageMorph',
 	#instVars : [
 		'lastX',
 		'scrollDelta',
@@ -25,10 +25,12 @@ Class {
 		'maxVal',
 		'pixValMap'
 	],
-	#category : #'Sound-Experimental'
+	#category : 'Sound-Experimental',
+	#package : 'Sound',
+	#tag : 'Experimental'
 }
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SonogramMorph >> extent: newExtent [
 	super image: (Form extent: newExtent depth: Display depth).
 	lastX := -1.
@@ -39,7 +41,7 @@ SonogramMorph >> extent: newExtent [
 
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 SonogramMorph >> extent: extent minVal: min maxVal: max scrollDelta: d [
 	minVal := min.
 	maxVal := max.
@@ -61,7 +63,7 @@ SonogramMorph >> extent: extent minVal: min maxVal: max scrollDelta: d [
 "
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 SonogramMorph >> plotColumn: dataArray [ 
 	| chm1 i normVal r |
 	columnForm unhibernate.
@@ -85,7 +87,7 @@ SonogramMorph >> plotColumn: dataArray [
 	self invalidRect: (r translateBy: self position)
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 SonogramMorph >> scroll [
 	image copy: (scrollDelta@0 extent: (image width-scrollDelta)@image height)
 			from: image to: 0@0 rule: Form over.

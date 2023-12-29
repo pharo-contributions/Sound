@@ -2,17 +2,19 @@
 A VolumeEnvelope is an envelope handling the volume of a sound.
 "
 Class {
-	#name : #VolumeEnvelope,
-	#superclass : #Envelope,
+	#name : 'VolumeEnvelope',
+	#superclass : 'Envelope',
 	#instVars : [
 		'currentVol',
 		'targetVol',
 		'mSecsForChange'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #computation }
+{ #category : 'computation' }
 VolumeEnvelope >> computeSlopeAtMSecs: mSecs [
 	"Private! Find the next inflection point of this envelope and compute its target volume and the number of milliseconds until the inflection point is reached."
 
@@ -57,7 +59,7 @@ VolumeEnvelope >> computeSlopeAtMSecs: mSecs [
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 VolumeEnvelope >> reset [
 	"Reset the state for this envelope."
 
@@ -67,7 +69,7 @@ VolumeEnvelope >> reset [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VolumeEnvelope >> updateSelector [
 	"Needed by the envelope editor."
 
@@ -75,7 +77,7 @@ VolumeEnvelope >> updateSelector [
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 VolumeEnvelope >> updateTargetAt: mSecs [
 	"Update the volume envelope slope and limit for my target. Answer false."
 
@@ -87,7 +89,7 @@ VolumeEnvelope >> updateTargetAt: mSecs [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VolumeEnvelope >> volume: aNumber [
 	"Set the maximum volume of a volume-controlling envelope."
 

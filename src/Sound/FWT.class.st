@@ -13,8 +13,8 @@ The following changes from cody's listings should also be noted...
 3.  All indexing follows the Smalltalk 1-to-N convention, naturally.
 "
 Class {
-	#name : #FWT,
-	#superclass : #Object,
+	#name : 'FWT',
+	#superclass : 'Object',
 	#instVars : [
 		'alpha',
 		'beta',
@@ -28,10 +28,12 @@ Class {
 		'nLevels',
 		'transform'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #access }
+{ #category : 'access' }
 FWT >> coeffs [
 	"Return all coefficients needed to reconstruct the original samples"
 	| header csize strm |
@@ -47,7 +49,7 @@ FWT >> coeffs [
 	^ coeffs
 ]
 
-{ #category : #access }
+{ #category : 'access' }
 FWT >> coeffs: coeffArray [
 	"Initialize this instance from the given coeff array (including header)."
 	| header strm |
@@ -61,7 +63,7 @@ FWT >> coeffs: coeffArray [
 
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 FWT >> convolveAndDec: inData dataLen: inLen filter: filter out: outData [
 	"convolve the input sequence with the filter and decimate by two"
 	| filtLen offset outi dotp |
@@ -86,7 +88,7 @@ FWT >> convolveAndDec: inData dataLen: inLen filter: filter out: outData [
 		outi := outi + 1]
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 FWT >> convolveAndInt: inData dataLen: inLen filter: filter sumOutput:
 sumOutput into: outData [
 	"insert zeros between each element of the input sequence and
@@ -123,7 +125,7 @@ sumOutput into: outData [
 
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 FWT >> dotpData: data endIndex: endIndex filter: filter start: start stop: stop inc: inc [
 	| sum i j |
 	sum := 0.0.
@@ -136,7 +138,7 @@ FWT >> dotpData: data endIndex: endIndex filter: filter start: start stop: stop 
 	^ sum
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FWT >> meanSquareError: otherData [
 	"Return the mean-square error between the current sample array and
 	some other data, presumably to evaluate a compression scheme."
@@ -149,7 +151,7 @@ FWT >> meanSquareError: otherData [
 	^ topSum / bottomSum
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FWT >> nSamples: n nLevels: nLevs [
 	"Initialize a wavelet transform."
 	"Note the sample array size must be N + 5, where N is a multiple of 2^nLevels"
@@ -167,12 +169,12 @@ FWT >> nSamples: n nLevels: nLevs [
 		transform at: 2*i put: (Array new: dyadSize + 5)]
 ]
 
-{ #category : #access }
+{ #category : 'access' }
 FWT >> samples [
 	^ samples copyFrom: 1 to: nSamples
 ]
 
-{ #category : #access }
+{ #category : 'access' }
 FWT >> samples: anArray [
 	1 to: anArray size do:
 		[:i | samples at: i put: (anArray at: i)].
@@ -180,7 +182,7 @@ FWT >> samples: anArray [
 		[:i | samples at: i put: 0.0]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FWT >> setAlpha: alph beta: bet [
 	"Set alpha and beta, compute wavelet coeefs, and derive hFilter and lFilter"
 	| tcosa tcosb tsina tsinb |
@@ -230,7 +232,7 @@ FWT >> setAlpha: alph beta: bet [
 
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 FWT >> transformForward: forward [
 	| inData inLen outData |
 	forward

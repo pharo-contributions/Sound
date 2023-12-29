@@ -1,6 +1,6 @@
 Class {
-	#name : #RepeatingSound,
-	#superclass : #AbstractSound,
+	#name : 'RepeatingSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'sound',
 		'iterationCount',
@@ -10,10 +10,12 @@ Class {
 	#classVars : [
 		'CarMotorSamples'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'car motor example' }
+{ #category : 'car motor example' }
 RepeatingSound class >> carMotorSound [
 	"Return a repeating sound for the sound of a car engine."
 	"RepeatingSound carMotorSound play"
@@ -21,7 +23,7 @@ RepeatingSound class >> carMotorSound [
 	^ self carMotorSound: 10.0
 ]
 
-{ #category : #'car motor example' }
+{ #category : 'car motor example' }
 RepeatingSound class >> carMotorSound: speed [
 	"Return a repeating sound for the sound of a car engine running at the given speed."
 	"(RepeatingSound carMotorSound: 2.0) play"
@@ -36,7 +38,7 @@ RepeatingSound class >> carMotorSound: speed [
 
 ]
 
-{ #category : #'car motor example' }
+{ #category : 'car motor example' }
 RepeatingSound class >> initializeCarMotor [
 	"Initialize the samples array for the sound of a car engine."
 
@@ -45,7 +47,7 @@ RepeatingSound class >> initializeCarMotor [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RepeatingSound class >> repeat: aSound count: anInteger [
 	"Return a RepeatingSound that will repeat the given sound for the given number of iterations."
 
@@ -53,7 +55,7 @@ RepeatingSound class >> repeat: aSound count: anInteger [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RepeatingSound class >> repeatForever: aSound [
 	"Return a RepeatingSound that will repeat the given sound forever."
 
@@ -61,7 +63,7 @@ RepeatingSound class >> repeatForever: aSound [
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RepeatingSound >> copySound [
 	"Private! Support for copying. Copy my component sound."
 
@@ -69,7 +71,7 @@ RepeatingSound >> copySound [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 RepeatingSound >> doControl [
 
 	super doControl.
@@ -77,21 +79,21 @@ RepeatingSound >> doControl [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RepeatingSound >> iterationCount [
 
 	^ iterationCount
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RepeatingSound >> iterationCount: aNumber [
 
 	iterationCount := aNumber.
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 RepeatingSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play a collection of sounds in sequence."
 	"(RepeatingSound new
@@ -122,7 +124,7 @@ RepeatingSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex le
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RepeatingSound >> postCopy [
 	"Copy my component sound."
 
@@ -131,7 +133,7 @@ RepeatingSound >> postCopy [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 RepeatingSound >> reset [
 
 	super reset.
@@ -143,7 +145,7 @@ RepeatingSound >> reset [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 RepeatingSound >> samplesRemaining [
 
 	iterationCount == #forever ifTrue: [^ 1000000].
@@ -153,21 +155,21 @@ RepeatingSound >> samplesRemaining [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepeatingSound >> setPitch: p dur: d loudness: l [
 
 	self error: 'RepeatingSounds do not support playing notes'.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepeatingSound >> setPitch: p duration: d loudness: l [
 
 	self error: 'RepeatingSounds do not support playing notes'.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RepeatingSound >> setSound: aSound iterations: anIntegerOrSymbol [
 	"Initialize the receiver to play the given sound the given number of times. If iteration count is the symbol #forever, then repeat indefinitely."
 	"(RepeatingSound repeat: AbstractSound scaleTest count: 2) play"
@@ -180,14 +182,14 @@ RepeatingSound >> setSound: aSound iterations: anIntegerOrSymbol [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RepeatingSound >> sound [
 
 	^ sound
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RepeatingSound >> sound: aSound [
 
 	sound := aSound.

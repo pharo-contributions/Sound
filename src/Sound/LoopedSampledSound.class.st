@@ -3,8 +3,8 @@ I respresent a sequence of sound samples, often used to record a single note pla
 
 "
 Class {
-	#name : #LoopedSampledSound,
-	#superclass : #AbstractSound,
+	#name : 'LoopedSampledSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'initialCount',
 		'count',
@@ -27,10 +27,12 @@ Class {
 		'LoopIndexFractionMask',
 		'LoopIndexScaleFactor'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LoopedSampledSound class >> fromAIFFFileNamed: fileName mergeIfStereo: mergeFlag [
 	"Initialize this sound from the data in the given AIFF file. If mergeFlag is true and the file is stereo, its left and right channels are mixed together to produce a mono sampled sound."
 
@@ -42,7 +44,7 @@ LoopedSampledSound class >> fromAIFFFileNamed: fileName mergeIfStereo: mergeFlag
 	self new fromAIFFFileReader: aiffFileReader mergeIfStereo: mergeFlag
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LoopedSampledSound class >> initialize [
 	"LoopedSampledSound initialize"
 
@@ -52,7 +54,7 @@ LoopedSampledSound class >> initialize [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LoopedSampledSound class >> samples: aSoundBuffer loopEnd: loopEndIndex loopLength: loopSampleCount pitch: perceivedPitchInHz samplingRate: samplingRateInHz [
 	"See the comment in the instance method of this name."
 
@@ -65,7 +67,7 @@ LoopedSampledSound class >> samples: aSoundBuffer loopEnd: loopEndIndex loopLeng
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LoopedSampledSound class >> unloopedSamples: aSoundBuffer pitch: perceivedPitchInHz samplingRate: samplingRateInHz [
 	"See the comment in the instance method of this name."
 
@@ -76,7 +78,7 @@ LoopedSampledSound class >> unloopedSamples: aSoundBuffer pitch: perceivedPitchI
 
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 LoopedSampledSound >> addReleaseEnvelope [
 	"Add a simple release envelope to this sound."
 
@@ -91,14 +93,14 @@ LoopedSampledSound >> addReleaseEnvelope [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> beUnlooped [
 
 	scaledLoopLength := 0.
 
 ]
 
-{ #category : #'disk i/o' }
+{ #category : 'disk i/o' }
 LoopedSampledSound >> comeFullyUpOnReload: smartRefStream [
 	"Convert my sample buffers from ByteArrays into SampleBuffers after raw loading from a DataStream. Answer myself."
 
@@ -113,7 +115,7 @@ LoopedSampledSound >> comeFullyUpOnReload: smartRefStream [
 
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 LoopedSampledSound >> computeSampleCountForRelease [
 	"Calculate the number of samples before the end of the note after which looping back will be be disabled. The units of this value, sampleCountForRelease, are samples at the original sampling rate. When playing a specific note, this value is converted to releaseCount, which is number of samples to be computed at the current pitch and sampling rate."
 	"Details: For short loops, set the sampleCountForRelease to the loop length plus the number of samples between loopEnd and lastSample. Otherwise, set it to 1/10th of a second worth of samples plus the number of samples between loopEnd and lastSample. In this case, the trailing samples will be played only if the last loop-back occurs within 1/10th of a second of the total note duration, and the note may be shortened by up to 1/10th second. For long loops, this is the best we can do."
@@ -128,7 +130,7 @@ LoopedSampledSound >> computeSampleCountForRelease [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 LoopedSampledSound >> copyDownSampledLowPassFiltering: doFiltering [
 	"Answer a copy of the receiver at half its sampling rate. The result consumes half the memory space, but has only half the frequency range of the original. If doFiltering is true, the original sound buffers are low-pass filtered before down-sampling. This is slower, but prevents aliasing of any high-frequency components of the original signal. (While it may be possible to avoid low-pass filtering when down-sampling from 44.1 kHz to 22.05 kHz, it is probably essential when going to lower sampling rates.)"
 
@@ -136,7 +138,7 @@ LoopedSampledSound >> copyDownSampledLowPassFiltering: doFiltering [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LoopedSampledSound >> downSampleLowPassFiltering: doFiltering [
 	"Cut my sampling rate in half. Use low-pass filtering (slower) if doFiltering is true."
 	"Note: This operation loses information, and modifies the receiver in place."
@@ -159,7 +161,7 @@ LoopedSampledSound >> downSampleLowPassFiltering: doFiltering [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> duration [
 	"Answer the duration of this sound in seconds."
 
@@ -167,7 +169,7 @@ LoopedSampledSound >> duration [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> duration: seconds [
 
 	super duration: seconds.
@@ -175,7 +177,7 @@ LoopedSampledSound >> duration: seconds [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 LoopedSampledSound >> fftAt: startIndex [
 	"Answer the Fast Fourier Transform (FFT) of my samples (only the left channel, if stereo) starting at the given index."
 
@@ -188,7 +190,7 @@ LoopedSampledSound >> fftAt: startIndex [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LoopedSampledSound >> fftWindowSize: windowSize startingAt: startIndex [
 	"Answer a Fast Fourier Transform (FFT) of the given number of samples starting at the given index (the left channel only, if stereo). The window size will be rounded up to the nearest power of two greater than the requested size. There must be enough samples past the given starting index to accomodate this window size."
 
@@ -201,7 +203,7 @@ LoopedSampledSound >> fftWindowSize: windowSize startingAt: startIndex [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 LoopedSampledSound >> findStartPointAfter: index [
 	"Answer the index of the last zero crossing sample before the given index."
 
@@ -218,7 +220,7 @@ LoopedSampledSound >> findStartPointAfter: index [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 LoopedSampledSound >> findStartPointForThreshold: threshold [
 	"Answer the index of the last zero crossing sample before the first sample whose absolute value (in either the right or left channel) exceeds the given threshold."
 
@@ -236,21 +238,21 @@ LoopedSampledSound >> findStartPointForThreshold: threshold [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> firstSample [
 
 	^ firstSample
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> firstSample: aNumber [
 
 	firstSample := (aNumber asInteger max: 1) min: lastSample.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LoopedSampledSound >> fromAIFFFileNamed: fileName mergeIfStereo: mergeFlag [
 	"Initialize this sound from the data in the given AIFF file. If mergeFlag is true and the file is stereo, its left and right channels are mixed together to produce a mono sampled sound."
 
@@ -283,7 +285,7 @@ LoopedSampledSound >> fromAIFFFileNamed: fileName mergeIfStereo: mergeFlag [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LoopedSampledSound >> fromAIFFFileReader: aiffFileReader mergeIfStereo: mergeFlag [
 	"Initialize this sound from the data in the given AIFF file. If mergeFlag is true and the file is stereo, its left and right channels are mixed together to produce a mono sampled sound."
 
@@ -311,21 +313,21 @@ LoopedSampledSound >> fromAIFFFileReader: aiffFileReader mergeIfStereo: mergeFla
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> gain [
 
 	^ gain
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> gain: aNumber [
 
 	gain := aNumber asFloat.
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 LoopedSampledSound >> highestSignificantFrequencyAt: startIndex [
 	"Answer the highest significant frequency in the sample window starting at the given index. The a frequency is considered significant if it's power is at least 1/50th that of the maximum frequency component in the frequency spectrum."
 
@@ -338,7 +340,7 @@ LoopedSampledSound >> highestSignificantFrequencyAt: startIndex [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 LoopedSampledSound >> indexOfFirstPointOverThreshold: threshold [
 	"Answer the index of the first sample whose absolute value exceeds the given threshold."
 
@@ -361,7 +363,7 @@ LoopedSampledSound >> indexOfFirstPointOverThreshold: threshold [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LoopedSampledSound >> initialize [
 	"This default initialization creates a loop consisting of a single cycle of a sine wave."
 	"(LoopedSampledSound pitch: 440.0 dur: 1.0 loudness: 0.4) play"
@@ -379,49 +381,49 @@ LoopedSampledSound >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> isLooped [
 
 	^ scaledLoopLength ~= 0.  "zero loop length means unlooped"
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> isStereo [
 
 	^ leftSamples ~~ rightSamples
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> leftSamples [
 
 	^ leftSamples
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> leftSamples: aSampleBuffer [
 
 	leftSamples := aSampleBuffer.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> loopEnd [
 
 	^ loopEnd
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> loopLength [
 
 	^ scaledLoopLength / FloatLoopIndexScaleFactor
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 LoopedSampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play samples from a wave table by stepping a fixed amount through the table on every sample. The table index and increment are scaled to allow fractional increments for greater pitch accuracy.  If a loop length is specified, then the index is looped back when the loopEnd index is reached until count drops below releaseCount. This allows a short sampled sound to be sustained indefinitely."
 	"(LoopedSampledSound pitch: 440.0 dur: 5.0 loudness: 0.5) play"
@@ -487,7 +489,7 @@ LoopedSampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startInde
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LoopedSampledSound >> normalizedResultsFromFFT: fft [
 	"Answer an array whose size is half of the FFT window size containing power in each frequency band, normalized to the average power over the entire FFT. A value of 10.0 in this array thus means that the power at the corresponding frequences is ten times the average power across the entire FFT."
 
@@ -499,7 +501,7 @@ LoopedSampledSound >> normalizedResultsFromFFT: fft [
 
 ]
 
-{ #category : #'disk i/o' }
+{ #category : 'disk i/o' }
 LoopedSampledSound >> objectForDataStream: refStrm [
     "Answer an object to store on a data stream, a copy of myself whose SampleBuffers have been converted into ByteArrays."
 
@@ -510,21 +512,21 @@ LoopedSampledSound >> objectForDataStream: refStrm [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> originalSamplingRate [
 
 	^ originalSamplingRate
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> perceivedPitch [
 
 	^ perceivedPitch
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> pitch [
 
 	^ (scaledIndexIncr asFloat * perceivedPitch * self samplingRate asFloat) /
@@ -532,7 +534,7 @@ LoopedSampledSound >> pitch [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> pitch: p [
 
 	scaledIndexIncr :=
@@ -545,7 +547,7 @@ LoopedSampledSound >> pitch: p [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 LoopedSampledSound >> reset [
 
 	super reset.
@@ -554,21 +556,21 @@ LoopedSampledSound >> reset [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> rightSamples [
 
 	^ rightSamples
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> rightSamples: aSampleBuffer [
 
 	rightSamples := aSampleBuffer.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LoopedSampledSound >> samples [
 	"For compatibility with SampledSound. Just return my left channel (which is the only channel if I am mono)."
 
@@ -576,7 +578,7 @@ LoopedSampledSound >> samples [
 
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 LoopedSampledSound >> samples: aSoundBuffer loopEnd: loopEndIndex loopLength: loopSampleCount pitch: perceivedPitchInHz samplingRate: samplingRateInHz [
 	"Make this sound use the given samples array with a loop of the given length starting at the given index. The loop length may have a fractional part; this is necessary to achieve pitch accuracy for short loops."
 
@@ -604,7 +606,7 @@ LoopedSampledSound >> samples: aSoundBuffer loopEnd: loopEndIndex loopLength: lo
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 LoopedSampledSound >> samplesRemaining [
 	"Answer the number of samples remaining until the end of this sound."
 
@@ -612,14 +614,14 @@ LoopedSampledSound >> samplesRemaining [
 
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 LoopedSampledSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
 	"(LoopedSampledSound pitch: 440.0 dur: 2.5 loudness: 0.4) play"
 
 	self setPitch: pitchNameOrNumber duration: d loudness: vol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LoopedSampledSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 	"(LoopedSampledSound pitch: 440.0 dur: 2.5 loudness: 0.4) play"
 
@@ -629,7 +631,7 @@ LoopedSampledSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 LoopedSampledSound >> stopAfterMSecs: mSecs [
 	"Terminate this sound this note after the given number of milliseconds."
 
@@ -637,7 +639,7 @@ LoopedSampledSound >> stopAfterMSecs: mSecs [
 
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 LoopedSampledSound >> storeSampleCount: samplesToStore bigEndian: bigEndianFlag on: aBinaryStream [
 	"Store my samples on the given stream at the current SoundPlayer sampling rate. If bigFlag is true, then each 16-bit sample is stored most-significant byte first (AIFF files), otherwise it is stored least-significant byte first (WAV files)."
 
@@ -657,7 +659,7 @@ LoopedSampledSound >> storeSampleCount: samplesToStore bigEndian: bigEndianFlag 
 
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 LoopedSampledSound >> unloopedSamples: aSoundBuffer pitch: perceivedPitchInHz samplingRate: samplingRateInHz [
 	"Make this sound play the given samples unlooped. The samples have the given perceived pitch when played at the given sampling rate. By convention, unpitched sounds such as percussion sounds should specify a pitch of nil or 100 Hz."
 

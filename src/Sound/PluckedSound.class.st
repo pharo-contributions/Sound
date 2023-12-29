@@ -3,8 +3,8 @@ The Karplus-Strong plucked string algorithm: start with a buffer full of random 
 
 "
 Class {
-	#name : #PluckedSound,
-	#superclass : #AbstractSound,
+	#name : 'PluckedSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'initialCount',
 		'count',
@@ -13,10 +13,12 @@ Class {
 		'scaledIndexIncr',
 		'scaledIndexLimit'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 PluckedSound class >> default [
 	"PluckedSound default play"
 	"(AbstractSound majorScaleOn: PluckedSound default) play"
@@ -33,7 +35,7 @@ PluckedSound class >> default [
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PluckedSound >> copyRing [
 	"Private! Support for copying"
 
@@ -41,7 +43,7 @@ PluckedSound >> copyRing [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluckedSound >> duration [
 	"Answer the duration of this sound in seconds."
 
@@ -49,7 +51,7 @@ PluckedSound >> duration [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluckedSound >> duration: seconds [
 
 	super duration: seconds.
@@ -57,7 +59,7 @@ PluckedSound >> duration: seconds [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 PluckedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"The Karplus-Strong plucked string algorithm: start with a buffer full of random noise and repeatedly play the contents of that buffer while averaging adjacent samples. High harmonics damp out more quickly, transfering their energy to lower ones. The length of the buffer corresponds to the length of the string."
 	"(PluckedSound pitch: 220.0 dur: 6.0 loudness: 0.8) play"
@@ -107,7 +109,7 @@ PluckedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PluckedSound >> postCopy [
 
 	super postCopy.
@@ -115,7 +117,7 @@ PluckedSound >> postCopy [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 PluckedSound >> reset [
 	"Fill the ring with random noise."
 
@@ -131,21 +133,21 @@ PluckedSound >> reset [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 PluckedSound >> samplesRemaining [
 
 	^ count
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluckedSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
 
 	self setPitch: pitchNameOrNumber duration: d loudness: vol
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluckedSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 
 	| p sz |
@@ -161,7 +163,7 @@ PluckedSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 PluckedSound >> stopAfterMSecs: mSecs [
 	"Terminate this sound this note after the given number of milliseconds."
 

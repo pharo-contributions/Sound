@@ -1,17 +1,19 @@
 Class {
-	#name : #FMClarinetSound,
-	#superclass : #FMSound,
-	#category : #'Sound-Core'
+	#name : 'FMClarinetSound',
+	#superclass : 'FMSound',
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 FMClarinetSound >> setPitch: pitchNameOrNumber dur: d loudness: l [
 	"Select a modulation ratio and modulation envelope scale based on my pitch."
 
 	self setPitch: pitchNameOrNumber duration: d loudness: l
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FMClarinetSound >> setPitch: pitchNameOrNumber duration: d loudness: l [
 	"Select a modulation ratio and modulation envelope scale based on my pitch."
 

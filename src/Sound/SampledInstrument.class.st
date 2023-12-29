@@ -3,8 +3,8 @@ I represent a collection of individual notes at different pitches, volumes, and 
 
 "
 Class {
-	#name : #SampledInstrument,
-	#superclass : #Object,
+	#name : 'SampledInstrument',
+	#superclass : 'Object',
 	#instVars : [
 		'sustainedSoft',
 		'sustainedLoud',
@@ -13,10 +13,12 @@ Class {
 		'sustainedThreshold',
 		'loudThreshold'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledInstrument class >> buildSmallOrchestra [
 	"Example of how to build a skeleton orchestra that uses less memory (about 14 MBytes)."
 	"SampledInstrument buildSmallOrchestra"
@@ -56,7 +58,7 @@ SampledInstrument class >> buildSmallOrchestra [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledInstrument class >> readLoudAndStaccatoInstrument: instName fromDirectory: orchestraDir [
 	"SampledInstrument
 		readLoudAndStaccatoInstrument: 'oboe'
@@ -86,7 +88,7 @@ SampledInstrument class >> readLoudAndStaccatoInstrument: instName fromDirectory
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledInstrument class >> readPizzInstrument: instName fromDirectory: orchestraDir [
 	"SampledInstrument
 		readPizzInstrument: 'violin'
@@ -111,7 +113,7 @@ SampledInstrument class >> readPizzInstrument: instName fromDirectory: orchestra
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledInstrument class >> readSimpleInstrument: instName fromDirectory: orchestraDir [
 	"SampledInstrument
 		readSimpleInstrument: 'oboe'
@@ -136,7 +138,7 @@ SampledInstrument class >> readSimpleInstrument: instName fromDirectory: orchest
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> allNotes [
 	"Answer a collection containing of all the unique sampled sounds used by this instrument."
 
@@ -150,7 +152,7 @@ SampledInstrument >> allNotes [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> allSampleSets: sortedNotes [
 
 	| keyMap |
@@ -162,7 +164,7 @@ SampledInstrument >> allSampleSets: sortedNotes [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> chooseSamplesForPitch: pitchInHz from: sortedNotes [
 	"From the given collection of LoopedSampledSounds, choose the best one to be pitch-shifted to produce the given pitch."
 	"Assume: the given collection is sorted in ascending pitch order."
@@ -181,7 +183,7 @@ SampledInstrument >> chooseSamplesForPitch: pitchInHz from: sortedNotes [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> initialize [
 
 	super initialize.
@@ -190,21 +192,21 @@ SampledInstrument >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> loudThreshold [
 
 	^ loudThreshold
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> loudThreshold: aNumber [
 
 	loudThreshold := aNumber asFloat.
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> memorySpace [
 	"Answer the number of bytes required to store the samples for this instrument."
 
@@ -217,7 +219,7 @@ SampledInstrument >> memorySpace [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> midiKeyMapFor: sortedNotes [
 	"Return a 128 element array that maps each MIDI key number to the sampled note from the given set with the closests pitch. A precise match isn't necessary because the selected note will be pitch shifted to play at the correct pitch."
 
@@ -228,14 +230,14 @@ SampledInstrument >> midiKeyMapFor: sortedNotes [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> playChromaticRunFrom: startPitch to: endPitch [
 
 	(AbstractSound chromaticRunFrom: startPitch to: endPitch on: self) play.
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> pruneNoteList: aNoteList notesPerOctave: notesPerOctave [
 	"Return a pruned version of the given note list with only the given number of notes per octave. Assume the given notelist is in sorted order."
 
@@ -251,7 +253,7 @@ SampledInstrument >> pruneNoteList: aNoteList notesPerOctave: notesPerOctave [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> pruneToNotesPerOctave: notesPerOctave [
 	"Prune all my keymaps to the given number of notes per octave."
 
@@ -266,7 +268,7 @@ SampledInstrument >> pruneToNotesPerOctave: notesPerOctave [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> pruneToSingleNote: aNote [
 	"Fill all my keymaps with the given note."
 
@@ -279,7 +281,7 @@ SampledInstrument >> pruneToSingleNote: aNote [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> readSampleSetFrom: dirName [
 	"Answer a collection of sounds read from AIFF files in the given directory and sorted in ascending pitch order."
 
@@ -299,7 +301,7 @@ SampledInstrument >> readSampleSetFrom: dirName [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> readSampleSetInfoFrom: dirName [
 	"MessageTally spyOn: [SampledInstrument new readSampleSetFrom: 'Tosh:Desktop Folder:AAA Squeak2.0 Beta:Organ Samples:Flute8'] timeToRun"
 
@@ -316,7 +318,7 @@ SampledInstrument >> readSampleSetInfoFrom: dirName [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledInstrument >> soundForMidiKey: midiKey dur: d loudness: l [
 	"Answer an initialized sound object that generates a note for the given MIDI key (in the range 0..127), duration (in seconds), and loudness (in the range 0.0 to 1.0)."
 
@@ -339,7 +341,7 @@ SampledInstrument >> soundForMidiKey: midiKey dur: d loudness: l [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledInstrument >> soundForPitch: pitchNameOrNumber dur: d loudness: l [
 	"Answer an initialized sound object that generates a note of the given pitch, duration, and loudness. Pitch may be a numeric pitch or a string pitch name such as 'c4'. Duration is in seconds and loudness is in the range 0.0 to 1.0."
 	"Note:  Generally, SampledInstruments are expected to be played via MIDI key numbers rather than by pitches, since finding the MIDI key for a given pitch is expensive."
@@ -350,7 +352,7 @@ SampledInstrument >> soundForPitch: pitchNameOrNumber dur: d loudness: l [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> staccatoLoudAndSoftSampleSet: sortedNotes [
 
 	staccatoLoud := self midiKeyMapFor: sortedNotes.
@@ -358,49 +360,49 @@ SampledInstrument >> staccatoLoudAndSoftSampleSet: sortedNotes [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> staccatoLoudSampleSet: sortedNotes [
 
 	staccatoLoud := self midiKeyMapFor: sortedNotes.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> staccatoSoftSampleSet: sortedNotes [
 
 	staccatoSoft := self midiKeyMapFor: sortedNotes.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> sustainedLoudSampleSet: sortedNotes [
 
 	sustainedLoud := self midiKeyMapFor: sortedNotes.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> sustainedSoftSampleSet: sortedNotes [
 
 	sustainedSoft := self midiKeyMapFor: sortedNotes.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> sustainedThreshold [
 
 	^ sustainedThreshold
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledInstrument >> sustainedThreshold: aNumber [
 
 	sustainedThreshold := aNumber asFloat.
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> testAtPitch: aPitch [
 	"SampledInstrument testAtPitch: 'c4'"
 
@@ -433,7 +435,7 @@ SampledInstrument >> testAtPitch: aPitch [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> trimAttackOf: sampleBuffer threshold: threshold [
 	"Trim 'silence' off the initial attacks of the given sound buffer."
 
@@ -445,7 +447,7 @@ SampledInstrument >> trimAttackOf: sampleBuffer threshold: threshold [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SampledInstrument >> trimAttacks: threshold [
 	"Trim 'silence' off the initial attacks all my samples."
 

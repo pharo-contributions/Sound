@@ -4,8 +4,8 @@ Its class side in addition manages a library of sounds (and may be could be extr
 
 "
 Class {
-	#name : #SampledSound,
-	#superclass : #AbstractSound,
+	#name : 'SampledSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'initialCount',
 		'count',
@@ -26,10 +26,12 @@ Class {
 		'ScaledIndexOverflow',
 		'SoundLibrary'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> addLibrarySoundNamed: aString fromAIFFfileNamed: fileName [
 	"Add a sound from the given AIFF file to the library."
 	"SampledSound
@@ -51,7 +53,7 @@ SampledSound class >> addLibrarySoundNamed: aString fromAIFFfileNamed: fileName 
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> addLibrarySoundNamed: aString samples: sampleData samplingRate: samplesPerSecond [
 	"Add the given sound to the sound library. The sample data may be either a ByteArray or a SoundBuffer. If the former, it is take to be 8-bit unsigned samples. If the latter, it is taken to be 16 bit signed samples."
 
@@ -61,7 +63,7 @@ SampledSound class >> addLibrarySoundNamed: aString samples: sampleData sampling
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> assimilateSoundsFrom: aDictionary [
  	"assimilate sounds with new keys from the given dictionary"
  
@@ -70,7 +72,7 @@ SampledSound class >> assimilateSoundsFrom: aDictionary [
  			[SoundLibrary add: assoc]]
 ]
 
-{ #category : #'coffee cup clink' }
+{ #category : 'coffee cup clink' }
 SampledSound class >> beep [
 	"Beep in the presence of the sound system.
 	Not to be used directly - use Beeper class>>beep
@@ -80,7 +82,7 @@ SampledSound class >> beep [
 			
 ]
 
-{ #category : #'coffee cup clink' }
+{ #category : 'coffee cup clink' }
 SampledSound class >> beepSound [
 	"Beep in the presence of the sound system. Not to be used directly - use Beeper class>>beep
 	or Beeper class>>beepPrimitive instead."
@@ -91,7 +93,7 @@ SampledSound class >> beepSound [
 			
 ]
 
-{ #category : #'coffee cup clink' }
+{ #category : 'coffee cup clink' }
 SampledSound class >> coffeeCupClink [
 	"Return the samples array for the sound of a spoon being tapped against a coffee cup."
 	"self coffeeCupClink"
@@ -100,7 +102,7 @@ SampledSound class >> coffeeCupClink [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> convert8bitSignedFrom: aByteArray to16Bit: aSoundBuffer [
 	"Copy the contents of the given array of signed 8-bit samples into the given array of 16-bit signed samples."
 
@@ -119,7 +121,7 @@ SampledSound class >> convert8bitSignedFrom: aByteArray to16Bit: aSoundBuffer [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> convert8bitSignedTo16Bit: aByteArray [
 	"Convert the given array of samples--assumed to be 8-bit signed, linear data--into 16-bit signed samples. Return an array containing the resulting samples. Typically used to read uncompressed AIFF sound data."
 
@@ -130,7 +132,7 @@ SampledSound class >> convert8bitSignedTo16Bit: aByteArray [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> convert8bitUnsignedTo16Bit: anArray [
 	"Convert the given array of samples--assumed to be 8-bit unsigned, linear data--into 16-bit signed samples. Return an array containing the resulting samples. Typically used to read uncompressed WAVE sound data."
 
@@ -144,7 +146,7 @@ SampledSound class >> convert8bitUnsignedTo16Bit: anArray [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> convertBytesTo16BitSamples: aByteArray mostSignificantByteFirst: msbFirst [
 	"Convert the given ByteArray (with the given byte ordering) into 16-bit sample buffer."
 
@@ -165,7 +167,7 @@ SampledSound class >> convertBytesTo16BitSamples: aByteArray mostSignificantByte
 
 ]
 
-{ #category : #'default sound' }
+{ #category : 'default sound' }
 SampledSound class >> defaultSampleTable: anArray [
 	"Set the sample table to be used as the default waveform for playing a score such as the Bach fugue. Array is assumed to contain monaural signed 16-bit sample values."
 
@@ -173,7 +175,7 @@ SampledSound class >> defaultSampleTable: anArray [
 
 ]
 
-{ #category : #'default sound' }
+{ #category : 'default sound' }
 SampledSound class >> defaultSamples: anArray repeated: n [
 
 	| data |
@@ -184,7 +186,7 @@ SampledSound class >> defaultSamples: anArray repeated: n [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledSound class >> fromAIFFfileNamed: fileName [
 	"Read a SampledSound from the AIFF file of the given name, merging stereo to mono if necessary."
 	"(SampledSound fromAIFFfileNamed: '1.aif') play"
@@ -207,7 +209,7 @@ SampledSound class >> fromAIFFfileNamed: fileName [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledSound class >> fromWaveFileNamed: fileName [
 	"(SampledSound fromWaveFileNamed: 'c:\windows\media\chimes.wav') play"
 	"| snd fd |
@@ -223,7 +225,7 @@ SampledSound class >> fromWaveFileNamed: fileName [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledSound class >> fromWaveStream: fileStream [
 
 	| stream header data type channels samplingRate blockAlign bitsPerSample leftAndRight |
@@ -259,7 +261,7 @@ SampledSound class >> fromWaveStream: fileStream [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SampledSound class >> initialize [
 	"SampledSound initialize"
 
@@ -271,7 +273,7 @@ SampledSound class >> initialize [
 	
 ]
 
-{ #category : #'coffee cup clink' }
+{ #category : 'coffee cup clink' }
 SampledSound class >> initializeCoffeeCupClink [
 	"Initialize the samples array for the sound of a spoon being tapped against a coffee cup."
 	"SampledSound initializeCoffeeCupClink"
@@ -283,7 +285,7 @@ SampledSound class >> initializeCoffeeCupClink [
 
 ]
 
-{ #category : #'wav reading' }
+{ #category : 'wav reading' }
 SampledSound class >> next16BitWord: msbFirst from: stream [
 	"Read a 16-bit positive integer from the input stream."
 	"Assume: Stream has at least two bytes left."
@@ -296,7 +298,7 @@ SampledSound class >> next16BitWord: msbFirst from: stream [
 
 ]
 
-{ #category : #'wav reading' }
+{ #category : 'wav reading' }
 SampledSound class >> next32BitWord: msbFirst from: stream [
 	"Read a 32-bit positive integer from the input stream."
 	"Assume: Stream has at least four bytes left."
@@ -309,7 +311,7 @@ SampledSound class >> next32BitWord: msbFirst from: stream [
 
 ]
 
-{ #category : #'default sound' }
+{ #category : 'default sound' }
 SampledSound class >> nominalSamplePitch: aNumber [
 	"Record an estimate of the normal pitch of the sampled sound."
 
@@ -317,7 +319,7 @@ SampledSound class >> nominalSamplePitch: aNumber [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> playSoundNamed: aString [
 	"Play the sound with given name. Do nothing if there is no sound of that name in the library."
 	"SampledSound playSoundNamed: 'croak'"
@@ -329,7 +331,7 @@ SampledSound class >> playSoundNamed: aString [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> putCoffeeCupClinkInSoundLibrary [
 	"SampledSound putCoffeeCupClinkInSoundLibrary"
 
@@ -338,7 +340,7 @@ SampledSound class >> putCoffeeCupClinkInSoundLibrary [
 		samplingRate: 11025
 ]
 
-{ #category : #'wav reading' }
+{ #category : 'wav reading' }
 SampledSound class >> readWaveChunk: chunkType inRIFF: stream [
 	"Search the stream for a format chunk of the given type and return its contents."
 
@@ -360,7 +362,7 @@ SampledSound class >> readWaveChunk: chunkType inRIFF: stream [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> removeSoundNamed: aString [
 	"Remove the sound with the given name from the sound library."
 
@@ -368,7 +370,7 @@ SampledSound class >> removeSoundNamed: aString [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SampledSound class >> samples: anArrayOf16BitSamples samplingRate: samplesPerSecond [
 	"Return a SampledSound with the given samples array and sampling rate."
 
@@ -376,7 +378,7 @@ SampledSound class >> samples: anArrayOf16BitSamples samplingRate: samplesPerSec
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> soundLibrary [
 	"Answer the sound library dictionary."
 
@@ -384,7 +386,7 @@ SampledSound class >> soundLibrary [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> soundNamed: aString [
 	"Answer the sound of the given name, or, if there is no sound of that name, put up an informer so stating, and answer nil"
 
@@ -393,7 +395,7 @@ SampledSound class >> soundNamed: aString [
 	^ self soundNamed: aString ifAbsent: [Beeper default]
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> soundNamed: aString ifAbsent: aBlock [
 	"Answer the sound of the given name, or if there is no sound of that name, answer the result of evaluating aBlock"
 	"(SampledSound soundNamed: 'shutterClick') play"
@@ -410,7 +412,7 @@ SampledSound class >> soundNamed: aString ifAbsent: aBlock [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> soundNames [
 	"Answer a list of sound names for the sounds stored in the sound library."
 	"| s |
@@ -423,7 +425,7 @@ SampledSound class >> soundNames [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> uLawDecode: aByteArray [
 	"Convert the given array of uLaw-encoded 8-bit samples into a SoundBuffer of 16-bit signed samples."
 
@@ -436,7 +438,7 @@ SampledSound class >> uLawDecode: aByteArray [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> uLawDecodeTable [
 	"Return a 256 entry table to be used to decode 8-bit uLaw-encoded samples."
 	"Details: This table was computed as follows:
@@ -461,7 +463,7 @@ SampledSound class >> uLawDecodeTable [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> uLawEncode: anArray [
 	"Convert the given array of 16-bit signed samples into a ByteArray of uLaw-encoded 8-bit samples."
 
@@ -479,7 +481,7 @@ SampledSound class >> uLawEncode: anArray [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SampledSound class >> uLawEncodeSample: s [
 	"Encode the given 16-bit signed sample using the uLaw 8-bit encoding."
 
@@ -505,7 +507,7 @@ SampledSound class >> uLawEncodeSample: s [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> universalSoundKeys [
  	"Answer a list of the sound-names that are expected to be found in the SoundLibrary of every image."
  
@@ -514,7 +516,7 @@ SampledSound class >> universalSoundKeys [
  
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 SampledSound class >> unusedSoundNameLike: desiredName [
 	"Pick an unused sound name based on the given string. If necessary, append digits to avoid name conflicts with existing sounds."
 	"SampledSound unusedSoundNameLike: 'chirp'"
@@ -529,7 +531,7 @@ SampledSound class >> unusedSoundNameLike: desiredName [
 
 ]
 
-{ #category : #'default sound' }
+{ #category : 'default sound' }
 SampledSound class >> useCoffeeCupClink [
 	"Set the sample table to be used as the default waveform to the sound of a coffee cup being tapped with a spoon."
 	"SampledSound useCoffeeCupClink bachFugue play"
@@ -539,25 +541,25 @@ SampledSound class >> useCoffeeCupClink [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledSound >> compressWith: codecClass [
 	^ codecClass new compressSound: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledSound >> compressWith: codecClass atRate: aSamplingRate [
 
 	^ codecClass new compressSound: self atRate: aSamplingRate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledSound >> duration [
 
 	^ initialCount asFloat / self samplingRate asFloat
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledSound >> duration: seconds [
 
 	super duration: seconds.
@@ -565,7 +567,7 @@ SampledSound >> duration: seconds [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledSound >> endGracefully [
 	"See stopGracefully, which affects initialCOunt, and I don't think it should (di)."
 
@@ -581,7 +583,7 @@ SampledSound >> endGracefully [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Mix the given number of samples with the samples already in the given buffer starting at the given index. Assume that the buffer size is at least (index + count) - 1."
 
@@ -629,14 +631,14 @@ SampledSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex left
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledSound >> originalSamplingRate [
 
 	^ originalSamplingRate
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SampledSound >> pitch: pitchNameOrNumber [
 
 	| p |
@@ -647,7 +649,7 @@ SampledSound >> pitch: pitchNameOrNumber [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledSound >> playSilentlyUntil: startTime [
 	"Used to fast foward to a particular starting time.
 	Overridden to be instant for sampled sounds."
@@ -660,7 +662,7 @@ SampledSound >> playSilentlyUntil: startTime [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledSound >> reset [
 	"Details: The sample index and increment are scaled to allow fractional increments without having to do floating point arithmetic in the inner loop."
 
@@ -673,21 +675,21 @@ SampledSound >> reset [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SampledSound >> samples [
 
 	^ samples
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledSound >> samplesRemaining [
 
 	^ count
 
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 SampledSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
 	"Used to play scores using the default sample table."
 	"(SampledSound pitch: 880.0 dur: 1.5 loudness: 0.6) play"
@@ -695,7 +697,7 @@ SampledSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
 	self setPitch: pitchNameOrNumber duration: d loudness: vol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SampledSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 	"Used to play scores using the default sample table."
 	"(SampledSound pitch: 880.0 duration: 1.5 loudness: 0.6) play"
@@ -713,7 +715,7 @@ SampledSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SampledSound >> setSamples: anArray samplingRate: rate [
 	"Set my samples array to the given array with the given nominal sampling rate. Altering the rate parameter allows the sampled sound to be played back at different pitches."
 	"Note: There are two ways to use sampled sound: (a) you can play them through once (supported by this method) or (b) you can make them the default waveform with which to play a musical score (supported by the class method defaultSampleTable:)."
@@ -737,7 +739,7 @@ SampledSound >> setSamples: anArray samplingRate: rate [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledSound >> setScaledIncrement: aNumber [
 
 	scaledIncrement := (aNumber * IncrementScaleFactor) rounded.
@@ -745,7 +747,7 @@ SampledSound >> setScaledIncrement: aNumber [
 
 ]
 
-{ #category : #'sound tracks' }
+{ #category : 'sound tracks' }
 SampledSound >> sonogramMorph: height from: start to: stop nPoints: nPoints [
 	"FYI:  It is very cool that we can do this, but for sound tracks on a movie,
 	simple volume is easier to read, easier to scale, and way faster to compute.
@@ -772,7 +774,7 @@ SampledSound >> sonogramMorph: height from: start to: stop nPoints: nPoints [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SampledSound >> stopAfterMSecs: mSecs [
 	"Terminate this sound this note after the given number of milliseconds."
 
@@ -780,7 +782,7 @@ SampledSound >> stopAfterMSecs: mSecs [
 
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 SampledSound >> storeSampleCount: samplesToStore bigEndian: bigEndianFlag on: aBinaryStream [
 	"Store my samples on the given stream at the current SoundPlayer sampling rate. If bigFlag is true, then each 16-bit sample is stored most-significant byte first (AIFF files), otherwise it is stored least-significant byte first (WAV files)."
 
@@ -800,7 +802,7 @@ SampledSound >> storeSampleCount: samplesToStore bigEndian: bigEndianFlag on: aB
 
 ]
 
-{ #category : #'sound tracks' }
+{ #category : 'sound tracks' }
 SampledSound >> volumeForm: height from: start to: stop nSamplesPerPixel: nPerPixel [
 	"Note: nPerPixel can be Integer or Float for pixel-perfect alignment."
 	"In an inspector of a samplesSound...

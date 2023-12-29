@@ -4,8 +4,8 @@ Instances of this class hold the data resulting from compressing a sound.  Each 
 In order to facilitate integration with existing sounds, a CompressedSoundData instance can masquerade as a sound by caching a copy of its original sound and delegating the essential sound-playing protocol to that cached copy.  It should probably be made a subclass of AbstractSound to complete the illusion.
 "
 Class {
-	#name : #CompressedSoundData,
-	#superclass : #Object,
+	#name : 'CompressedSoundData',
+	#superclass : 'Object',
 	#instVars : [
 		'channels',
 		'soundClassName',
@@ -18,10 +18,12 @@ Class {
 		'firstSample',
 		'cachedSound'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #assound }
+{ #category : 'assound' }
 CompressedSoundData >> asSound [
 	"Answer the result of decompressing the receiver."
 
@@ -32,7 +34,7 @@ CompressedSoundData >> asSound [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> channels [
 	"Answer an array of ByteArrays containing the compressed sound data for each channel."
 
@@ -40,14 +42,14 @@ CompressedSoundData >> channels [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> channels: anArray [
 
 	channels := anArray.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> codecName [
 	"Answer the name of the sound codec used to compress this sound. Typically, this is the name of a class that can be used to decode the sound, but it is possible that the codec has not yet been implemented or is not filed into this image."
 
@@ -55,35 +57,35 @@ CompressedSoundData >> codecName [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> codecName: aStringOrSymbol [
 
 	codecName := aStringOrSymbol asSymbol.
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 CompressedSoundData >> compressWith: codecClass [
 
 	codecName == codecClass name asSymbol ifTrue: [^self].
 	^self asSound compressWith: codecClass
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 CompressedSoundData >> compressWith: codecClass atRate: aSamplingRate [
 
 	(codecName == codecClass name asSymbol and: [samplingRate = aSamplingRate]) ifTrue: [^self].
 	^self asSound compressWith: codecClass atRate: aSamplingRate
 ]
 
-{ #category : #assound }
+{ #category : 'assound' }
 CompressedSoundData >> doControl [
 
 	cachedSound doControl
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> firstSample [
 	"Answer the firstSample of the original sound."
 
@@ -91,14 +93,14 @@ CompressedSoundData >> firstSample [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> firstSample: anInteger [
 
 	firstSample := anInteger.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> gain [
 	"Answer the gain of the original sound."
 
@@ -106,14 +108,14 @@ CompressedSoundData >> gain [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> gain: aNumber [
 
 	gain := aNumber.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> loopEnd [
 	"Answer index of the last sample of the loop, or nil if the original sound was not looped."
 
@@ -121,14 +123,14 @@ CompressedSoundData >> loopEnd [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> loopEnd: anInteger [
 
 	loopEnd := anInteger.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> loopLength [
 	"Answer length of the loop, or nil if the original sound was not looped."
 
@@ -136,21 +138,21 @@ CompressedSoundData >> loopLength [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> loopLength: anInteger [
 
 	loopLength := anInteger.
 
 ]
 
-{ #category : #assound }
+{ #category : 'assound' }
 CompressedSoundData >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 
 	cachedSound mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> perceivedPitch [
 	"Answer the perceived pitch of the original sound. By convention, unpitched sounds (like drum hits) are given an arbitrary pitch of 100.0."
 
@@ -158,14 +160,14 @@ CompressedSoundData >> perceivedPitch [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> perceivedPitch: aNumber [
 
 	perceivedPitch := aNumber.
 
 ]
 
-{ #category : #assound }
+{ #category : 'assound' }
 CompressedSoundData >> reset [
 	"This message is the cue to start behaving like a real sound in order to be played.
 	We do this by caching a decompressed version of this sound.
@@ -176,13 +178,13 @@ CompressedSoundData >> reset [
 
 ]
 
-{ #category : #assound }
+{ #category : 'assound' }
 CompressedSoundData >> samples [
 
 	^ self asSound samples
 ]
 
-{ #category : #assound }
+{ #category : 'assound' }
 CompressedSoundData >> samplesRemaining [
 	"This message is the cue that the cached sound may no longer be needed.
 	We know it is done playing when samplesRemaining=0."
@@ -193,7 +195,7 @@ CompressedSoundData >> samplesRemaining [
 	^ samplesRemaining
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> samplingRate [
 	"Answer the samplingRate of the original sound."
 
@@ -201,14 +203,14 @@ CompressedSoundData >> samplingRate [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> samplingRate: aNumber [
 
 	samplingRate := aNumber.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> soundClassName [
 	"Answer the class name of the uncompressed sound."
 
@@ -216,7 +218,7 @@ CompressedSoundData >> soundClassName [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedSoundData >> soundClassName: aStringOrSymbol [
 
 	soundClassName := aStringOrSymbol asSymbol.

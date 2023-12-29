@@ -5,8 +5,8 @@ This codec will also encode and decode all Flash .swf file compressed sound form
 
 "
 Class {
-	#name : #ADPCMCodec,
-	#superclass : #SoundCodec,
+	#name : 'ADPCMCodec',
+	#superclass : 'SoundCodec',
 	#instVars : [
 		'predicted',
 		'index',
@@ -25,10 +25,12 @@ Class {
 		'stepSizeTable',
 		'indexTable'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ADPCMCodec class >> new [
 
 	^ super new
@@ -37,7 +39,7 @@ ADPCMCodec class >> new [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ADPCMCodec class >> newBitsPerSample: bitsPerSample [
 
 	^ super new
@@ -46,7 +48,7 @@ ADPCMCodec class >> newBitsPerSample: bitsPerSample [
 
 ]
 
-{ #category : #'primitive generation' }
+{ #category : 'primitive generation' }
 ADPCMCodec class >> translatedPrimitives [
 	"Answer a string containing the translated C code for my primitives."
 	"Note: This code currently must be hand-edited to remove several methods that are inlined (thus not needed) but not pruned out by the ST-to-C translator."
@@ -62,7 +64,7 @@ ADPCMCodec class >> translatedPrimitives [
 
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> bytesPerEncodedFrame [
 	"Answer the number of bytes required to hold one frame of compressed sound data."
 	"Note: When used as a normal codec, the frame size is always 8 samples which results in (8 * bitsPerSample) / 8 = bitsPerSample bytes."
@@ -75,7 +77,7 @@ ADPCMCodec >> bytesPerEncodedFrame [
 
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> compressAndDecompress: aSound [
 	"Compress and decompress the given sound. Overridden to use same bits per sample for both compressing and decompressing."
 
@@ -89,7 +91,7 @@ ADPCMCodec >> compressAndDecompress: aSound [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> decode: aByteArray bitsPerSample: bits [
 
 	^ self
@@ -101,7 +103,7 @@ ADPCMCodec >> decode: aByteArray bitsPerSample: bits [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> decode: aByteArray sampleCount: count bitsPerSample: bits frameSize: frameSize stereo: stereoFlag [
 
 	self initializeForBitsPerSample: bits samplesPerFrame: frameSize.
@@ -125,7 +127,7 @@ ADPCMCodec >> decode: aByteArray sampleCount: count bitsPerSample: bits frameSiz
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> decodeFlash: aByteArray sampleCount: sampleCount stereo: stereoFlag [
 
 	| bits |
@@ -151,7 +153,7 @@ ADPCMCodec >> decodeFlash: aByteArray sampleCount: sampleCount stereo: stereoFla
 
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dstSoundBuffer at: dstIndex [
 	"Decode the given number of monophonic frames starting at the given index in the given ByteArray of compressed sound data and storing the decoded samples into the given SoundBuffer starting at the given destination index. Answer a pair containing the number of bytes of compressed data consumed and the number of decompressed samples produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -167,7 +169,7 @@ ADPCMCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dst
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> encode: aSoundBuffer bitsPerSample: bits [
 
 	^ self
@@ -179,7 +181,7 @@ ADPCMCodec >> encode: aSoundBuffer bitsPerSample: bits [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> encodeFlashLeft: leftSoundBuffer right: rightSoundBuffer bitsPerSample: bits [
 
 	^ self
@@ -191,7 +193,7 @@ ADPCMCodec >> encodeFlashLeft: leftSoundBuffer right: rightSoundBuffer bitsPerSa
 
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: dstByteArray at: dstIndex [
 	"Encode the given number of frames starting at the given index in the given monophonic SoundBuffer and storing the encoded sound data into the given ByteArray starting at the given destination index. Encode only as many complete frames as will fit into the destination. Answer a pair containing the number of samples consumed and the number of bytes of compressed data produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -207,7 +209,7 @@ ADPCMCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: d
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> encodeLeft: leftSoundBuffer right: rightSoundBuffer bitsPerSample: bits frameSize: frameSize forFlash: flashFlag [
 
 	| stereoFlag sampleCount sampleBitCount bitCount |
@@ -239,7 +241,7 @@ ADPCMCodec >> encodeLeft: leftSoundBuffer right: rightSoundBuffer bitsPerSample:
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> headerBitsForSampleCount: sampleCount stereoFlag: stereoFlag [
 	"Answer the number of extra header bits required for the given number of samples. This will be zero if I am not using frame headers."
 
@@ -252,7 +254,7 @@ ADPCMCodec >> headerBitsForSampleCount: sampleCount stereoFlag: stereoFlag [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> indexForDeltaFrom: thisSample to: nextSample [
 	"Answer the best index to use for the difference between the given samples."
 	"Details: Scan stepSizeTable for the first entry >= the absolute value of the difference between sample values. Since indexes are zero-based, the index used during decoding will be the one in the following stepSizeTable entry. Since the index field of a Flash frame header is only six bits, the maximum index value is 63."
@@ -272,7 +274,7 @@ ADPCMCodec >> indexForDeltaFrom: thisSample to: nextSample [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> initializeForBitsPerSample: sampleBits samplesPerFrame: frameSize [
 
 	self resetForMono.
@@ -307,7 +309,7 @@ ADPCMCodec >> initializeForBitsPerSample: sampleBits samplesPerFrame: frameSize 
 
 ]
 
-{ #category : #'bit streaming' }
+{ #category : 'bit streaming' }
 ADPCMCodec >> nextBits: n [
 	"Answer the next n bits of my bit stream as an unsigned integer."
 
@@ -334,7 +336,7 @@ ADPCMCodec >> nextBits: n [
 
 ]
 
-{ #category : #'bit streaming' }
+{ #category : 'bit streaming' }
 ADPCMCodec >> nextBits: n put: anInteger [
 	"Write the next n bits to my bit stream."
 
@@ -363,7 +365,7 @@ ADPCMCodec >> nextBits: n put: anInteger [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> privateDecodeMono: count [
 
 	| delta step predictedDelta bit |
@@ -408,7 +410,7 @@ ADPCMCodec >> privateDecodeMono: count [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> privateDecodeStereo: count [
 
 	| predictedLeft predictedRight indexLeft indexRight deltaLeft deltaRight
@@ -492,7 +494,7 @@ ADPCMCodec >> privateDecodeStereo: count [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> privateEncodeMono: count [
 
 	| step sign diff delta predictedDelta bit p |
@@ -559,7 +561,7 @@ ADPCMCodec >> privateEncodeMono: count [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ADPCMCodec >> privateEncodeStereo: count [
 
 	<primitive: 'primitiveEncodeStereo' module: 'ADPCMCodecPlugin'>
@@ -570,14 +572,14 @@ ADPCMCodec >> privateEncodeStereo: count [
 	self success: false.
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> reset [
 
 	self resetForMono.
 
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> resetForMono [
 	"Reset my encoding and decoding state for mono."
 
@@ -586,7 +588,7 @@ ADPCMCodec >> resetForMono [
 
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> resetForStereo [
 	"Reset my encoding and decoding state for stereo."
 
@@ -596,7 +598,7 @@ ADPCMCodec >> resetForStereo [
 
 ]
 
-{ #category : #'codec stuff' }
+{ #category : 'codec stuff' }
 ADPCMCodec >> samplesPerFrame [
 	"Answer the number of sound samples per compression frame."
 

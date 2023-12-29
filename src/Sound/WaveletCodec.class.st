@@ -25,8 +25,8 @@ The specific format for an encoded buffer is as follows:
 			128-255:	a 15-bit signed value = (N*256 + nextByte) - 32768 - 16384.
 "
 Class {
-	#name : #WaveletCodec,
-	#superclass : #SoundCodec,
+	#name : 'WaveletCodec',
+	#superclass : 'SoundCodec',
 	#instVars : [
 		'fwt',
 		'samplesPerFrame',
@@ -34,10 +34,12 @@ Class {
 		'alpha',
 		'beta'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 WaveletCodec >> bytesPerEncodedFrame [
 	"Answer the number of bytes required to hold one frame of compressed sound data. Answer zero if this codec produces encoded frames of variable size."
 
@@ -45,7 +47,7 @@ WaveletCodec >> bytesPerEncodedFrame [
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 WaveletCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dstSoundBuffer at: dstIndex [
 	"Decode the given number of monophonic frames starting at the given index in the given ByteArray of compressed sound data and storing the decoded samples into the given SoundBuffer starting at the given destination index. Answer a pair containing the number of bytes of compressed data consumed and the number of decompressed samples produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -107,7 +109,7 @@ WaveletCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: d
 			with: frameBase - dstIndex
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 WaveletCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: dstByteArray at: dstIndex [
 	"Encode the given number of frames starting at the given index in the given monophonic SoundBuffer and storing the encoded sound data into the given ByteArray starting at the given destination index. Encode only as many complete frames as will fit into the destination. Answer a pair containing the number of samples consumed and the number of bytes of compressed data produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -200,7 +202,7 @@ sm delete.
 			with: outStream position+1 - dstIndex
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 WaveletCodec >> frameCount: aByteArray [
 	"Compute the frame count for this byteArray.  This default computation will have to be overridden by codecs with variable frame sizes."
 
@@ -208,7 +210,7 @@ WaveletCodec >> frameCount: aByteArray [
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 WaveletCodec >> samplesPerFrame [
 	"Answer the number of sound samples per compression frame."
 

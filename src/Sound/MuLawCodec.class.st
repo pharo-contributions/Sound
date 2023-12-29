@@ -3,15 +3,17 @@ I represent a mu-law (u-law) codec. I compress sound data by a factor of 2:1 by 
 
 "
 Class {
-	#name : #MuLawCodec,
-	#superclass : #SoundCodec,
+	#name : 'MuLawCodec',
+	#superclass : 'SoundCodec',
 	#classVars : [
 		'DecodingTable'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MuLawCodec class >> initialize [
 	"Build the 256 entry table to be used to decode 8-bit uLaw-encoded samples."
 	"MuLawCodec initialize"
@@ -35,7 +37,7 @@ MuLawCodec class >> initialize [
 
 ]
 
-{ #category : #'subclass responsibility' }
+{ #category : 'subclass responsibility' }
 MuLawCodec >> bytesPerEncodedFrame [
 	"Answer the number of bytes required to hold one frame of compressed sound data. Answer zero if this codec produces encoded frames of variable size."
 
@@ -43,7 +45,7 @@ MuLawCodec >> bytesPerEncodedFrame [
 
 ]
 
-{ #category : #'subclass responsibility' }
+{ #category : 'subclass responsibility' }
 MuLawCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dstSoundBuffer at: dstIndex [
 	"Decode the given number of monophonic frames starting at the given index in the given ByteArray of compressed sound data and storing the decoded samples into the given SoundBuffer starting at the given destination index. Answer a pair containing the number of bytes of compressed data consumed and the number of decompressed samples produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -57,7 +59,7 @@ MuLawCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dst
 
 ]
 
-{ #category : #'subclass responsibility' }
+{ #category : 'subclass responsibility' }
 MuLawCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: dstByteArray at: dstIndex [
 	"Encode the given number of frames starting at the given index in the given monophonic SoundBuffer and storing the encoded sound data into the given ByteArray starting at the given destination index. Encode only as many complete frames as will fit into the destination. Answer a pair containing the number of samples consumed and the number of bytes of compressed data produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -68,7 +70,7 @@ MuLawCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: d
 
 ]
 
-{ #category : #'subclass responsibility' }
+{ #category : 'subclass responsibility' }
 MuLawCodec >> samplesPerFrame [
 	"Answer the number of sound samples per compression frame."
 
@@ -76,14 +78,14 @@ MuLawCodec >> samplesPerFrame [
 
 ]
 
-{ #category : #'external access' }
+{ #category : 'external access' }
 MuLawCodec >> uLawDecodeSample: byte [
 	"Decode a 16-bit signed sample from 8 bits using uLaw decoding"
 
 	^ DecodingTable at: byte + 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MuLawCodec >> uLawEncode12Bits: s [
 	"Encode a 12-bit unsigned sample (0-4095) into 7 bits using uLaw encoding.
 	This gets called by a method that scales 16-bit signed integers down to a
@@ -112,7 +114,7 @@ MuLawCodec >> uLawEncode12Bits: s [
 
 ]
 
-{ #category : #'external access' }
+{ #category : 'external access' }
 MuLawCodec >> uLawEncodeSample: sample [
 	"Encode a 16-bit signed sample into 8 bits using uLaw encoding"
 

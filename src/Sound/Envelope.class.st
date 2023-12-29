@@ -13,8 +13,8 @@ For best results, amplitude envelopes should start and end with zero values. Oth
 
 "
 Class {
-	#name : #Envelope,
-	#superclass : #Object,
+	#name : 'Envelope',
+	#superclass : 'Object',
 	#instVars : [
 		'points',
 		'loopStartIndex',
@@ -33,10 +33,12 @@ Class {
 		'nextRecomputeTime',
 		'noChangesDuringLoop'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Envelope class >> example [
 	"Envelope example"
 
@@ -46,7 +48,7 @@ Envelope class >> example [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Envelope class >> exponentialDecay: multiplier [
 	"(Envelope exponentialDecay: 0.95) "
 
@@ -74,7 +76,7 @@ Envelope class >> exponentialDecay: multiplier [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Envelope class >> points: pList loopStart: loopStart loopEnd: loopEnd [
 
 	^ self new setPoints: pList asArray
@@ -83,7 +85,7 @@ Envelope class >> points: pList loopStart: loopStart loopEnd: loopEnd [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> attackTime [
 	"Return the time taken by the attack phase."
 
@@ -91,13 +93,13 @@ Envelope >> attackTime [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> centerPitch: aNumber [
 	"Set the center pitch of a pitch-controlling envelope. This default implementation does nothing."
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Envelope >> checkParameters [
 	"Verify that the point array, loopStartIndex, and loopStopIndex obey the rules."
 
@@ -123,7 +125,7 @@ Envelope >> checkParameters [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Envelope >> computeIncrementAt: mSecs between: p1 and: p2 scale: combinedScale [
 	"Compute the current and increment values for the given time between the given inflection points."
 	"Assume: p1 x <= mSecs <= p2 x"
@@ -137,7 +139,7 @@ Envelope >> computeIncrementAt: mSecs between: p1 and: p2 scale: combinedScale [
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 Envelope >> computeValueAtMSecs: mSecs [
 	"Return the value of this envelope at the given number of milliseconds from its onset. Return zero for times outside the time range of this envelope."
 	"Note: Unlike the private method incrementalComputeValueAtMSecs:, this method does is not increment. Thus it is slower, but it doesn't depend on being called sequentially at fixed time intervals."
@@ -165,14 +167,14 @@ Envelope >> computeValueAtMSecs: mSecs [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> decayEndIndex [
 
 	^ points size
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> decayTime [
 	"Return the time taken by the decay phase."
 
@@ -180,7 +182,7 @@ Envelope >> decayTime [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> duration [
 	"Return the time of the final point."
 
@@ -190,7 +192,7 @@ Envelope >> duration [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> duration: seconds [
 	"Set the note duration to the given number of seconds."
 	"Details: The duration is reduced by 19 mSec to ensure proper cutoffs even when the sound starts playing between doControl epochs."
@@ -211,7 +213,7 @@ Envelope >> duration: seconds [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Envelope >> incrementalComputeValueAtMSecs: mSecs [
 	"Compute the current value, per-step increment, and the time of the next inflection point."
 	"Note: This method is part of faster, but less general, way of computing envelope values. It depends on a known, fixed control updating rate."
@@ -255,7 +257,7 @@ Envelope >> incrementalComputeValueAtMSecs: mSecs [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Envelope >> indexOfPointAfterMSecs: mSecs startingAt: startIndex [
 	"Return the index of the first point whose time is greater that mSecs, starting with the given index. Return nil if mSecs is after the last point's time."
 
@@ -265,7 +267,7 @@ Envelope >> indexOfPointAfterMSecs: mSecs startingAt: startIndex [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Envelope >> interpolate: mSecs between: p1 and: p2 [
 	"Return the scaled, interpolated value for the given time between the given time points."
 	"Assume: p1 x <= mSecs <= p2 x"
@@ -278,35 +280,35 @@ Envelope >> interpolate: mSecs between: p1 and: p2 [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> loopEndIndex [
 
 	^ loopEndIndex
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> loopStartIndex [
 
 	^ loopStartIndex
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> name [
 
 	^ self updateSelector allButLast
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> points [
 
 	^ points
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 Envelope >> reset [
 	"Reset the state for this envelope."
 
@@ -316,21 +318,21 @@ Envelope >> reset [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> scale [
 
 	^ scale
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> scale: aNumber [
 
 	scale := aNumber asFloat.
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Envelope >> setPoints: pointList loopStart: startIndex loopEnd: endIndex [
 
 	| lastVal |
@@ -354,7 +356,7 @@ Envelope >> setPoints: pointList loopStart: startIndex loopEnd: endIndex [
 
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 Envelope >> storeOn: strm [
 	strm nextPutAll: '((' , self class name;
 		nextPutAll: ' points: '; store: (points collect: [:p | p x @ (p y roundTo: 0.00001)]);
@@ -365,7 +367,7 @@ Envelope >> storeOn: strm [
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 Envelope >> sustainEnd: mSecs [
 	"Set the ending time of the sustain phase of this envelope; the decay phase will start this point. Typically derived from a note's duration."
 	"Details: to avoid a sharp transient, the decay phase is scaled so that the beginning of the decay matches the envelope's instantaneous value when the decay phase starts."
@@ -383,35 +385,35 @@ Envelope >> sustainEnd: mSecs [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> target [
 
 	^ target
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> target: anObject [
 
 	target := anObject.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> updateSelector [
 
 	^ updateSelector
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> updateSelector: aSymbol [
 
 	updateSelector := aSymbol.
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 Envelope >> updateTargetAt: mSecs [
 	"Send my updateSelector to the given target object with the value of this envelope at the given number of milliseconds from its onset. Answer true if the value changed."
 
@@ -426,7 +428,7 @@ Envelope >> updateTargetAt: mSecs [
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 Envelope >> valueAtMSecs: mSecs [
 	"Return the value of this envelope at the given number of milliseconds from its onset. Return zero for times outside the time range of this envelope."
 
@@ -438,7 +440,7 @@ Envelope >> valueAtMSecs: mSecs [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Envelope >> volume: aNumber [
 	"Set the maximum volume of a volume-controlling envelope. This default implementation does nothing."
 

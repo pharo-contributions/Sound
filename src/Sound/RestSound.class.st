@@ -1,14 +1,16 @@
 Class {
-	#name : #RestSound,
-	#superclass : #AbstractSound,
+	#name : 'RestSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'initialCount',
 		'count'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RestSound class >> dur: d [
 	"Return a rest of the given duration."
 
@@ -16,7 +18,7 @@ RestSound class >> dur: d [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RestSound class >> pitch: p dur: d loudness: l [
 	"Return a rest of the given duration."
 	"Note: This message allows one to silence one or more voices of a multi-voice piece by using RestSound as their instrument."
@@ -25,7 +27,7 @@ RestSound class >> pitch: p dur: d loudness: l [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RestSound >> duration [
 	"Answer the duration of this sound in seconds."
 
@@ -33,7 +35,7 @@ RestSound >> duration [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RestSound >> duration: seconds [
 
 	super duration: seconds.
@@ -41,7 +43,7 @@ RestSound >> duration: seconds [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 RestSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play silence for a given duration."
 	"(RestSound dur: 1.0) play"
@@ -50,7 +52,7 @@ RestSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 RestSound >> reset [
 
 	super reset.
@@ -58,19 +60,19 @@ RestSound >> reset [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RestSound >> samples [
 	^ SoundBuffer newMonoSampleCount: initialCount
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 RestSound >> samplesRemaining [
 
 	^ count
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RestSound >> setDur: d [
 	"Set rest duration in seconds."
 

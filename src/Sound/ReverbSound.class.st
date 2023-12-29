@@ -1,6 +1,6 @@
 Class {
-	#name : #ReverbSound,
-	#superclass : #AbstractSound,
+	#name : 'ReverbSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'sound',
 		'tapDelays',
@@ -11,10 +11,12 @@ Class {
 		'leftBuffer',
 		'rightBuffer'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ReverbSound >> applyReverbTo: aSoundBuffer startingAt: startIndex count: n [
 
 	| delayedLeft delayedRight i tapGain j out |
@@ -55,7 +57,7 @@ ReverbSound >> applyReverbTo: aSoundBuffer startingAt: startIndex count: n [
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ReverbSound >> copySound [
 	"Private! Support for copying. Copy my component sound."
 
@@ -65,7 +67,7 @@ ReverbSound >> copySound [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 ReverbSound >> doControl [
 
 	super doControl.
@@ -73,7 +75,7 @@ ReverbSound >> doControl [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 ReverbSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play my sound with reverberation."
 
@@ -86,7 +88,7 @@ ReverbSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftV
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ReverbSound >> postCopy [
 	"Copy my component sound."
 
@@ -95,7 +97,7 @@ ReverbSound >> postCopy [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 ReverbSound >> reset [
 
 	super reset.
@@ -106,28 +108,28 @@ ReverbSound >> reset [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 ReverbSound >> samplesRemaining [
 
 	^ sound samplesRemaining
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReverbSound >> sound [
 
 	^ sound
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReverbSound >> sound: aSound [
 
 	sound := aSound.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReverbSound >> tapDelays: delayList gains: gainList [
 	"ReverbSound new tapDelays: #(537 691 1191) gains: #(0.07 0.07 0.07)"
 

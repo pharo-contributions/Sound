@@ -1,17 +1,19 @@
 Class {
-	#name : #FMBassoonSound,
-	#superclass : #FMSound,
-	#category : #'Sound-Core'
+	#name : 'FMBassoonSound',
+	#superclass : 'FMSound',
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 FMBassoonSound >> setPitch: pitchNameOrNumber dur: d loudness: l [
 	"Select a modulation ratio and modulation envelope scale based on my pitch."
 
 	self setPitch: pitchNameOrNumber duration: d loudness: l
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FMBassoonSound >> setPitch: pitchNameOrNumber duration: d loudness: l [
 	"Select a modulation ratio and modulation envelope scale based on my pitch."
 

@@ -4,8 +4,8 @@ The recorder is used for example by
 	RecordingControlsMorph new openInWorld
 "
 Class {
-	#name : #SoundRecorder,
-	#superclass : #Object,
+	#name : 'SoundRecorder',
+	#superclass : 'Object',
 	#instVars : [
 		'stereo',
 		'samplingRate',
@@ -27,16 +27,18 @@ Class {
 		'CanRecordWhilePlaying',
 		'RecorderActive'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder class >> anyActive [
 	"Return true if any sound recorder is actively recording"
 	^RecorderActive == true
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundRecorder class >> canRecordWhilePlaying [
 	"Return true if this platform supports simultaneous sound recording and playback."
 
@@ -44,14 +46,14 @@ SoundRecorder class >> canRecordWhilePlaying [
 
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundRecorder class >> canRecordWhilePlaying: aBoolean [
 	"Return true if this platform supports simultaneous sound recording and playback."
 
 	CanRecordWhilePlaying := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundRecorder class >> initialize [
 	"SoundRecorder initialize"
 	"Details: Some computers cannot record and playback sound at the same time. If CanRecordWhilePlaying is false, then the SoundRecorder alternates between recording and playing. If it is true, sounds can be playing during recording."
@@ -60,7 +62,7 @@ SoundRecorder class >> initialize [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundRecorder >> allocateBuffer [
 	"Allocate a new buffer and reset nextIndex."
 
@@ -75,7 +77,7 @@ SoundRecorder >> allocateBuffer [
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> clearRecordedSound [
 	"Clear the sound recorded thus far. Go into pause mode if currently recording."
 
@@ -85,13 +87,13 @@ SoundRecorder >> clearRecordedSound [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> codec: aSoundCodec [
 
 	codec := aSoundCodec
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 SoundRecorder >> condensedSamples [
 	"Return a single SoundBuffer that is the contatenation of all my recorded buffers."
 
@@ -111,7 +113,7 @@ SoundRecorder >> condensedSamples [
 
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 SoundRecorder >> condensedStereoSound [
 	"Decompose my buffers into left and right channels and return a mixed sound consisting of the those two channels. This may be take a while, since the data must be copied into new buffers."
 
@@ -132,7 +134,7 @@ SoundRecorder >> condensedStereoSound [
 
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> copyFrom: startPlace to: endPlace normalize: nFactor dcOffset: dcOffset [
 	"Return a new SoundBuffer containing the samples in the given range."
 
@@ -172,7 +174,7 @@ SoundRecorder >> copyFrom: startPlace to: endPlace normalize: nFactor dcOffset: 
 
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> copyTo: resultBuf from: startIndex to: endIndex from: buf startingAt: firstInBuf normalize: nFactor dcOffset: dcOffset [
 	"Copy samples from buf to resultBuf removing the DC offset and normalizing their volume in the process."
 
@@ -183,7 +185,7 @@ SoundRecorder >> copyTo: resultBuf from: startIndex to: endIndex from: buf start
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> desiredSampleRate: newRate [
 
 	"use of this method indicates a strong desire for the specified rate, even if
@@ -193,7 +195,7 @@ SoundRecorder >> desiredSampleRate: newRate [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundRecorder >> emitBuffer: buffer [
 
 	| sound ratio resultBuf |
@@ -214,20 +216,20 @@ SoundRecorder >> emitBuffer: buffer [
 	recordedSound add: (codec ifNil: [sound] ifNotNil: [codec compressSound: sound])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundRecorder >> emitPartialBuffer [
 	| s |
 	s := self samplesPerFrame.
 	self emitBuffer: (currentBuffer copyFrom: 1 to: ((nextIndex-1) +( s-1) truncateTo: s))
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> endPlace [
 
 	^ Array with: recordedBuffers size with: recordedBuffers last size
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> firstSampleOverThreshold: threshold dcOffset: dcOffset startingAt: startPlace [
 	"Beginning at startPlace, this routine will return the first place at which a sample exceeds the given threshold."
 
@@ -246,14 +248,14 @@ SoundRecorder >> firstSampleOverThreshold: threshold dcOffset: dcOffset starting
 	^ self endPlace
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> hasRecordedSound [
  	"Answer whether the receiver currently has any recorded sound"
  
  	^ self recordedSound notNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundRecorder >> initialize [
 	"SoundRecorder new"
 
@@ -265,7 +267,7 @@ SoundRecorder >> initialize [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundRecorder >> initializeRecordingState [
 
 	recordProcess := nil.
@@ -279,7 +281,7 @@ SoundRecorder >> initializeRecordingState [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> isActive [
 	"Return true if I have a recordProcess running."
 
@@ -287,7 +289,7 @@ SoundRecorder >> isActive [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> isPaused [
 	"Return true if recording is paused."
 
@@ -295,7 +297,7 @@ SoundRecorder >> isPaused [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundRecorder >> meterFrom: start count: count in: buffer [
 	"Update the meter level with the maximum signal level in the given range of the given buffer."
 
@@ -311,7 +313,7 @@ SoundRecorder >> meterFrom: start count: count in: buffer [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> meterLevel [
 	"Return the meter level, an integer in the range [0..100] where zero is silence and 100 represents the maximum signal level possible without clipping."
 
@@ -319,7 +321,7 @@ SoundRecorder >> meterLevel [
 
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> normalizeFactorFor: percentOfMaxVolume min: min max: max dcOffset: dcOffset [
 	"Return a normalization factor for the range of sample values and DC offset. A normalization factor is a fixed-point number that will be divided by 1000 after multiplication with each sample value."
 
@@ -331,7 +333,7 @@ SoundRecorder >> normalizeFactorFor: percentOfMaxVolume min: min max: max dcOffs
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> pause [
 	"Go into pause mode. The record level continues to be updated, but no sound is recorded."
 
@@ -349,7 +351,7 @@ SoundRecorder >> pause [
 
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> place: startPlace plus: nSamples [
 	"Return the place that is nSamples (may be negative) beyond thisPlace."
 
@@ -373,7 +375,7 @@ SoundRecorder >> place: startPlace plus: nSamples [
 			^ #(1 1)]
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> playback [
 	"Playback the sound that has been recorded."
 
@@ -383,7 +385,7 @@ SoundRecorder >> playback [
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundRecorder >> primGetActualRecordingSampleRate [
 	"Return the actual sample rate being used for recording. This primitive fails unless sound recording is currently in progress."
 
@@ -392,7 +394,7 @@ SoundRecorder >> primGetActualRecordingSampleRate [
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundRecorder >> primRecordSamplesInto: aWordArray startingAt: index [
 	"Record a sequence of 16-bit sound samples into the given array starting at the given sample index. Return the number of samples recorded, which may be zero if no samples are currently available."
 
@@ -401,7 +403,7 @@ SoundRecorder >> primRecordSamplesInto: aWordArray startingAt: index [
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundRecorder >> primSetRecordLevel: anInteger [
 	"Set the desired recording level to the given value in the range 0-1000, where 0 is the lowest recording level and 1000 is the maximum. Do nothing if the sound input hardware does not support changing the recording level."
 
@@ -410,7 +412,7 @@ SoundRecorder >> primSetRecordLevel: anInteger [
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundRecorder >> primStartRecordingDesiredSampleRate: samplesPerSec stereo: stereoFlag semaIndex: anInteger [
 	"Start sound recording with the given stereo setting. Use a sampling rate as close to the desired rate as the underlying platform will support. If the given semaphore index is > 0, it is taken to be the index of a Semaphore in the external objects array to be signalled every time a recording buffer is filled."
 
@@ -419,21 +421,21 @@ SoundRecorder >> primStartRecordingDesiredSampleRate: samplesPerSec stereo: ster
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundRecorder >> primStopRecording [
 	"Stop sound recording. Does nothing if recording is not currently in progress. Do not fail if plugin is not available"
 
 	<primitive: 'primitiveSoundStopRecording' module: 'SoundPlugin'>
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> recordLevel [
 
 	^ recordLevel
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> recordLevel: level [
 	"Set the desired recording level to the given value in the range 0.0 to 1.0, where 0.0 is the lowest recording level and 1.0 is the maximum. Do nothing if the sound input hardware does not support changing the recording level."
 	"Details: On the Macintosh, the lowest possible record level attenuates the input signal, but does not silence it entirely." 
@@ -444,7 +446,7 @@ SoundRecorder >> recordLevel: level [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundRecorder >> recordLoop [
 	"Record process loop that records samples."
 
@@ -475,7 +477,7 @@ SoundRecorder >> recordLoop [
 
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 SoundRecorder >> recordedSound [
 	"Return the sound that was recorded."
 
@@ -483,7 +485,7 @@ SoundRecorder >> recordedSound [
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> resumeRecording [
 	"Continue recording from the point at which it was last paused."
 
@@ -495,7 +497,7 @@ SoundRecorder >> resumeRecording [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundRecorder >> samplesPerFrame [
 	"Can be overridden to quantize buffer size for, eg, fixed-frame codecs"
 
@@ -504,21 +506,21 @@ SoundRecorder >> samplesPerFrame [
 		ifFalse: [^ codec samplesPerFrame]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> samplingRate [
 
 	^ samplingRate
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundRecorder >> samplingRate: newRate [
 
 	samplingRate := newRate  "Best are 44100 22050 11025"
 
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> scanForEndThreshold: threshold dcOffset: dcOffset minLull: lull startingAt: startPlace [
 	"Beginning at startPlace, this routine will find the last sound that exceeds threshold, such that if you look lull samples later you will not find another sound over threshold within the following block of lull samples.
 	Return the place that is lull samples beyond to that last sound.
@@ -543,7 +545,7 @@ SoundRecorder >> scanForEndThreshold: threshold dcOffset: dcOffset minLull: lull
 	^ self endPlace
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> scanForStartThreshold: threshold dcOffset: dcOffset minDur: duration startingAt: startPlace [
 	"Beginning at startPlace, this routine will find the first sound that exceeds threshold, such that if you look duration samples later you will find another sound over threshold within the following block of duration samples.
 	Return the place that is duration samples prior to that first sound.
@@ -568,7 +570,7 @@ SoundRecorder >> scanForStartThreshold: threshold dcOffset: dcOffset minDur: dur
 
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> segmentsAbove: threshold normalizedVolume: percentOfMaxVolume [
 	"Break the current recording up into a sequence of sound segments separated by silences."
 
@@ -638,14 +640,14 @@ SoundRecorder >> segmentsAbove: threshold normalizedVolume: percentOfMaxVolume [
 	^ segments
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 SoundRecorder >> soundSegments [
 
 	^ self segmentsAbove: 1000 normalizedVolume: 80.0
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> startRecording [
 	"Turn of the sound input driver and start the recording process. Initially, recording is paused."
 
@@ -671,7 +673,7 @@ SoundRecorder >> startRecording [
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> stopRecording [
 	"Stop the recording process and turn of the sound input driver."
 
@@ -686,13 +688,13 @@ SoundRecorder >> stopRecording [
 
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> suppressSilence [
 
 	recordedSound := self soundSegments
 ]
 
-{ #category : #trimming }
+{ #category : 'trimming' }
 SoundRecorder >> trim: threshold normalizedVolume: percentOfMaxVolume [
 	"Remove the leading and trailing parts of this recording that are below the given threshold. Remove any DC offset and scale the recording so that its peaks are the given percent of the maximum volume."
 
@@ -733,7 +735,7 @@ SoundRecorder >> trim: threshold normalizedVolume: percentOfMaxVolume [
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundRecorder >> verifyExistenceOfRecordedSound [
  	"If the receiver has a recorded sound, answer true; if not, put up an informer and answer false"
  

@@ -1,16 +1,18 @@
 Class {
-	#name : #RandomEnvelope,
-	#superclass : #Envelope,
+	#name : 'RandomEnvelope',
+	#superclass : 'Envelope',
 	#instVars : [
 		'rand',
 		'lowLimit',
 		'highLimit',
 		'delta'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RandomEnvelope class >> for: aSelector [
 	"Answer a random envelope for the given selector."
 
@@ -18,7 +20,7 @@ RandomEnvelope class >> for: aSelector [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> centerPitch: aNumber [
 	"If this envelope controls pitch, set its scale to the given number. Otherwise, do nothing."
 
@@ -26,48 +28,48 @@ RandomEnvelope >> centerPitch: aNumber [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> delta [
 
 	^ delta
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> delta: aNumber [
 
 	delta := aNumber.
 
 ]
 
-{ #category : #'envelope compatibility' }
+{ #category : 'envelope compatibility' }
 RandomEnvelope >> duration [
 
 	^ 1.0
 
 ]
 
-{ #category : #'envelope compatibility' }
+{ #category : 'envelope compatibility' }
 RandomEnvelope >> duration: seconds [
 	"Do nothing."
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> highLimit [
 
 	^ highLimit
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> highLimit: aNumber [
 
 	highLimit := aNumber.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RandomEnvelope >> initialize [
 
 	super initialize.
@@ -80,28 +82,28 @@ RandomEnvelope >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> lowLimit [
 
 	^ lowLimit
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> lowLimit: aNumber [
 
 	lowLimit := aNumber.
 
 ]
 
-{ #category : #'envelope compatibility' }
+{ #category : 'envelope compatibility' }
 RandomEnvelope >> name [
 
 	^ 'random ', updateSelector
 
 ]
 
-{ #category : #'envelopeeditor compatibility' }
+{ #category : 'envelopeeditor compatibility' }
 RandomEnvelope >> points [
 
 	| env |
@@ -119,7 +121,7 @@ RandomEnvelope >> points [
 	^points
 ]
 
-{ #category : #'envelopeeditor compatibility' }
+{ #category : 'envelopeeditor compatibility' }
 RandomEnvelope >> setPoints: pointList loopStart: startIndex loopEnd: endIndex [
 
 	self delta: pointList first y - 0.5 / 5.
@@ -128,13 +130,13 @@ RandomEnvelope >> setPoints: pointList loopStart: startIndex loopEnd: endIndex [
 	^super setPoints: pointList loopStart: startIndex loopEnd: endIndex
 ]
 
-{ #category : #'envelope compatibility' }
+{ #category : 'envelope compatibility' }
 RandomEnvelope >> sustainEnd: seconds [
 	"Do nothing."
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 RandomEnvelope >> updateTargetAt: mSecs [
 	"Send my updateSelector to the given target object with the value of this envelope at the given number of milliseconds from its onset. Answer true if the value changed."
 
@@ -157,7 +159,7 @@ RandomEnvelope >> updateTargetAt: mSecs [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RandomEnvelope >> volume: aNumber [
 	"If this envelope controls volume, set its scale to the given number. Otherwise, do nothing."
 

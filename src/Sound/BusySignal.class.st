@@ -5,12 +5,14 @@ A BusySignal is a simple sound.
 (BusySignal count: 3) play
 "
 Class {
-	#name : #BusySignal,
-	#superclass : #FMSound,
-	#category : #'Sound-Core'
+	#name : 'BusySignal',
+	#superclass : 'FMSound',
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BusySignal class >> count: count [
 	"self new count: 3"
 	
@@ -18,14 +20,14 @@ BusySignal class >> count: count [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BusySignal >> count:  aNumber [
 
 	count := aNumber.
 	self recalculate. 
 ]
 
-{ #category : #operation }
+{ #category : 'operation' }
 BusySignal >> recalculate [
 
 	| m s |

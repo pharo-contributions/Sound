@@ -21,8 +21,8 @@ Instance Variables
 	waveTable:		<Object>
 "
 Class {
-	#name : #FMSound,
-	#superclass : #AbstractSound,
+	#name : 'FMSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'initialCount',
 		'count',
@@ -39,10 +39,12 @@ Class {
 	#classVars : [
 		'SineTable'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> bass1 [
 	"FMSound bass1 play"
 	"(FMSound lowMajorScaleOn: FMSound bass1) play"
@@ -54,7 +56,7 @@ FMSound class >> bass1 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> bassoon1 [
 	"FMSound bassoon1 play"
 	"(FMSound lowMajorScaleOn: FMSound bassoon1) play"
@@ -74,7 +76,7 @@ FMSound class >> bassoon1 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> brass1 [
 	"FMSound brass1 play"
 	"(FMSound lowMajorScaleOn: FMSound brass1) play"
@@ -93,7 +95,7 @@ FMSound class >> brass1 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> brass2 [
 	"FMSound brass2 play"
 	"(FMSound lowMajorScaleOn: FMSound brass2) play"
@@ -112,7 +114,7 @@ FMSound class >> brass2 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> clarinet [
 	"FMSound clarinet play"
 	"(FMSound lowMajorScaleOn: FMSound clarinet) play"
@@ -127,7 +129,7 @@ FMSound class >> clarinet [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> clarinet2 [
 	"FMSound clarinet2 play"
 	"(FMSound lowMajorScaleOn: FMSound clarinet2) play"
@@ -149,14 +151,14 @@ FMSound class >> clarinet2 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> default [
 
 	^ self oboe1
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> flute1 [
 	"FMSound flute1 play"
 	"(FMSound majorScaleOn: FMSound flute1) play"
@@ -168,7 +170,7 @@ FMSound class >> flute1 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> flute2 [
 	"FMSound flute2 play"
 	"(FMSound majorScaleOn: FMSound flute2) play"
@@ -181,7 +183,7 @@ FMSound class >> flute2 [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FMSound class >> initialize [
 	"Build a sine wave table."
 	"self initialize"
@@ -196,7 +198,7 @@ FMSound class >> initialize [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> marimba [
 	"FMSound marimba play"
 	"(FMSound majorScaleOn: FMSound marimba) play"
@@ -211,7 +213,7 @@ FMSound class >> marimba [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> mellowBrass [
 	"FMSound mellowBrass play"
 	"(FMSound lowMajorScaleOn: FMSound mellowBrass) play"
@@ -226,7 +228,7 @@ FMSound class >> mellowBrass [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> oboe1 [
 	"FMSound oboe1 play"
 	"(FMSound majorScaleOn: FMSound oboe1) play"
@@ -238,7 +240,7 @@ FMSound class >> oboe1 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> oboe2 [
 	"FMSound oboe2 play"
 	"(FMSound majorScaleOn: FMSound oboe2) play"
@@ -251,7 +253,7 @@ FMSound class >> oboe2 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> organ1 [
 	"FMSound organ1 play"
 	"(FMSound majorScaleOn: FMSound organ1) play"
@@ -268,7 +270,7 @@ FMSound class >> organ1 [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FMSound class >> pitch: pitchNameOrNumber duration: d loudness: vol [
 	"Creates a sound for a giving note, a duration in second and a volume expressed as a float between 0 and 1.0. The note can be expressed either by a frequency or a pitchName e.g. 'a4, g#3"
 	
@@ -280,7 +282,7 @@ FMSound class >> pitch: pitchNameOrNumber duration: d loudness: vol [
 		loudness: vol
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> pluckedElecBass [
 	"FMSound pluckedElecBass play"
 	"(FMSound lowMajorScaleOn: FMSound pluckedElecBass) play"
@@ -301,7 +303,7 @@ FMSound class >> pluckedElecBass [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> randomWeird1 [
 	"FMSound randomWeird1 play"
 
@@ -313,7 +315,7 @@ FMSound class >> randomWeird1 [
 
 ]
 
-{ #category : #instruments }
+{ #category : 'instruments' }
 FMSound class >> randomWeird2 [
 	"FMSound randomWeird2 play"
 
@@ -325,7 +327,7 @@ FMSound class >> randomWeird2 [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FMSound class >> sineTable [
 	"Answer a SoundBuffer containing one complete cycle of a sine wave."
 
@@ -333,14 +335,14 @@ FMSound class >> sineTable [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> duration [
 
 	^ initialCount asFloat / self samplingRate asFloat
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> duration: seconds [
 
 	super duration: seconds.
@@ -348,7 +350,7 @@ FMSound >> duration: seconds [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FMSound >> initialize [
 
 	super initialize.
@@ -358,7 +360,7 @@ FMSound >> initialize [
 
 ]
 
-{ #category : #operation }
+{ #category : 'operation' }
 FMSound >> internalizeModulationAndRatio [
 	"Recompute the internal state for the modulation index and frequency ratio relative to the current pitch."
 
@@ -378,7 +380,7 @@ FMSound >> internalizeModulationAndRatio [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 FMSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play samples from a wave table by stepping a fixed amount through the table on every sample. The table index and increment are scaled to allow fractional increments for greater pitch accuracy."
 	"(FMSound pitch: 440.0 dur: 1.0 loudness: 0.5) play"
@@ -430,7 +432,7 @@ FMSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: 
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> modulation [
 	"Return the FM modulation index."
 
@@ -439,7 +441,7 @@ FMSound >> modulation [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> modulation: mod [
 	"Set the FM modulation index. Typical values range from 0 (no modulation) to 5, although values up to about 10 are sometimes useful."
 	"Warning: This method is intended primarily for use by envelopes. For efficiency during envelope processing, this change will not take effect until internalizeModulationAndRatio is called."
@@ -448,7 +450,7 @@ FMSound >> modulation: mod [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> modulation: mod multiplier: freqRatio [
 	"For backward compatibility. Needed to read old .fmp files."
 
@@ -456,7 +458,7 @@ FMSound >> modulation: mod multiplier: freqRatio [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> modulation: mod ratio: freqRatio [
 	"Set the modulation index and carrier to modulation frequency ratio for this sound, and compute the internal state that depends on these parameters."
 
@@ -466,21 +468,21 @@ FMSound >> modulation: mod ratio: freqRatio [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> multiplier [
 
 	^ 	multiplier ifNil: [multiplier := 0.0].
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> pitch [
 
 	^ (self samplingRate asFloat * scaledIndexIncr / ScaleFactor) asFloat / waveTable size
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> pitch: p [
 	"Warning: Since the modulation and ratio are relative to the current pitch, some internal state must be recomputed when the pitch is changed. However, for efficiency during envelope processing, this compuation will not be done until internalizeModulationAndRatio is called."
 
@@ -490,7 +492,7 @@ FMSound >> pitch: p [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> ratio [
 	"Return the FM modulation to carrier frequency ratio."
 
@@ -498,7 +500,7 @@ FMSound >> ratio [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FMSound >> ratio: freqRatio [
 	"Set the FM modulation to carrier frequency ratio."
 	"Warning: This method is intended primarily for use by envelopes. For efficiency during envelope processing, this change will not take effect until internalizeModulationAndRatio is called."
@@ -507,7 +509,7 @@ FMSound >> ratio: freqRatio [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 FMSound >> reset [
 
 	self internalizeModulationAndRatio.
@@ -518,21 +520,21 @@ FMSound >> reset [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 FMSound >> samplesRemaining [
 
 	^ count
 
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 FMSound >> setPitch: pitchNameOrNumber dur: d loudness: vol [
 	"For compatibility"
 
 	self setPitch: pitchNameOrNumber duration: d loudness: vol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FMSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 	"Creates a sound for a giving note, a duration in second and a volume expressed as a float between 0 and 1.0. The note can be expressed either by a frequency or a pitchName e.g. 'a4, g#3"
 	
@@ -548,7 +550,7 @@ FMSound >> setPitch: pitchNameOrNumber duration: d loudness: vol [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FMSound >> setWavetable: anArray [
 	"(AbstractSound lowMajorScaleOn: (FMSound new setWavetable: AA)) play"
 
@@ -567,7 +569,7 @@ FMSound >> setWavetable: anArray [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 FMSound >> stopAfterMSecs: mSecs [
 	"Terminate this sound this note after the given number of milliseconds."
 
@@ -575,7 +577,7 @@ FMSound >> stopAfterMSecs: mSecs [
 
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 FMSound >> storeOn: strm [
 	| env |
 	strm nextPutAll: '(((FMSound';
