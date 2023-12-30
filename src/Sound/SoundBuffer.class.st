@@ -2,16 +2,18 @@
 SoundBuffers store 16 bit unsigned quantities.  
 "
 Class {
-	#name : #SoundBuffer,
-	#superclass : #ArrayedCollection,
-	#type : #words,
+	#name : 'SoundBuffer',
+	#superclass : 'ArrayedCollection',
+	#type : 'words',
 	#classVars : [
 		'SineTable'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SoundBuffer class >> averageEvery: nSamples from: anotherBuffer upTo: inCount [
 
 	^(self newMonoSampleCount: inCount // nSamples)
@@ -20,7 +22,7 @@ SoundBuffer class >> averageEvery: nSamples from: anotherBuffer upTo: inCount [
 		upTo: inCount
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SoundBuffer class >> fromArray: anArray [
 	"Return a new SoundBuffer whose contents are copied from the given Array or ByteArray."
 
@@ -31,7 +33,7 @@ SoundBuffer class >> fromArray: anArray [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SoundBuffer class >> fromByteArray: aByteArray [
 	"Convert the given ByteArray (stored with the most significant byte first) into 16-bit sample buffer."
 
@@ -48,7 +50,7 @@ SoundBuffer class >> fromByteArray: aByteArray [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundBuffer class >> initialize [
 	"Build a sine wave table."
 	"SoundBuffer initialize"
@@ -63,7 +65,7 @@ SoundBuffer class >> initialize [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SoundBuffer class >> new: anInteger [
 	"See the comment in newMonoSampleCount:. To avoid confusion, it is best to create new instances using newMonoSampleCount: or newStereoSampleCount:."
 
@@ -71,7 +73,7 @@ SoundBuffer class >> new: anInteger [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SoundBuffer class >> newMonoSampleCount: anInteger [
 	"Return a SoundBuffer large enough to hold the given number of monaural samples (i.e., 16-bit words)."
 	"Details: The size is rounded up to an even number, since the underlying representation is in terms of 32-bit words."
@@ -80,7 +82,7 @@ SoundBuffer class >> newMonoSampleCount: anInteger [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SoundBuffer class >> newStereoSampleCount: anInteger [
 	"Return a SoundBuffer large enough to hold the given number of stereo slices. A stereo 'slice' consists of two 16-bit samples, one for each channel."
 
@@ -88,7 +90,7 @@ SoundBuffer class >> newStereoSampleCount: anInteger [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundBuffer class >> sineTable [
 	"Answer a SoundBuffer containing one complete cycle of a sine wave."
 
@@ -96,7 +98,7 @@ SoundBuffer class >> sineTable [
 
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 SoundBuffer class >> startUp [
 	"Check if the word order has changed from the last save."
 
@@ -108,7 +110,7 @@ SoundBuffer class >> startUp [
 
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 SoundBuffer class >> startUpFrom: anImageSegment [ 
 	"In this case, do we need to swap word halves when reading this segment?"
 
@@ -117,7 +119,7 @@ SoundBuffer class >> startUpFrom: anImageSegment [
 		ifFalse: [nil]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> asByteArray [
 	"Answer a ByteArray containing my sample data serialized in most-significant byte first order."
 
@@ -134,7 +136,7 @@ SoundBuffer >> asByteArray [
 	
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundBuffer >> at: index [
 	"Return the 16-bit integer value at the given index of the receiver."
 
@@ -145,7 +147,7 @@ SoundBuffer >> at: index [
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundBuffer >> at: index put: value [
 	"Store the given 16-bit integer at the given index in the receiver."
 
@@ -160,7 +162,7 @@ SoundBuffer >> at: index put: value [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> averageEvery: nSamples from: anotherBuffer upTo: inCount [
 
 	| fromIndex sum |
@@ -177,13 +179,13 @@ SoundBuffer >> averageEvery: nSamples from: anotherBuffer upTo: inCount [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundBuffer >> bytesPerElement [
 	"Number of bytes in each item.  This multiplied by (self size)*8 gives the number of bits stored."
 	^ 2
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> downSampledLowPassFiltering: doFiltering [
 	"Answer a new SoundBuffer half the size of the receiver consisting of every other sample. If doFiltering is true, a simple low-pass filter is applied to avoid aliasing of high frequencies. Assume that receiver is monophonic."
 	"Details: The simple low-pass filter in the current implementation could be improved, at some additional cost."
@@ -204,7 +206,7 @@ SoundBuffer >> downSampledLowPassFiltering: doFiltering [
 	^ resultBuf
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> extractLeftChannel [
 	"Answer a new SoundBuffer half the size of the receiver consisting of only the left channel of the receiver, which is assumed to contain stereo sound data."
 
@@ -216,7 +218,7 @@ SoundBuffer >> extractLeftChannel [
 	^ resultBuf
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> extractRightChannel [
 	"Answer a new SoundBuffer half the size of the receiver consisting of only the right channel of the receiver, which is assumed to contain stereo sound data."
 
@@ -228,7 +230,7 @@ SoundBuffer >> extractRightChannel [
 	^ resultBuf
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> indexOfFirstSampleOver: threshold [
 	"Return the index of the first sample whose absolute value is over the given threshold value. Return an index one greater than my size if no sample is over the threshold."
 
@@ -237,7 +239,7 @@ SoundBuffer >> indexOfFirstSampleOver: threshold [
 	^ self size + 1
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> indexOfLastSampleOver: threshold [
 	"Return the index of the last sample whose absolute value is over the given threshold value. Return zero if no sample is over the threshold."
 
@@ -247,7 +249,7 @@ SoundBuffer >> indexOfLastSampleOver: threshold [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> lowPassFiltered [
 	"Answer a simple low-pass filtered copy of this buffer. Assume it is monophonic."
 
@@ -263,7 +265,7 @@ SoundBuffer >> lowPassFiltered [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> mergeStereo [
 	"Answer a new SoundBuffer half the size of the receiver that mixes the left and right stereo channels of the receiver, which is assumed to contain stereo sound data."
 
@@ -276,7 +278,7 @@ SoundBuffer >> mergeStereo [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundBuffer >> monoSampleCount [
 	"Return the number of monaural 16-bit samples that fit into this SoundBuffer."
 
@@ -284,21 +286,23 @@ SoundBuffer >> monoSampleCount [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> normalized: percentOfFullVolume [
 	"Increase my amplitudes so that the highest peak is the given percent of full volume. For example 's normalized: 50' would normalize to half of full volume."
 
 	| peak s mult |
 	peak := 0.
-	1 to: self size do: [:i |
+	1 to: self size do: [ :i |
 		s := (self at: i) abs.
-		s > peak ifTrue: [peak := s]].
-	mult := (32767.0 * percentOfFullVolume) / (100.0 * peak).
-	1 to: self size do: [:i | self at: i put: (mult * (self at: i)) asInteger].
+		peak := peak max: s ].
+	peak > 0 ifFalse: [ ^ self ].
+	mult := 32767.0 * percentOfFullVolume / (10000.0 * peak).
+	1 to: self size do: [ :i |
+		self at: i put: (mult * (self at: i)) asInteger ]
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SoundBuffer >> primFill: aPositiveInteger [
 	"Fill the receiver, an indexable bytes or words object, with the given positive integer. The range of possible fill values is [0..255] for byte arrays and [0..(2^32 - 1)] for word arrays."
 	"Note: Since 16-bit word arrays are not built into the virtual machine, this primitive fills by 32-bit words."
@@ -308,7 +312,7 @@ SoundBuffer >> primFill: aPositiveInteger [
 
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 SoundBuffer >> restoreEndianness [
 	"This word object was just read in from a stream.  It was stored in Big Endian (Mac) format.  Swap each pair of bytes (16-bit word), if the current machine is Little Endian.
 	Why is this the right thing to do?  We are using memory as a byteStream.  High and low bytes are reversed in each 16-bit word, but the stream of words ascends through memory.  Different from a Bitmap."
@@ -330,7 +334,7 @@ SoundBuffer >> restoreEndianness [
 
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 SoundBuffer >> reverseEndianness [
 	"Swap the bytes of each 16-bit word, using a fast BitBlt hack."
 
@@ -348,7 +352,7 @@ SoundBuffer >> reverseEndianness [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> saveAsAIFFFileSamplingRate: rate on: aBinaryStream [
 	"Store this mono sound buffer in AIFF file format with the given sampling rate on the given stream."
 
@@ -383,7 +387,7 @@ SoundBuffer >> saveAsAIFFFileSamplingRate: rate on: aBinaryStream [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundBuffer >> size [
 	"Return the number of 16-bit sound samples that fit in this sound buffer. To avoid confusion, it is better to get the size of SoundBuffer using monoSampleCount or stereoSampleCount."
 
@@ -391,7 +395,7 @@ SoundBuffer >> size [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> splitStereo [
 	"Answer an array of two SoundBuffers half the size of the receiver consisting of the left and right channels of the receiver (which is assumed to contain stereo sound data)."
 
@@ -407,7 +411,7 @@ SoundBuffer >> splitStereo [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundBuffer >> stereoSampleCount [
 	"Return the number of stereo slices that fit into this SoundBuffer. A stereo 'slice' consists of two 16-bit samples, one for each channel."
 
@@ -415,7 +419,7 @@ SoundBuffer >> stereoSampleCount [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SoundBuffer >> storeExtendedFloat: aNumber on: aBinaryStream [
 	"Store an Apple extended-precision 80-bit floating point number on the given stream."
 	"Details: I could not find the specification for this format, so constants were determined empirically based on assumption of 1-bit sign, 15-bit exponent, 64-bit mantissa. This format does not seem to have an implicit one before the mantissa as some float formats do."
@@ -435,7 +439,12 @@ SoundBuffer >> storeExtendedFloat: aNumber on: aBinaryStream [
 	8 to: 1 by: -1 do: [:i | aBinaryStream nextPut: (mantissa digitAt: i)].
 ]
 
-{ #category : #utilities }
+{ #category : 'converting' }
+SoundBuffer >> tfPointerAddress [ 
+	^ PointerUtils oopForObjectForcePinInMemory: self
+]
+
+{ #category : 'utilities' }
 SoundBuffer >> trimmedThreshold: threshold [
 
 	| start end |
@@ -448,7 +457,7 @@ SoundBuffer >> trimmedThreshold: threshold [
 
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SoundBuffer >> writeOnGZIPByteStream: aStream [ 
 	
 	aStream nextPutAllWordArray: self

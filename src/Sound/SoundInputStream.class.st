@@ -3,16 +3,18 @@ This subclass of SoundRecorder supports real-time processing of incoming sound d
 
 "
 Class {
-	#name : #SoundInputStream,
-	#superclass : #SoundRecorder,
+	#name : 'SoundInputStream',
+	#superclass : 'SoundRecorder',
 	#instVars : [
 		'bufferSize',
 		'mutex'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SoundInputStream >> allocateBuffer [
 	"Allocate a new buffer and reset nextIndex. This message is sent by the sound input process."
 
@@ -21,7 +23,7 @@ SoundInputStream >> allocateBuffer [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundInputStream >> bufferCount [
 	"Answer the number of sound buffers that have been queued."
 
@@ -30,14 +32,14 @@ SoundInputStream >> bufferCount [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundInputStream >> bufferSize [
 
 	^ bufferSize
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundInputStream >> bufferSize: aNumber [
 	"Set the sound buffer size. Buffers of this size will be queued for the client to process."
 
@@ -45,7 +47,7 @@ SoundInputStream >> bufferSize: aNumber [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundInputStream >> emitBuffer: buffer [
 	"Queue a buffer for later processing. This message is sent by the sound input process."
 
@@ -53,7 +55,7 @@ SoundInputStream >> emitBuffer: buffer [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundInputStream >> initialize [
 
 	super initialize.
@@ -62,7 +64,7 @@ SoundInputStream >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundInputStream >> isRecording [
 	"Answer true if the sound input process is running."
 
@@ -70,7 +72,7 @@ SoundInputStream >> isRecording [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundInputStream >> nextBufferOrNil [
 	"Answer the next input buffer or nil if no buffer is available."
 
@@ -82,7 +84,7 @@ SoundInputStream >> nextBufferOrNil [
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundInputStream >> startRecording [
 	"Start the sound input process."
 
@@ -94,7 +96,7 @@ SoundInputStream >> startRecording [
 
 ]
 
-{ #category : #'recording controls' }
+{ #category : 'recording controls' }
 SoundInputStream >> stopRecording [
 	"Turn off the sound input process and close the driver."
 

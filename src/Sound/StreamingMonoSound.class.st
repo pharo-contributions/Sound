@@ -5,8 +5,8 @@ Example of use:
 
 "
 Class {
-	#name : #StreamingMonoSound,
-	#superclass : #AbstractSound,
+	#name : 'StreamingMonoSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'stream',
 		'volume',
@@ -21,10 +21,12 @@ Class {
 		'lastBufferMSecs',
 		'mutex'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StreamingMonoSound class >> onFileNamed: fileName [
 	"Answer an instance of me for playing the file with the given name."
 
@@ -35,7 +37,7 @@ StreamingMonoSound class >> onFileNamed: fileName [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StreamingMonoSound class >> onFileNamed: fileName headerStart: anInteger [
 	"Answer an instance of me for playing audio data starting at the given position in the file with the given name."
 
@@ -46,7 +48,7 @@ StreamingMonoSound class >> onFileNamed: fileName headerStart: anInteger [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 StreamingMonoSound >> closeFile [
 	"Close my stream, if it responds to close."
 
@@ -57,7 +59,7 @@ StreamingMonoSound >> closeFile [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> createMixer [
 	"Create a mixed sound consisting of sampled sounds with one sound buffer's worth of samples."
 
@@ -70,7 +72,7 @@ StreamingMonoSound >> createMixer [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> currentSampleIndex [
 	"Answer the index of the current sample."
 
@@ -84,7 +86,7 @@ StreamingMonoSound >> currentSampleIndex [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> duration [
 	"Answer the duration of this sound in seconds."
 
@@ -92,7 +94,7 @@ StreamingMonoSound >> duration [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 StreamingMonoSound >> extractFrom: startSecs to: endSecs [
 	"Extract a portion of this sound between the given start and end times. The current implementation only works if the sound is uncompressed."
 
@@ -112,7 +114,7 @@ StreamingMonoSound >> extractFrom: startSecs to: endSecs [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StreamingMonoSound >> initStream: aStream headerStart: anInteger [
 	"Initialize for streaming from the given stream. The audio file header starts at the given stream position."
 
@@ -124,7 +126,7 @@ StreamingMonoSound >> initStream: aStream headerStart: anInteger [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> loadBuffer: aSoundBuffer compressedSampleCount: sampleCount [
 	"Load the given sound buffer from the compressed sample stream."
 	"Details: Most codecs decode in multi-sample units called 'frames'. Since the requested sampleCount is typically not an even multiple of the frame size, we need to deal with partial frames. The unused samples from a partial frame are retained until the next call to this method."
@@ -155,7 +157,7 @@ StreamingMonoSound >> loadBuffer: aSoundBuffer compressedSampleCount: sampleCoun
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> loadBuffer: aSoundBuffer uncompressedSampleCount: sampleCount [
 	"Load the given sound buffer from the uncompressed sample stream."
 
@@ -168,7 +170,7 @@ StreamingMonoSound >> loadBuffer: aSoundBuffer uncompressedSampleCount: sampleCo
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> loadBuffersForSampleCount: count [
 	"Load the sound buffers from the stream."
 
@@ -189,7 +191,7 @@ StreamingMonoSound >> loadBuffersForSampleCount: count [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> loadFromLeftovers: aSoundBuffer sampleCount: sampleCount [
 	"Load the given sound buffer from the samples leftover from the last frame. Answer the number of samples loaded, which typically is less than sampleCount."
 
@@ -206,7 +208,7 @@ StreamingMonoSound >> loadFromLeftovers: aSoundBuffer sampleCount: sampleCount [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 StreamingMonoSound >> millisecondsSinceStart [
 	"Answer the number of milliseconds of this sound started playing."
 
@@ -222,7 +224,7 @@ StreamingMonoSound >> millisecondsSinceStart [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 StreamingMonoSound >> playSampleCount: n into: aSoundBuffer startingAt: startIndex [
 	"Mix the next n samples of this sound into the given buffer starting at the given index"
 
@@ -236,7 +238,7 @@ StreamingMonoSound >> playSampleCount: n into: aSoundBuffer startingAt: startInd
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> positionCodecTo: desiredSampleIndex [
 	"Position to the closest frame before the given sample index when using a codec. If using the ADPCM codec, try to ensure that it is in sync with the compressed sample stream."
 
@@ -278,7 +280,7 @@ StreamingMonoSound >> positionCodecTo: desiredSampleIndex [
 	(tmpStream isKindOf: FileStream) ifTrue: [tmpStream close].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> readAIFFHeader [
 	"Read an AIFF file header from stream."
 
@@ -295,7 +297,7 @@ StreamingMonoSound >> readAIFFHeader [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> readHeader [
 	"Read the sound file header from my stream."
 
@@ -309,7 +311,7 @@ StreamingMonoSound >> readHeader [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> readSunAudioHeader [
 	"Read a Sun audio file header from my stream."
 
@@ -356,7 +358,7 @@ StreamingMonoSound >> readSunAudioHeader [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> repeat [
 	"Answer the repeat flag."
 
@@ -364,7 +366,7 @@ StreamingMonoSound >> repeat [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> repeat: aBoolean [
 	"Set the repeat flag. If true, this sound will loop back to the beginning when it gets to the end."
 
@@ -372,7 +374,7 @@ StreamingMonoSound >> repeat: aBoolean [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 StreamingMonoSound >> reset [
 
 	super reset.
@@ -381,7 +383,7 @@ StreamingMonoSound >> reset [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 StreamingMonoSound >> samplesRemaining [
 	"Answer the number of samples remaining to be played."
 
@@ -394,7 +396,7 @@ StreamingMonoSound >> samplesRemaining [
 
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 StreamingMonoSound >> saveAsFileNamed: newFileName compressionType: compressionTypeString [
 	"Store this sound in a new file with the given name using the given compression type. Useful for converting between compression formats."
 
@@ -405,7 +407,7 @@ StreamingMonoSound >> saveAsFileNamed: newFileName compressionType: compressionT
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> soundPosition [
 	"Answer the relative position of sound playback as a number between 0.0 and 1.0."
 
@@ -414,7 +416,7 @@ StreamingMonoSound >> soundPosition [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> soundPosition: fraction [
 	"Jump to the position the given fraction through the sound file. The argument is a number between 0.0 and 1.0."
 
@@ -428,7 +430,7 @@ StreamingMonoSound >> soundPosition: fraction [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StreamingMonoSound >> startOver [
 	"Jump back to the first sample."
 
@@ -441,7 +443,7 @@ StreamingMonoSound >> startOver [
 
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 StreamingMonoSound >> storeSunAudioOn: aBinaryStream compressionType: compressionName [
 	"Store myself on the given stream as a monophonic sound compressed with the given type of compression. The sampling rate is reduced to 22050 samples/second if it is higher."
 
@@ -495,7 +497,7 @@ StreamingMonoSound >> storeSunAudioOn: aBinaryStream compressionType: compressio
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> streamSamplingRate [
 	"Answer the sampling rate of the MP3 stream."
 
@@ -503,7 +505,7 @@ StreamingMonoSound >> streamSamplingRate [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> volume [
 	"Answer my volume."
 
@@ -511,7 +513,7 @@ StreamingMonoSound >> volume [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StreamingMonoSound >> volume: aNumber [
 	"Set my volume to the given number between 0.0 and 1.0."
 

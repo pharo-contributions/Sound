@@ -10,8 +10,8 @@ SoundPlayer initialize.
 PluckedSound bachFugue play
 "
 Class {
-	#name : #AbstractSound,
-	#superclass : #Object,
+	#name : 'AbstractSound',
+	#superclass : 'Object',
 	#instVars : [
 		'envelopes',
 		'mSecsSinceStart',
@@ -29,10 +29,12 @@ Class {
 		'TopOfBottomOctave',
 		'UnloadedSnd'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> bachFugue [
 	"Play a fugue by J. S. Bach using and instance of me as the sound for all four voices."
 	"PluckedSound bachFugue play"
@@ -41,7 +43,7 @@ AbstractSound class >> bachFugue [
 
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> bachFugueOn: aSound [
 	"Play a fugue by J. S. Bach using the given sound as the sound for all four voices."
 	"PluckedSound bachFugue play"
@@ -54,7 +56,7 @@ AbstractSound class >> bachFugueOn: aSound [
 
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> bachFugueVoice1On: aSound [
 	"Voice one of a fugue by J. S. Bach."
 
@@ -330,7 +332,7 @@ AbstractSound class >> bachFugueVoice1On: aSound [
 		(523  1.60 268)).
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> bachFugueVoice2On: aSound [
 	"Voice two of a fugue by J. S. Bach."
 
@@ -616,7 +618,7 @@ AbstractSound class >> bachFugueVoice2On: aSound [
 
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> bachFugueVoice3On: aSound [
 	"Voice three of a fugue by J. S. Bach."
 
@@ -873,7 +875,7 @@ AbstractSound class >> bachFugueVoice3On: aSound [
 
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> bachFugueVoice4On: aSound [
 	"Voice four of a fugue by J. S. Bach."
 
@@ -910,7 +912,7 @@ AbstractSound class >> bachFugueVoice4On: aSound [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> chromaticPitchesFrom: aPitch [
 
 	| halfStep pitch |
@@ -923,7 +925,7 @@ AbstractSound class >> chromaticPitchesFrom: aPitch [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> chromaticRunFrom: startPitch to: endPitch on: aSound [
 	"Answer a composite sound consisting of a rapid chromatic run between the given pitches on the given sound."
 	"(AbstractSound chromaticRunFrom: 'c3' to: 'c#5' on: FMSound oboe1) play"
@@ -944,7 +946,7 @@ AbstractSound class >> chromaticRunFrom: startPitch to: endPitch on: aSound [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> chromaticScale [
 	"PluckedSound chromaticScale play"
 
@@ -952,7 +954,7 @@ AbstractSound class >> chromaticScale [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> chromaticScaleOn: aSound [
 	"PluckedSound chromaticScale play"
 
@@ -962,7 +964,7 @@ AbstractSound class >> chromaticScaleOn: aSound [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AbstractSound class >> default [
 	"Return a default sound prototype for this class, with envelopes if appropriate. (This is in contrast to new, which returns a raw instance without envelopes.)"
 
@@ -970,7 +972,7 @@ AbstractSound class >> default [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> dial: aString [
 	| s |
 	"AbstractSound dial: '867-5309'" "ask for Jenny"
@@ -994,7 +996,7 @@ AbstractSound class >> dial: aString [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> dialTone: duration [
 	"AbstractSound dialTone: 2"
 	
@@ -1006,7 +1008,7 @@ AbstractSound class >> dialTone: duration [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AbstractSound class >> dur: d [
 	"Return a rest of the given duration."
 
@@ -1014,7 +1016,7 @@ AbstractSound class >> dur: d [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> fileInSoundLibrary [
 	"Prompt the user for a file name and the file in the sound library with that name."
 	"AbstractSound fileInSoundLibrary"
@@ -1027,7 +1029,7 @@ AbstractSound class >> fileInSoundLibrary [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> fileInSoundLibraryNamed: fileName [
 	"File in the sound library with the given file name, and add its contents to the current sound library."
 
@@ -1042,7 +1044,7 @@ AbstractSound class >> fileInSoundLibraryNamed: fileName [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> fileOutSoundLibrary [
 	"File out the current sound library."
 	"AbstractSound fileOutSoundLibrary"
@@ -1051,7 +1053,7 @@ AbstractSound class >> fileOutSoundLibrary [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> fileOutSoundLibrary: aDictionary [
 	"File out the given dictionary, which is assumed to contain sound and instrument objects keyed by their names."
 	"Note: This method is separated out so that one can file out edited sound libraries, as well as the system sound library. To make such a collection, you can inspect AbstractSound sounds and remove the items you don't want. Then do: 'AbstractSound fileOutSoundLibrary: self' from the Dictionary inspector."
@@ -1066,7 +1068,7 @@ AbstractSound class >> fileOutSoundLibrary: aDictionary [
 		ensure: [ refStream close ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> hangUpWarning: count [
 	"AbstractSound hangUpWarning: 20"
 	| m s |
@@ -1080,7 +1082,7 @@ AbstractSound class >> hangUpWarning: count [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> hiMajorScale [
 	"FMSound hiMajorScale play"
 
@@ -1088,14 +1090,14 @@ AbstractSound class >> hiMajorScale [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> hiMajorScaleOn: aSound [
 	"FMSound hiMajorScale play"
 
 	^ self majorScaleOn: aSound from: #c6
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> indexOfBottomOctavePitch: p [
 	"Answer the index of the first pitch in the bottom octave equal to or higher than the given pitch. Assume that the given pitch is below the top pitch of the bottom octave."
 
@@ -1105,7 +1107,7 @@ AbstractSound class >> indexOfBottomOctavePitch: p [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 AbstractSound class >> initSounds [
 	"AbstractSound initSounds"
 
@@ -1115,7 +1117,7 @@ AbstractSound class >> initSounds [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound class >> initialize [
 	"AbstractSound initialize"
  
@@ -1131,7 +1133,7 @@ AbstractSound class >> initialize [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> lowMajorScale [
 	"PluckedSound lowMajorScale play"
 
@@ -1139,20 +1141,20 @@ AbstractSound class >> lowMajorScale [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> lowMajorScaleOn: aSound [
 	"PluckedSound lowMajorScale play"
 
 	^ self majorScaleOn: aSound from: #c3
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> majorChord [
 	"FMSound majorChord play"
 	^ self majorChordOn: self default from: #c4
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> majorChordOn: aSound from: aPitch [
 	"FMSound majorChord play"
 
@@ -1172,7 +1174,7 @@ AbstractSound class >> majorChordOn: aSound from: aPitch [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> majorPitchesFrom: aPitch [
 	| chromatic |
 	chromatic := self chromaticPitchesFrom: aPitch.
@@ -1180,7 +1182,7 @@ AbstractSound class >> majorPitchesFrom: aPitch [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> majorScale [
 	"FMSound majorScale play"
 
@@ -1188,14 +1190,14 @@ AbstractSound class >> majorScale [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> majorScaleOn: aSound [
 	"FMSound majorScale play"
 
 	^ self majorScaleOn: aSound from: #c5
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> majorScaleOn: aSound from: aPitch [
 	"FMSound majorScale play"
 
@@ -1205,7 +1207,7 @@ AbstractSound class >> majorScaleOn: aSound from: aPitch [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> majorScaleOn: aSound from: aPitch octaves: octaveCount [
 	"(AbstractSound majorScaleOn: FMSound oboe1 from: #c2 octaves: 5) play"
 
@@ -1223,7 +1225,7 @@ AbstractSound class >> majorScaleOn: aSound from: aPitch octaves: octaveCount [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> midiKeyForPitch: pitchNameOrNumber [
 	"Answer the midiKey closest to the given pitch. Pitch may be a numeric pitch or a pitch name string such as 'c4'."
 	"AbstractSound midiKeyForPitch: 440.0"
@@ -1248,7 +1250,7 @@ AbstractSound class >> midiKeyForPitch: pitchNameOrNumber [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AbstractSound class >> noteSequenceOn: aSound from: anArray [
 	"Build a note sequence (i.e., a SequentialSound) from the given array using the given sound as the instrument. Elements are either (pitch, duration, loudness) triples or (#rest duration) pairs.  Pitches can be given as names or as numbers."
 	| score |
@@ -1269,7 +1271,7 @@ AbstractSound class >> noteSequenceOn: aSound from: anArray [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AbstractSound class >> pitch: p dur: d loudness: l [
 	"Return a new sound object for a note with the given parameters."
 
@@ -1277,7 +1279,7 @@ AbstractSound class >> pitch: p dur: d loudness: l [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> pitchForMIDIKey: midiKey [
 	"Answer the pitch for the given MIDI key."
 	"(1 to: 127) collect: [:i | AbstractSound pitchForMIDIKey: i]"
@@ -1290,7 +1292,7 @@ AbstractSound class >> pitchForMIDIKey: midiKey [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> pitchForName: aString [
 	"AbstractSound pitchForName: 'c2'"
 	"#(c 'c#' d eb e f fs g 'g#' a bf b) collect: [ :s | AbstractSound pitchForName: s, '4']"
@@ -1316,7 +1318,7 @@ AbstractSound class >> pitchForName: aString [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractSound class >> pitchTable [
 	"AbstractSound pitchTable"
 
@@ -1334,14 +1336,14 @@ AbstractSound class >> pitchTable [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound class >> scaleFactor [
 
 	^ ScaleFactor
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> scaleTest [
 	"AbstractSound scaleTest play"
 
@@ -1351,21 +1353,21 @@ AbstractSound class >> scaleTest [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 AbstractSound class >> soundNamed: soundName [
 
 	^ Sounds at: soundName
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 AbstractSound class >> soundNamed: soundName ifAbsent: aBlock [
 
 	^ Sounds at: soundName ifAbsent: aBlock
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 AbstractSound class >> soundNamed: soundName put: aSound [
 
 	Sounds at: soundName put: aSound.
@@ -1373,21 +1375,21 @@ AbstractSound class >> soundNamed: soundName put: aSound [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 AbstractSound class >> soundNames [
 
 	^ Sounds keys sorted
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 AbstractSound class >> sounds [
 
 	^ Sounds
 
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> stereoBachFugue [
 	"Play fugue by J. S. Bach in stereo using different timbres."
 	"AbstractSound stereoBachFugue play"
@@ -1403,7 +1405,7 @@ AbstractSound class >> stereoBachFugue [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> storeFiledInSound: snd named: sndName [
 	"Store the given sound in the sound library. Use the given name if it isn't in use, otherwise ask the user what to do."
 
@@ -1431,7 +1433,7 @@ AbstractSound class >> storeFiledInSound: snd named: sndName [
 
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AbstractSound class >> testFMInteractively [
 	"Experiment with different settings of the FM modulation and multiplier settings interactively by moving the mouse. The top-left corner of the screen is 0 for both parameters. Stop when the mouse is pressed."
 	"AbstractSound testFMInteractively"
@@ -1458,7 +1460,7 @@ ratio: ', ratio printString.
 
 ]
 
-{ #category : #'primitive generation' }
+{ #category : 'primitive generation' }
 AbstractSound class >> translatedPrimitives [
 	^#(
 		(FMSound mixSampleCount:into:startingAt:leftVol:rightVol:)
@@ -1470,7 +1472,7 @@ AbstractSound class >> translatedPrimitives [
 
 ]
 
-{ #category : #'examples-bach fugue' }
+{ #category : 'examples-bach fugue' }
 AbstractSound class >> unloadSampledTimbres [
 	"This can be done to unload those bulky sampled timbres to shrink the image. The unloaded sounds are replaced by a well-known 'unloaded sound' object to enable the unloaded sounds to be detected when the process is reversed."
 	"AbstractSound unloadSampledTimbres"
@@ -1484,7 +1486,7 @@ AbstractSound class >> unloadSampledTimbres [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> unloadSoundNamed: soundName [
 
 	(Sounds includesKey: soundName) ifTrue: [
@@ -1493,7 +1495,7 @@ AbstractSound class >> unloadSoundNamed: soundName [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> unloadedSound [
 	"Answer a sound to be used as the place-holder for sounds that have been unloaded."
 
@@ -1502,7 +1504,7 @@ AbstractSound class >> unloadedSound [
 
 ]
 
-{ #category : #'sound library' }
+{ #category : 'sound library' }
 AbstractSound class >> updateFMSounds [
 	"AbstractSound updateFMSounds"
 
@@ -1515,7 +1517,7 @@ AbstractSound class >> updateFMSounds [
 
 ]
 
-{ #category : #'sound library-file in/out' }
+{ #category : 'sound library-file in/out' }
 AbstractSound class >> updateScorePlayers [
 	| soundsBeingEdited |
 	"Force all ScorePlayers to update their instrument list from the sound library. This may done after loading, unloading, or replacing a sound to make all ScorePlayers feel the change."
@@ -1530,7 +1532,7 @@ AbstractSound class >> updateScorePlayers [
 			[:p | p updateInstrumentsFromLibraryExcept: soundsBeingEdited ] ]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 AbstractSound >> + aSound [
 	"Return the mix of the receiver and the argument sound."
 
@@ -1541,7 +1543,7 @@ AbstractSound >> + aSound [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 AbstractSound >> , aSound [
 	"Return the concatenation of the receiver and the argument sound."
 
@@ -1551,7 +1553,7 @@ AbstractSound >> , aSound [
 		yourself
 ]
 
-{ #category : #envelopes }
+{ #category : 'envelopes' }
 AbstractSound >> addEnvelope: anEnvelope [
 	"Add the given envelope to my envelopes list."
 
@@ -1560,7 +1562,7 @@ AbstractSound >> addEnvelope: anEnvelope [
 
 ]
 
-{ #category : #volume }
+{ #category : 'volume' }
 AbstractSound >> adjustVolumeTo: vol overMSecs: mSecs [
 	"Adjust the volume of this sound to the given volume, a number in the range [0.0..1.0], over the given number of milliseconds. The volume will be changed a little bit on each sample until the desired volume is reached."
 
@@ -1583,7 +1585,7 @@ AbstractSound >> adjustVolumeTo: vol overMSecs: mSecs [
 
 ]
 
-{ #category : #conversion }
+{ #category : 'conversion' }
 AbstractSound >> asSampledSound [
 	"Answer a SampledSound containing my samples. If the receiver is some kind of sampled sound, the resulting SampledSound will have the same original sampling rate as the receiver."
 
@@ -1591,14 +1593,14 @@ AbstractSound >> asSampledSound [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 AbstractSound >> asSound [
 
 	^ self
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> computeSamplesForSeconds: seconds [
 	"Compute the samples of this sound without outputting them, and return the resulting buffer of samples."
 
@@ -1610,7 +1612,7 @@ AbstractSound >> computeSamplesForSeconds: seconds [
 
 ]
 
-{ #category : #'sampling rates' }
+{ #category : 'sampling rates' }
 AbstractSound >> controlRate [
 	"Answer the number of control changes per second."
 
@@ -1618,7 +1620,7 @@ AbstractSound >> controlRate [
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AbstractSound >> copyEnvelopes [
 	"Private! Support for copying. Copy my envelopes."
 
@@ -1626,7 +1628,7 @@ AbstractSound >> copyEnvelopes [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 AbstractSound >> delayedBy: seconds [
 	"Return a composite sound consisting of a rest for the given amount of time followed by the receiver."
 
@@ -1634,7 +1636,7 @@ AbstractSound >> delayedBy: seconds [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> doControl [
 	"Update the control parameters of this sound using its envelopes, if any."
 	"Note: This is only called at a small fraction of the sampling rate."
@@ -1650,7 +1652,7 @@ AbstractSound >> doControl [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound >> duration: seconds [
 	"Scale my envelopes to the given duration. Subclasses overriding this method should include a resend to super."
 
@@ -1658,7 +1660,7 @@ AbstractSound >> duration: seconds [
 
 ]
 
-{ #category : #envelopes }
+{ #category : 'envelopes' }
 AbstractSound >> envelopes [
 	"Return my collection of envelopes."
 
@@ -1666,7 +1668,7 @@ AbstractSound >> envelopes [
 
 ]
 
-{ #category : #volume }
+{ #category : 'volume' }
 AbstractSound >> initialVolume: vol [
 	"Set the initial volume of this sound to the given volume, a number in the range [0.0..1.0]."
 
@@ -1676,7 +1678,7 @@ AbstractSound >> initialVolume: vol [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound >> initialize [
 	super initialize.
 	envelopes := #().
@@ -1688,19 +1690,19 @@ AbstractSound >> initialize [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> internalizeModulationAndRatio [
 	"Overridden by FMSound. This default implementation does nothing."
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> isPlaying [
 	"Return true if the receiver is currently playing"
 	^ SoundPlayer isPlaying: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractSound >> isStereo [
 	"Answer true if this sound has distinct left and right channels. (Every sound plays into a stereo sample buffer, but most sounds, which produce exactly the same samples on both channels, are not stereo.)"
 
@@ -1708,14 +1710,14 @@ AbstractSound >> isStereo [
 
 ]
 
-{ #category : #volume }
+{ #category : 'volume' }
 AbstractSound >> loudness [
 	"Answer the current volume setting for this sound."
 
 	^ scaledVol asFloat / ScaleFactor asFloat
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound >> loudness: aNumber [
 	"Initialize my volume envelopes and initial volume. Subclasses overriding this method should include a resend to super."
 
@@ -1727,13 +1729,13 @@ AbstractSound >> loudness: aNumber [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> millisecondsSinceStart [
 
 	^ mSecsSinceStart
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Mix the given number of samples with the samples already in the given buffer starting at the given index. Assume that the buffer size is at least (index + count) - 1. The leftVol and rightVol parameters determine the volume of the sound in each channel, where 0 is silence and ScaleFactor is full volume."
 
@@ -1741,7 +1743,7 @@ AbstractSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex lef
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound >> nameOrNumberToPitch: aStringOrNumber [
 	"Answer the pitch in cycles/second for the given pitch specification. The specification can be either a numeric pitch or pitch name such as 'c4'."
 
@@ -1751,7 +1753,7 @@ AbstractSound >> nameOrNumberToPitch: aStringOrNumber [
 
 ]
 
-{ #category : #'sampling rates' }
+{ #category : 'sampling rates' }
 AbstractSound >> originalSamplingRate [
 	"For sampled sounds, answer the sampling rate used to record the stored samples. For other sounds, this is the same as the playback sampling rate."
 
@@ -1759,21 +1761,21 @@ AbstractSound >> originalSamplingRate [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> pause [
 	"Pause this sound. It can be resumed from this point, or reset and resumed to start from the beginning."
 
 	SoundPlayer pauseSound: self.
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> play [
 	"Play this sound to the sound output port in real time."
 
 	SoundPlayer playSound: self.
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> playAndWaitUntilDone [
 	"Play this sound to the sound ouput port and wait until it has finished playing before returning."
 
@@ -1783,7 +1785,7 @@ AbstractSound >> playAndWaitUntilDone [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> playChromaticRunFrom: startPitch to: endPitch [
 	"Play a fast chromatic run between the given pitches. Useful for auditioning a sound."
 
@@ -1791,7 +1793,7 @@ AbstractSound >> playChromaticRunFrom: startPitch to: endPitch [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> playSampleCount: n into: aSoundBuffer startingAt: startIndex [
 	"Mix the next n samples of this sound into the given buffer starting at the given index. Update the receiver's control parameters periodically."
 
@@ -1815,7 +1817,7 @@ AbstractSound >> playSampleCount: n into: aSoundBuffer startingAt: startIndex [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> playSilently [
 	"Compute the samples of this sound without outputting them. Used for performance analysis."
 
@@ -1829,7 +1831,7 @@ AbstractSound >> playSilently [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> playSilentlyUntil: startTime [
 	"Compute the samples of this sound without outputting them. Used to fast foward to a particular starting time. The start time is given in seconds."
 
@@ -1849,7 +1851,7 @@ AbstractSound >> playSilentlyUntil: startTime [
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AbstractSound >> postCopy [
 	"A sound should copy all of the state needed to play itself, allowing two copies of a sound to play at the same time. These semantics require a recursive copy but only down to the level of immutable data. For example, a SampledSound need not copy its sample buffer. Subclasses overriding this method should include a resend to super."
 
@@ -1858,7 +1860,7 @@ AbstractSound >> postCopy [
 
 ]
 
-{ #category : #envelopes }
+{ #category : 'envelopes' }
 AbstractSound >> removeAllEnvelopes [
 	"Remove all envelopes from my envelopes list."
 
@@ -1866,7 +1868,7 @@ AbstractSound >> removeAllEnvelopes [
 
 ]
 
-{ #category : #envelopes }
+{ #category : 'envelopes' }
 AbstractSound >> removeEnvelope: anEnvelope [
 	"Remove the given envelope from my envelopes list."
 
@@ -1874,7 +1876,7 @@ AbstractSound >> removeEnvelope: anEnvelope [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> reset [
 	"Reset my internal state for a replay. Methods that override this method should do super reset."
 
@@ -1885,7 +1887,7 @@ AbstractSound >> reset [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> resumePlaying [
 	"Resume playing this sound from where it last stopped."
 
@@ -1893,7 +1895,7 @@ AbstractSound >> resumePlaying [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 AbstractSound >> samples [
 	"Answer a monophonic sample buffer containing my samples. The left and write channels are merged."
 	"Warning: This may require a lot of memory!"
@@ -1902,7 +1904,7 @@ AbstractSound >> samples [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> samplesRemaining [
 	"Answer the number of samples remaining until the end of this sound. A sound with an indefinite ending time should answer some large integer such as 1000000."
 
@@ -1910,7 +1912,7 @@ AbstractSound >> samplesRemaining [
 
 ]
 
-{ #category : #'sampling rates' }
+{ #category : 'sampling rates' }
 AbstractSound >> samplingRate [
 	"Answer the sampling rate in samples per second."
 
@@ -1918,14 +1920,14 @@ AbstractSound >> samplingRate [
 
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 AbstractSound >> setPitch: pitchNameOrNumber dur: d loudness: l [
 	"Initialize my envelopes for the given parameters. Subclasses overriding this method should include a resend to super."
 
 	self setPitch: pitchNameOrNumber duration: d loudness: l
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound >> setPitch: pitchNameOrNumber duration: d loudness: l [
 	"Initialize my envelopes for the given parameters. Subclasses overriding this method should include a resend to super."
 
@@ -1939,7 +1941,7 @@ AbstractSound >> setPitch: pitchNameOrNumber duration: d loudness: l [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound >> soundForMidiKey: midiKey dur: d loudness: l [
 	"Answer an initialized sound object (a copy of the receiver) that generates a note for the given MIDI key (in the range 0..127), duration (in seconds), and loudness (in the range 0.0 to 1.0)."
 
@@ -1950,7 +1952,7 @@ AbstractSound >> soundForMidiKey: midiKey dur: d loudness: l [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractSound >> soundForPitch: pitchNameOrNumber dur: d loudness: l [
 	"Answer an initialized sound object (a copy of the receiver) that generates a note of the given pitch, duration, and loudness. Pitch may be a numeric pitch or a string pitch name such as 'c4'. Duration is in seconds and loudness is in the range 0.0 to 1.0."
 
@@ -1958,20 +1960,20 @@ AbstractSound >> soundForPitch: pitchNameOrNumber dur: d loudness: l [
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AbstractSound >> sounds [
 	"Allows simple sounds to behave as, eg, sequential sounds"
 
 	^ Array with: self
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> stopAfterMSecs: mSecs [
 	"Terminate this sound this note after the given number of milliseconds. This default implementation does nothing."
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> stopGracefully [
 	"End this note with a graceful decay. If the note has envelopes, determine the decay time from its envelopes."
 
@@ -1988,7 +1990,7 @@ AbstractSound >> stopGracefully [
 
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeAIFFOnFileNamed: fileName [
 	"Store this sound as a AIFF file of the given name."
 
@@ -1999,7 +2001,7 @@ AbstractSound >> storeAIFFOnFileNamed: fileName [
 
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeAIFFSamplesOn: aBinaryStream [
 	"Store this sound as a 16-bit AIFF file at the current SoundPlayer sampling rate. Store both channels if self isStereo is true; otherwise, store the left channel only as a mono sound."
 
@@ -2028,7 +2030,7 @@ AbstractSound >> storeAIFFSamplesOn: aBinaryStream [
 
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeExtendedFloat: aNumber on: aBinaryStream [
 	"Store an Apple extended-precision 80-bit floating point number on the given stream."
 	"Details: I could not find the specification for this format, so constants were determined empirically based on assumption of 1-bit sign, 15-bit exponent, 64-bit mantissa. This format does not seem to have an implicit one before the mantissa as some float formats do."
@@ -2049,7 +2051,7 @@ AbstractSound >> storeExtendedFloat: aNumber on: aBinaryStream [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> storeSample: sample in: aSoundBuffer at: sliceIndex leftVol: leftVol rightVol: rightVol [
 	"This method is provided for documentation. To gain 10% more speed when running sound generation in Smalltalk, this method is hand-inlined into all sound generation methods that use it."
 
@@ -2069,7 +2071,7 @@ AbstractSound >> storeSample: sample in: aSoundBuffer at: sliceIndex leftVol: le
 
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeSampleCount: samplesToStore bigEndian: bigEndianFlag on: aBinaryStream [
 	"Store my samples on the given stream at the current SoundPlayer sampling rate. If bigFlag is true, then each 16-bit sample is stored most-significant byte first (AIFF files), otherwise it is stored least-significant byte first (WAV files). If self isStereo is true, both channels are stored, creating a stereo file. Otherwise, only the left channel is stored, creating a mono file."
 
@@ -2097,7 +2099,7 @@ remaining := samplesToStore.
 				remaining := remaining - bufSize.].
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeSunAudioOnFileNamed: fileName [
 	"Store this sound as an uncompressed Sun audio file of the given name."
 
@@ -2107,7 +2109,7 @@ AbstractSound >> storeSunAudioOnFileNamed: fileName [
 		ensure: [ f close ]
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeSunAudioSamplesOn: aBinaryStream [
 	"Store this sound as a 16-bit Sun audio file at the current SoundPlayer sampling rate. Store both channels if self isStereo is true; otherwise, store the left channel only as a mono sound."
 
@@ -2131,7 +2133,7 @@ AbstractSound >> storeSunAudioSamplesOn: aBinaryStream [
 
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeWAVOnFileNamed: fileName [
 	"Store this sound as a 16-bit Windows WAV file of the given name."
 
@@ -2141,7 +2143,7 @@ AbstractSound >> storeWAVOnFileNamed: fileName [
 		ensure: [ f close ]
 ]
 
-{ #category : #'file i/o' }
+{ #category : 'file i/o' }
 AbstractSound >> storeWAVSamplesOn: aBinaryStream [
 	"Store this sound as a 16-bit Windows WAV file at the current SoundPlayer sampling rate. Store both channels if self isStereo is true; otherwise, store the left channel only as a mono sound."
 
@@ -2178,7 +2180,7 @@ AbstractSound >> storeWAVSamplesOn: aBinaryStream [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 AbstractSound >> updateVolume [
 	"Increment the volume envelope of this sound. To avoid clicks, the volume envelope must be interpolated at the sampling rate, rather than just at the control rate like other envelopes. At the control rate, the volume envelope computes the slope and next target volume volume for the current segment of the envelope (i.e., it sets the rate of change for the volume parameter). When that target volume is reached, incrementing is stopped until a new increment is set."
 	"This method is provided for documentation. To gain 10% more speed when running sound generation in Smalltalk, it is hand-inlined into all sound generation methods that use it."
@@ -2193,7 +2195,7 @@ AbstractSound >> updateVolume [
 
 ]
 
-{ #category : #volume }
+{ #category : 'volume' }
 AbstractSound >> volumeEnvelopeScaledTo: scalePoint [
 	"Return a collection of values representing my volume envelope scaled by the given point. The scale point's x component is pixels/second and its y component is the number of pixels for full volume."
 

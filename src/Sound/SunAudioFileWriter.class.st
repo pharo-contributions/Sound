@@ -3,16 +3,18 @@ I encode monophonic sampled sounds in Sun audio (.au) file format. Sun audio fil
 
 "
 Class {
-	#name : #SunAudioFileWriter,
-	#superclass : #Object,
+	#name : 'SunAudioFileWriter',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'headerStart'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'sound storing' }
+{ #category : 'sound storing' }
 SunAudioFileWriter class >> codecForFormatCode: formatCode [
 	"Answer the codec for the given Sun audio file format number."
 
@@ -26,7 +28,7 @@ SunAudioFileWriter class >> codecForFormatCode: formatCode [
 
 ]
 
-{ #category : #'sound storing' }
+{ #category : 'sound storing' }
 SunAudioFileWriter class >> formatCodeForCompressionType: aString [
 	"Answer the Sun audio file format number for the given compression type name."
 
@@ -42,7 +44,7 @@ SunAudioFileWriter class >> formatCodeForCompressionType: aString [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SunAudioFileWriter class >> onFileNamed: fileName [
 	"Answer an instance of me on a newly created file with the given name."
 
@@ -52,7 +54,7 @@ SunAudioFileWriter class >> onFileNamed: fileName [
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SunAudioFileWriter class >> onStream: aBinaryStream [
 	"Answer an instance of me on the given binary stream."
 
@@ -60,7 +62,7 @@ SunAudioFileWriter class >> onStream: aBinaryStream [
 
 ]
 
-{ #category : #'sound storing' }
+{ #category : 'sound storing' }
 SunAudioFileWriter class >> storeSampledSound: aSampledSound onFileNamed: fileName compressionType: aString [
 	"Store the samples of the given sampled sound on a file with the given name using the given type of compression. See formatCodeForCompressionType: for the list of compression types."
 
@@ -78,7 +80,7 @@ SunAudioFileWriter class >> storeSampledSound: aSampledSound onFileNamed: fileNa
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SunAudioFileWriter >> appendBytes: aByteArray [
 	"Append the given sample data to my stream."
 
@@ -86,7 +88,7 @@ SunAudioFileWriter >> appendBytes: aByteArray [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SunAudioFileWriter >> appendSamples: aSoundBuffer [
 	"Append the given SoundBuffer to my stream."
 
@@ -106,7 +108,7 @@ SunAudioFileWriter >> appendSamples: aSoundBuffer [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SunAudioFileWriter >> closeFile [
 	"Update the Sun audio file header to reflect the final size of the sound data. If my stream is a file stream, close it and, on a Macintosh, set the file type and creator to that used by SoundApp for Sun Audio files. (This does nothing on other platforms.)"
 
@@ -118,7 +120,7 @@ SunAudioFileWriter >> closeFile [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SunAudioFileWriter >> ensureOpen [
 	"Ensure that my stream is open."
 
@@ -126,7 +128,7 @@ SunAudioFileWriter >> ensureOpen [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SunAudioFileWriter >> setStream: aBinaryStream [
 	"Initialize myself for writing on the given stream."
 
@@ -135,7 +137,7 @@ SunAudioFileWriter >> setStream: aBinaryStream [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SunAudioFileWriter >> updateHeaderDataSize [
 	"Update the Sun audio file header to reflect the final size of the sound data."
 
@@ -146,7 +148,7 @@ SunAudioFileWriter >> updateHeaderDataSize [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SunAudioFileWriter >> writeHeaderSamplingRate: samplingRate [
 	"Write a Sun audio file header for 16-bit linear format."
 
@@ -154,7 +156,7 @@ SunAudioFileWriter >> writeHeaderSamplingRate: samplingRate [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 SunAudioFileWriter >> writeHeaderSamplingRate: samplingRate format: audioFormat [
 	"Write a Sun audio file header for the given sampling rate and format. Currently, only monophonic files are supported."
 

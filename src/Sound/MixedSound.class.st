@@ -1,16 +1,18 @@
 Class {
-	#name : #MixedSound,
-	#superclass : #AbstractSound,
+	#name : 'MixedSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'sounds',
 		'leftVols',
 		'rightVols',
 		'soundDone'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #composition }
+{ #category : 'composition' }
 MixedSound >> + aSound [
 	"Return the mix of the receiver and the argument sound."
 
@@ -18,7 +20,7 @@ MixedSound >> + aSound [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 MixedSound >> add: aSound [
 	"Add the given sound with a pan setting of centered and no attenuation."
 
@@ -27,7 +29,7 @@ MixedSound >> add: aSound [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 MixedSound >> add: aSound pan: leftRightPan [
 	"Add the given sound with the given left-right panning and no attenuation."
 
@@ -35,7 +37,7 @@ MixedSound >> add: aSound pan: leftRightPan [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 MixedSound >> add: aSound pan: leftRightPan volume: volume [
 	"Add the given sound with the given left-right pan, where 0.0 is full left, 1.0 is full right, and 0.5 is centered. The loudness of the sound will be scaled by volume, which ranges from 0 to 1.0."
 
@@ -48,7 +50,7 @@ MixedSound >> add: aSound pan: leftRightPan volume: volume [
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MixedSound >> copySounds [
 	"Private! Support for copying. Copy my component sounds and settings array."
 
@@ -58,7 +60,7 @@ MixedSound >> copySounds [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 MixedSound >> doControl [
 
 	super doControl.
@@ -66,7 +68,7 @@ MixedSound >> doControl [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MixedSound >> duration [
 	"Answer the duration of this sound in seconds."
 
@@ -77,7 +79,7 @@ MixedSound >> duration [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MixedSound >> initialize [
 
 	super initialize.
@@ -87,14 +89,14 @@ MixedSound >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MixedSound >> isStereo [
 
 	^ true
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 MixedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play a number of sounds concurrently. The level of each sound can be set independently for the left and right channels."
 
@@ -111,7 +113,7 @@ MixedSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVo
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MixedSound >> postCopy [
 	"Copy my component sounds."
 
@@ -120,7 +122,7 @@ MixedSound >> postCopy [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 MixedSound >> reset [
 
 	super reset.
@@ -129,7 +131,7 @@ MixedSound >> reset [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 MixedSound >> samplesRemaining [
 
 	| remaining r |
@@ -142,14 +144,14 @@ MixedSound >> samplesRemaining [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MixedSound >> sounds [
 
 	^ sounds
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 MixedSound >> stopGracefully [
 	"End this note with a graceful decay. If the note has envelopes, determine the decay time from its envelopes."
 

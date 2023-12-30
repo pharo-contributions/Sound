@@ -3,12 +3,14 @@ I am an abstract class that describes the protocol for sound codecs. Each codec 
 
 "
 Class {
-	#name : #SoundCodec,
-	#superclass : #Object,
-	#category : #'Sound-Core'
+	#name : 'SoundCodec',
+	#superclass : 'Object',
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 SoundCodec >> bytesPerEncodedFrame [
 	"Answer the number of bytes required to hold one frame of compressed sound data. Answer zero if this codec produces encoded frames of variable size."
 
@@ -16,7 +18,7 @@ SoundCodec >> bytesPerEncodedFrame [
 
 ]
 
-{ #category : #'compress/decompress' }
+{ #category : 'compress/decompress' }
 SoundCodec >> compressAndDecompress: aSound [
 	"Compress and decompress the given sound. Useful for testing."
 	"(MuLawCodec new compressAndDecompress: (SampledSound soundNamed: 'camera')) play"
@@ -25,7 +27,7 @@ SoundCodec >> compressAndDecompress: aSound [
 
 ]
 
-{ #category : #'compress/decompress' }
+{ #category : 'compress/decompress' }
 SoundCodec >> compressSound: aSound [
 	"Compress the entirety of the given sound with this codec. Answer a CompressedSoundData."
 
@@ -67,7 +69,7 @@ SoundCodec >> compressSound: aSound [
 
 ]
 
-{ #category : #'compress/decompress' }
+{ #category : 'compress/decompress' }
 SoundCodec >> compressSound: aSound atRate: desiredSampleRate [
 	"Compress the entirety of the given sound with this codec. Answer a CompressedSoundData."
 
@@ -123,7 +125,7 @@ SoundCodec >> compressSound: aSound atRate: desiredSampleRate [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundCodec >> decodeCompressedData: aByteArray [
 	"Decode the entirety of the given encoded data buffer with this codec. Answer a monophonic SoundBuffer containing the uncompressed samples."
 
@@ -138,7 +140,7 @@ SoundCodec >> decodeCompressedData: aByteArray [
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 SoundCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dstSoundBuffer at: dstIndex [
 	"Decode the given number of monophonic frames starting at the given index in the given ByteArray of compressed sound data and storing the decoded samples into the given SoundBuffer starting at the given destination index. Answer a pair containing the number of bytes of compressed data consumed and the number of decompressed samples produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -147,7 +149,7 @@ SoundCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dst
 
 ]
 
-{ #category : #'compress/decompress' }
+{ #category : 'compress/decompress' }
 SoundCodec >> decompressSound: aCompressedSound [
 	"Decompress the entirety of the given compressed sound with this codec and answer the resulting sound."
 
@@ -187,7 +189,7 @@ SoundCodec >> decompressSound: aCompressedSound [
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 SoundCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: dstByteArray at: dstIndex [
 	"Encode the given number of frames starting at the given index in the given monophonic SoundBuffer and storing the encoded sound data into the given ByteArray starting at the given destination index. Encode only as many complete frames as will fit into the destination. Answer a pair containing the number of samples consumed and the number of bytes of compressed data produced."
 	"Note: Assume that the sender has ensured that the given number of frames will not exhaust either the source or destination buffers."
@@ -196,7 +198,7 @@ SoundCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: d
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundCodec >> encodeSoundBuffer: aSoundBuffer [
 	"Encode the entirety of the given monophonic SoundBuffer with this codec. Answer a ByteArray containing the compressed sound data."
 
@@ -227,7 +229,7 @@ SoundCodec >> encodeSoundBuffer: aSoundBuffer [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundCodec >> frameCount: aByteArray [
 	"Compute the frame count for this byteArray.  This default computation will have to be overridden by codecs with variable frame sizes."
 
@@ -238,13 +240,13 @@ SoundCodec >> frameCount: aByteArray [
 	^ aByteArray size // codeFrameSize
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 SoundCodec >> reset [
 	"Reset my encoding and decoding state. Optional. This default implementation does nothing."
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 SoundCodec >> samplesPerFrame [
 	"Answer the number of sound samples per compression frame."
 

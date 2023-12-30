@@ -4,36 +4,38 @@ This is the normal sound system in Squeak and is registered in SoundService - an
 More information available in superclass.
 "
 Class {
-	#name : #BaseSoundSystem,
-	#superclass : #SoundSystem,
-	#category : #'Sound-Core'
+	#name : 'BaseSoundSystem',
+	#superclass : 'SoundSystem',
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaseSoundSystem class >> initialize [
 	self current: self new.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BaseSoundSystem class >> unload [
 	self resetSoundSystem
 ]
 
-{ #category : #beep }
+{ #category : 'beep' }
 BaseSoundSystem >> beep [
 	"There is sound support, so we use the default sampled sound for a beep."
 
 	self soundEnabled ifTrue: [ SampledSound beep]
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 BaseSoundSystem >> playSampledSound: samples rate: rate [
 
 	self soundEnabled ifTrue: [
 		(SampledSound samples: samples samplingRate: rate) play]
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 BaseSoundSystem >> playSoundNamed: soundName [
 	"There is sound support, so we play the given sound."
 
@@ -41,7 +43,7 @@ BaseSoundSystem >> playSoundNamed: soundName [
 		SampledSound playSoundNamed: soundName asString]
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 BaseSoundSystem >> playSoundNamed: soundName ifAbsentReadFrom: aifFileName [
 
 	self soundEnabled ifTrue: [
@@ -54,7 +56,7 @@ BaseSoundSystem >> playSoundNamed: soundName ifAbsentReadFrom: aifFileName [
 			SampledSound playSoundNamed: soundName]]
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 BaseSoundSystem >> playSoundNamedOrBeep: soundName [
 	"There is sound support, so we play the given sound
 	instead of beeping."
@@ -63,7 +65,7 @@ BaseSoundSystem >> playSoundNamedOrBeep: soundName [
 		^self playSoundNamed: soundName]
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 BaseSoundSystem >> randomBitsFromSoundInput: bitCount [
 	"Answer a positive integer with the given number of random bits of 'noise' from a sound input source. Typically, one would use a microphone or line input as the sound source, although many sound cards have enough thermal noise that you get random low-order sample bits even with no microphone connected. Only the least signficant bit of the samples is used. Since not all sound cards support 16-bits of sample resolution, we use the lowest bit that changes."
 	"(1 to: 10) collect: [:i | BaseSoundSystem new randomBitsFromSoundInput: 512]"
@@ -97,18 +99,18 @@ BaseSoundSystem >> randomBitsFromSoundInput: bitCount [
 
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 BaseSoundSystem >> sampledSoundChoices [
 	^ SampledSound soundNames
 ]
 
-{ #category : #'activation hooks' }
+{ #category : 'activation hooks' }
 BaseSoundSystem >> shutDown [
 	SoundPlayer shutDown
 
 ]
 
-{ #category : #query }
+{ #category : 'query' }
 BaseSoundSystem >> soundNamed: soundName [
 	^ SampledSound soundNamed: soundName
 ]

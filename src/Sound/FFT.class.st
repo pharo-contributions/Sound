@@ -6,8 +6,8 @@ Each instance caches tables used for transforming a given size (n = 2^nu samples
 It would have been cleaner using complex numbers, but often the data is all real.
 "
 Class {
-	#name : #FFT,
-	#superclass : #Object,
+	#name : 'FFT',
+	#superclass : 'Object',
 	#instVars : [
 		'nu',
 		'n',
@@ -17,10 +17,12 @@ Class {
 		'imagData',
 		'window'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFT class >> new: anIntegerPowerOfTwo [
 	"Answer a new FFT instance for transforming data packets of the given size."
 
@@ -28,14 +30,14 @@ FFT class >> new: anIntegerPowerOfTwo [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFT >> imagData [
 
 	^ imagData
 
 ]
 
-{ #category : #'bulk processing' }
+{ #category : 'bulk processing' }
 FFT >> initializeHammingWindow: alpha [
 	"Initialize the windowing function to the generalized Hamming window. See F. Richard Moore, Elements of Computer Music, p. 100. An alpha of 0.54 gives the Hamming window, 0.5 gives the hanning window."
 
@@ -49,7 +51,7 @@ FFT >> initializeHammingWindow: alpha [
 
 ]
 
-{ #category : #'bulk processing' }
+{ #category : 'bulk processing' }
 FFT >> initializeTriangularWindow [
 	"Initialize the windowing function to the triangular, or Parzen, window. See F. Richard Moore, Elements of Computer Music, p. 100."
 
@@ -62,14 +64,14 @@ FFT >> initializeTriangularWindow [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFT >> n [
 
 	^ n
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFT >> nu: order [
 	"Initialize variables and tables for transforming 2^nu points"
 	|  j perms k |
@@ -91,7 +93,7 @@ FFT >> nu: order [
 	sinTable := (0 to: n/4) collect: [:i | (i asFloat / (n//4) * Float pi / 2.0) sin]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 FFT >> permuteData [
 	| i end a b |
 	i := 1.
@@ -104,7 +106,7 @@ FFT >> permuteData [
 		i := i + 2]
 ]
 
-{ #category : #'plugin-testing' }
+{ #category : 'plugin-testing' }
 FFT >> pluginPrepareData [
 	"The FFT plugin requires data to be represented in WordArrays or FloatArrays"
 	sinTable := sinTable asFloatArray.
@@ -113,7 +115,7 @@ FFT >> pluginPrepareData [
 	imagData := imagData asFloatArray.
 ]
 
-{ #category : #'plugin-testing' }
+{ #category : 'plugin-testing' }
 FFT >> pluginTransformData: forward [
 	"Plugin testing -- if the primitive is not implemented 
 	or cannot be found run the simulation. See also: FFTPlugin"
@@ -122,26 +124,26 @@ FFT >> pluginTransformData: forward [
 		doPrimitive: 'primitiveFFTTransformData'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFT >> realData [
 
 	^ realData
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFT >> realData: real [
 	realData := real.
 	imagData := real collect: [:i | 0.0]  "imaginary component all zero"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFT >> realData: real imagData: imag [
 	realData := real.
 	imagData := imag
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFT >> samplesPerCycleForIndex: i [
 	"Answer the number of samples per cycle corresponding to a power peak at the given index. Answer zero if i = 1, since an index of 1 corresponds to the D.C. component."
 
@@ -153,7 +155,7 @@ FFT >> samplesPerCycleForIndex: i [
 
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 FFT >> scaleData [
 	"Scale all elements by 1/n when doing inverse"
 	| realN |
@@ -164,7 +166,7 @@ FFT >> scaleData [
 		imagData at: i put: (imagData at: i) / realN]
 ]
 
-{ #category : #'bulk processing' }
+{ #category : 'bulk processing' }
 FFT >> setSize: anIntegerPowerOfTwo [
 	"Initialize variables and tables for performing an FFT on the given number of samples. The number of samples must be an integral power of two (e.g. 1024). Prepare data for use with the fast primitive."
 
@@ -178,7 +180,7 @@ FFT >> setSize: anIntegerPowerOfTwo [
 
 ]
 
-{ #category : #'bulk processing' }
+{ #category : 'bulk processing' }
 FFT >> transformDataFrom: anIndexableCollection startingAt: index [
 	"Forward transform a block of real data taken from from the given indexable collection starting at the given index. Answer a block of values representing the normalized magnitudes of the frequency components."
 
@@ -200,7 +202,7 @@ FFT >> transformDataFrom: anIndexableCollection startingAt: index [
 
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 FFT >> transformForward: forward [
 	| lev lev1 ip theta realU imagU realT imagT i |
 	<primitive: 'primitiveFFTTransformData' module: 'FFTPlugin'>

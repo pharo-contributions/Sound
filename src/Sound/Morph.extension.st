@@ -1,6 +1,6 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*sound-piano rolls' }
+{ #category : '*sound-piano rolls' }
 Morph >> addMorphsTo: morphList pianoRoll: pianoRoll eventTime: t betweenTime: leftTime and: rightTime [
 
 	"a hack to allow for abitrary morphs to be dropped into piano roll"
@@ -10,33 +10,33 @@ Morph >> addMorphsTo: morphList pianoRoll: pianoRoll eventTime: t betweenTime: l
 
 ]
 
-{ #category : #'*sound-piano rolls' }
+{ #category : '*sound-piano rolls' }
 Morph >> encounteredAtTime: ticks inScorePlayer: scorePlayer atIndex: index inEventTrack: track secsPerTick: secsPerTick [
 
 	"a hack to allow for abitrary morphs to be dropped into piano roll"
 	self triggerActionFromPianoRoll.
 ]
 
-{ #category : #'*sound-piano rolls' }
+{ #category : '*sound-piano rolls' }
 Morph >> pauseFrom: scorePlayer [
 
 	"subclasses should take five"
 ]
 
-{ #category : #'*sound-piano rolls' }
+{ #category : '*sound-piano rolls' }
 Morph >> resetFrom: scorePlayer [
 
 	"subclasses should revert to their initial state"
 ]
 
-{ #category : #'*sound-piano rolls' }
+{ #category : '*sound-piano rolls' }
 Morph >> resumeFrom: scorePlayer [
 
 	"subclasses should continue from their current position"
 	"a hack to allow for abitrary morphs to be dropped into piano roll"
 ]
 
-{ #category : #'*sound-piano rolls' }
+{ #category : '*sound-piano rolls' }
 Morph >> triggerActionFromPianoRoll [
 
 	| evt |

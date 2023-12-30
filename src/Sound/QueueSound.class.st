@@ -25,46 +25,48 @@ You may want to keep track of the queue's position so that you can feed it at an
 
 "
 Class {
-	#name : #QueueSound,
-	#superclass : #AbstractSound,
+	#name : 'QueueSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'startTime',
 		'sounds',
 		'currentSound',
 		'done'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueueSound >> add: aSound [
 	self sounds nextPut: aSound.
 	^ aSound
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueueSound >> currentSound [
 	currentSound isNil ifTrue: [currentSound := self nextSound].
 	^ currentSound
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueueSound >> currentSound: aSound [
 	currentSound := aSound
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 QueueSound >> doControl [
 	super doControl.
 	self currentSound notNil ifTrue: [self currentSound doControl]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueueSound >> done: aBoolean [
 	done := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 QueueSound >> initialize [
 	super initialize.
 	sounds := SharedQueue new.
@@ -72,7 +74,7 @@ QueueSound >> initialize [
 	startTime := Time millisecondClockValue
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 QueueSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play a collection of sounds in sequence."
 
@@ -92,7 +94,7 @@ QueueSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVo
 		i := i + count]
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 QueueSound >> nextSound [
 	| answer |
 	sounds isEmpty ifTrue: [^ nil].
@@ -101,7 +103,7 @@ QueueSound >> nextSound [
 	^ answer
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 QueueSound >> reset [
 	super reset.
 	self currentSound notNil
@@ -109,7 +111,7 @@ QueueSound >> reset [
 		ifFalse: [self currentSound: self nextSound]
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 QueueSound >> samplesRemaining [
 	(done and: [self sounds isEmpty])
 		ifTrue: [^ 0]
@@ -117,17 +119,17 @@ QueueSound >> samplesRemaining [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueueSound >> sounds [
 	^ sounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueueSound >> startTime [
 	^ startTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueueSound >> startTime: anInteger [
 	startTime := anInteger
 ]

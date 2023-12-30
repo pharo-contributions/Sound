@@ -1,14 +1,16 @@
 Class {
-	#name : #SequentialSound,
-	#superclass : #AbstractSound,
+	#name : 'SequentialSound',
+	#superclass : 'AbstractSound',
 	#instVars : [
 		'sounds',
 		'currentIndex'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #composition }
+{ #category : 'composition' }
 SequentialSound >> , aSound [
 	"Return the concatenation of the receiver and the argument sound."
 
@@ -16,7 +18,7 @@ SequentialSound >> , aSound [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 SequentialSound >> add: aSound [
 
 	sounds := sounds copyWith: aSound.
@@ -24,17 +26,17 @@ SequentialSound >> add: aSound [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 SequentialSound >> compressWith: codecClass [
 	^ self copy transformSounds: [:s | s compressWith: codecClass]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 SequentialSound >> compressWith: codecClass atRate: aSamplingRate [
 	^ self copy transformSounds: [:s | s compressWith: codecClass atRate: aSamplingRate]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SequentialSound >> copySounds [
 	"Private! Support for copying. Copy my component sounds."
 
@@ -42,7 +44,7 @@ SequentialSound >> copySounds [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 SequentialSound >> doControl [
 
 	super doControl.
@@ -51,7 +53,7 @@ SequentialSound >> doControl [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SequentialSound >> duration [
 	"Answer the duration of this sound in seconds."
 
@@ -60,7 +62,7 @@ SequentialSound >> duration [
 	^sounds inject: 0 into: [:totalDuration :snd | totalDuration + snd asSound duration]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SequentialSound >> initialize [
 
 	super initialize.
@@ -69,7 +71,7 @@ SequentialSound >> initialize [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 SequentialSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Play a collection of sounds in sequence."
 	"PluckedSound chromaticScale play"
@@ -96,7 +98,7 @@ SequentialSound >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex l
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SequentialSound >> postCopy [
 	"Copy my component sounds."
 
@@ -105,7 +107,7 @@ SequentialSound >> postCopy [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 SequentialSound >> pruneFinishedSounds [
 	"Remove any sounds that have been completely played."
 
@@ -117,7 +119,7 @@ SequentialSound >> pruneFinishedSounds [
 
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 SequentialSound >> removeFirstCompleteSoundOrNil [
 	"Remove the first sound if it has been completely recorded."
 
@@ -130,7 +132,7 @@ SequentialSound >> removeFirstCompleteSoundOrNil [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 SequentialSound >> reset [
 
 	super reset.
@@ -139,7 +141,7 @@ SequentialSound >> reset [
 
 ]
 
-{ #category : #'sound generation' }
+{ #category : 'sound generation' }
 SequentialSound >> samplesRemaining [
 
 	currentIndex = 0
@@ -148,14 +150,14 @@ SequentialSound >> samplesRemaining [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SequentialSound >> sounds [
 
 	^ sounds
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SequentialSound >> transformSounds: tfmBlock [
 	"Private! Support for copying. Copy my component sounds."
 

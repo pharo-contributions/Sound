@@ -2,8 +2,8 @@
 I represent a place where sound is directed to. I am a sink for sound (i.e. I eat sound samples). I can be typically something like a speaker or headphone, but in the case of some sound drivers I may represent something more abstract.
 "
 Class {
-	#name : #SoundSink,
-	#superclass : #Object,
+	#name : 'SoundSink',
+	#superclass : 'Object',
 	#instVars : [
 		'activeSounds',
 		'activeSoundsMutex',
@@ -11,21 +11,23 @@ Class {
 		'buffer',
 		'mixingProcess'
 	],
-	#category : #'Sound-Driver'
+	#category : 'Sound-Driver',
+	#package : 'Sound',
+	#tag : 'Driver'
 }
 
-{ #category : #'mixing process' }
+{ #category : 'mixing process' }
 SoundSink >> computeNextRequiredSampleCount [
 	^ 0
 ]
 
-{ #category : #'driver interface' }
+{ #category : 'driver interface' }
 SoundSink >> doEnqueueAudioBuffer: aBuffer count: sampleCount [
 	"This is the place for actually sending a buffer into the sound device sink."
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SoundSink >> isAllSilence: aBuffer size: count [
 	"return true if the buffer is all silence after reverb has ended"
 	| value |
@@ -34,14 +36,14 @@ SoundSink >> isAllSilence: aBuffer size: count [
 	^true
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundSink >> isPlaying: aSound [
 	^ activeSoundsMutex critical: [
 		activeSounds includes: aSound
 	].
 ]
 
-{ #category : #'mixing process' }
+{ #category : 'mixing process' }
 SoundSink >> mixAndEnqueueNextAudioBufferOfSize: sampleCount [
 	| volume |
 	"TODO: look into placing volume calculations somwhere else, with less action"
@@ -59,7 +61,7 @@ SoundSink >> mixAndEnqueueNextAudioBufferOfSize: sampleCount [
 
 ]
 
-{ #category : #'mixing process' }
+{ #category : 'mixing process' }
 SoundSink >> mixingProcessLoop [
 	| bufferFlyingTime |
 	
@@ -83,24 +85,24 @@ SoundSink >> mixingProcessLoop [
 	]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 SoundSink >> pauseAudioDeviceSink [
 	"This is the place for pausing the audio device"
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundSink >> pauseSound: aSound [
 	activeSoundsMutex critical: [
 		activeSounds remove: aSound ifAbsent: []
 	].
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 SoundSink >> resumeAudioDeviceSink [
 	"This is the place for resuming the audio device"
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundSink >> resumePlaying: aSound quickStart: doQuickStart [
 	activeSoundsMutex critical: [
 		(activeSounds includes: aSound) ifFalse: [
@@ -109,12 +111,12 @@ SoundSink >> resumePlaying: aSound quickStart: doQuickStart [
 	].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundSink >> samplingRate [
 	^ samplingRate
 ]
 
-{ #category : #'mixing process' }
+{ #category : 'mixing process' }
 SoundSink >> startMixingProcess [
 	mixingProcess := [ self mixingProcessLoop ] newProcess.
 	mixingProcess priority: Processor userInterruptPriority.
@@ -123,7 +125,7 @@ SoundSink >> startMixingProcess [
 
 ]
 
-{ #category : #'mixing process' }
+{ #category : 'mixing process' }
 SoundSink >> startMixingProcessWithBufferSize: theBufferSize samplingRate: theSamplingRate numchannels: numchannels [
 	self assert: numchannels >= 1.
 	self assert: numchannels <= 2. "Until we support more than two channels."
@@ -137,7 +139,7 @@ SoundSink >> startMixingProcessWithBufferSize: theBufferSize samplingRate: theSa
 	self startMixingProcess
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundSink >> stopMixingProcess [
 	mixingProcess ifNil: [ ^ self ].
 	mixingProcess terminate.
@@ -145,14 +147,14 @@ SoundSink >> stopMixingProcess [
 	self pauseAudioDeviceSink
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundSink >> stopPlayingAll [
 	activeSoundsMutex critical: [
 		activeSounds removeAll
 	].
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundSink >> waitUntilDonePlaying: aSound [
 	self flag: 'TODO: Use a monitor here'.
 	[activeSoundsMutex critical: [activeSounds includes: aSound]]

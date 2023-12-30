@@ -1,27 +1,29 @@
 Class {
-	#name : #PitchEnvelope,
-	#superclass : #Envelope,
+	#name : 'PitchEnvelope',
+	#superclass : 'Envelope',
 	#instVars : [
 		'centerPitch'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PitchEnvelope >> centerPitch [
 
 	^ centerPitch
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PitchEnvelope >> centerPitch: aNumber [
 
 	centerPitch := aNumber.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PitchEnvelope >> updateSelector [
 	"Needed by the envelope editor."
 
@@ -29,7 +31,7 @@ PitchEnvelope >> updateSelector [
 
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 PitchEnvelope >> updateTargetAt: mSecs [
 	"Update the pitch for my target. Answer true if the value changed."
 	"Details: Assume envelope range is 0.0..2.0, with 1 being the center pitch. Subtracting one yields the range -1.0..1.0. Raising two to this power yields pitches between half and double the center pitch; i.e. from an octave below to an octave about the center pitch."

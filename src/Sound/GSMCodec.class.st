@@ -1,28 +1,30 @@
 Class {
-	#name : #GSMCodec,
-	#superclass : #SoundCodec,
+	#name : 'GSMCodec',
+	#superclass : 'SoundCodec',
 	#instVars : [
 		'encodeState',
 		'decodeState'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GSMCodec class >> new [
 
 	^ super new reset
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 GSMCodec >> bytesPerEncodedFrame [
 
 	^ 33
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 GSMCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dstSoundBuffer at: dstIndex [
 
 	| p |
@@ -33,7 +35,7 @@ GSMCodec >> decodeFrames: frameCount from: srcByteArray at: srcIndex into: dstSo
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 GSMCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: dstByteArray at: dstIndex [
 
 	| p |
@@ -44,7 +46,7 @@ GSMCodec >> encodeFrames: frameCount from: srcSoundBuffer at: srcIndex into: dst
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 GSMCodec >> primDecode: state frames: frameCount from: srcSoundBuffer at: srcIndex into: dstByteArray at: dstIndex [
 
 	<primitive: 'primitiveGSMDecode' module: 'SoundCodecPrims'>
@@ -52,7 +54,7 @@ GSMCodec >> primDecode: state frames: frameCount from: srcSoundBuffer at: srcInd
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 GSMCodec >> primEncode: state frames: frameCount from: srcSoundBuffer at: srcIndex into: dstByteArray at: dstIndex [
 
 	<primitive: 'primitiveGSMEncode' module: 'SoundCodecPrims'>
@@ -60,7 +62,7 @@ GSMCodec >> primEncode: state frames: frameCount from: srcSoundBuffer at: srcInd
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 GSMCodec >> primNewState [
 
 	<primitive: 'primitiveGSMNewState' module: 'SoundCodecPrims'>
@@ -68,7 +70,7 @@ GSMCodec >> primNewState [
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 GSMCodec >> reset [
 	"Reset my encoding/decoding state to prepare to encode or decode a new sound stream."
 
@@ -77,7 +79,7 @@ GSMCodec >> reset [
 
 ]
 
-{ #category : #'subclass responsibilities' }
+{ #category : 'subclass responsibilities' }
 GSMCodec >> samplesPerFrame [
 
 	^ 160

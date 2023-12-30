@@ -3,12 +3,14 @@ Instances of me, which are really just FMSounds, are used placeholders for sound
 
 "
 Class {
-	#name : #UnloadedSound,
-	#superclass : #FMSound,
-	#category : #'Sound-Core'
+	#name : 'UnloadedSound',
+	#superclass : 'FMSound',
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 UnloadedSound class >> default [
 	"UnloadedSound default play"
 

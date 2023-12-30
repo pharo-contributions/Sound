@@ -3,8 +3,8 @@ I contain setting builders for the Sound package
 
 "
 Class {
-	#name : #SoundPlayer,
-	#superclass : #Object,
+	#name : 'SoundPlayer',
+	#superclass : 'Object',
 	#classVars : [
 		'Buffer',
 		'BufferIndex',
@@ -17,10 +17,12 @@ Class {
 		'UseReadySemaphore',
 		'UseReverb'
 	],
-	#category : #'Sound-Driver'
+	#category : 'Sound-Driver',
+	#package : 'Sound',
+	#tag : 'Driver'
 }
 
-{ #category : #'primitive test' }
+{ #category : 'primitive test' }
 SoundPlayer class >> boinkPitch: p dur: d loudness: l waveTable: waveTable pan: pan [
 	"Play a decaying note on the given stream using the given wave table. Used for testing only."
 
@@ -41,7 +43,7 @@ SoundPlayer class >> boinkPitch: p dur: d loudness: l waveTable: waveTable pan: 
 
 ]
 
-{ #category : #'primitive test' }
+{ #category : 'primitive test' }
 SoundPlayer class >> boinkScale [
 	<script>
 	"Tests the sound output primitives by playing a scale."
@@ -71,14 +73,14 @@ SoundPlayer class >> boinkScale [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundPlayer class >> bufferMSecs [
 
 	^ BufferMSecs
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> canStartPlayer [
 	"Some platforms do no support simultaneous record and play. If this is one of those platforms, return false if there is a running SoundRecorder."
 
@@ -86,24 +88,24 @@ SoundPlayer class >> canStartPlayer [
 		or: [SoundRecorder anyActive not]
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> currentSoundSink [
 	^ SoundDriver current mainSoundSink
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundPlayer class >> defaultQuickStartForPlatform [
 
 	^ Smalltalk os platformName = 'Mac OS'.
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundPlayer class >> defaultStopSoundForPlatform [
 
 	^(Smalltalk os platformName = 'Mac OS') not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundPlayer class >> initialize [
 	"SoundPlayer initialize; shutDown; startUp"
 	"Details: BufferMSecs represents a tradeoff between latency and quality. If BufferMSecs is too low, the sound will not play smoothly, especially during long-running primitives such as large BitBlts. If BufferMSecs is too high, there will be a long time lag between when a sound buffer is submitted to be played and when that sound is actually heard. BufferMSecs is typically in the range 50-200."
@@ -112,7 +114,7 @@ SoundPlayer class >> initialize [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundPlayer class >> initializeForPlatform [
 	"Apparently, the VM could crash if these were not correct. 
 		Change in future if platform support for the features change"
@@ -120,26 +122,26 @@ SoundPlayer class >> initializeForPlatform [
 	self stopSoundWhenDone: self defaultStopSoundForPlatform.
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> isPlaying: aSound [
 	^ self currentSoundSink isPlaying: aSound
 ]
 
-{ #category : #'player process' }
+{ #category : 'player process' }
 SoundPlayer class >> isReverbOn [
 
 	^ ReverbState ~~ nil
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> pauseSound: aSound [
 	"Stop playing the given sound. Playing can be resumed from this point later."
 	^ self currentSoundSink pauseSound: aSound
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> playSound: aSound [
 	"Reset and start playing the given sound from its beginning."
 
@@ -149,7 +151,7 @@ SoundPlayer class >> playSound: aSound [
 
 ]
 
-{ #category : #'primitive test' }
+{ #category : 'primitive test' }
 SoundPlayer class >> playTestSample: s pan: pan [
 	"Append the given sample in the range [-32767..32767] to the output buffer, playing the output buffer when it is full. Used for testing only."
 
@@ -178,7 +180,7 @@ SoundPlayer class >> playTestSample: s pan: pan [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> resumePlaying: aSound [
 	"Start playing the given sound without resetting it; it will resume playing from where it last stopped."
 	"Implementation detail: On virtual machines that don't support the quickstart primitive, you may need to edit this method to pass false to resumePlaying:quickStart:."
@@ -187,7 +189,7 @@ SoundPlayer class >> resumePlaying: aSound [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> resumePlaying: aSound quickStart: quickStart [
 	"Start playing the given sound without resetting it; it will resume playing from where it last stopped. If quickStart is true, then try to start playing the given sound immediately."
 
@@ -198,25 +200,25 @@ SoundPlayer class >> resumePlaying: aSound quickStart: quickStart [
 	self currentSoundSink resumePlaying: aSound quickStart: doQuickStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundPlayer class >> reverbState [
 
 	^ ReverbState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundPlayer class >> samplingRate [
 
 	^ self currentSoundSink samplingRate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundPlayer class >> setVolumeLeft: aLeftVolume volumeRight: aRightVolume [
 	"Set sound pass in float 0.0-1.0 for left and right channel, with possible 2.0 or  higher to overdrive sound channel "
 	self primSoundSetVolumeLeft: aLeftVolume volumeRight: aRightVolume
 ]
 
-{ #category : #snapshotting }
+{ #category : 'snapshotting' }
 SoundPlayer class >> shutDown [
 	"Stop player process, for example before snapshotting."
 
@@ -225,7 +227,7 @@ SoundPlayer class >> shutDown [
 
 ]
 
-{ #category : #'primitive test' }
+{ #category : 'primitive test' }
 SoundPlayer class >> sineTable: size [
 	"Compute a sine table of the given size. Used for testing only."
 
@@ -240,25 +242,25 @@ SoundPlayer class >> sineTable: size [
 
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundPlayer class >> soundQuickStart [
 	"Attempt to start sounds immediately. Should always be on unless it causes vm to crash"
 	^SoundsShouldStartQuick ifNil: [self defaultQuickStartForPlatform]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundPlayer class >> soundQuickStart: aBoolean [
 	"Attempt to start sounds immediately"
 	SoundsShouldStartQuick := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundPlayer class >> soundVolume [
 	"Return sound as array of doubles left then right channel, range is 0.0 to 1.0 but may be overdriven"
 	^self primSoundGetVolume
 ]
 
-{ #category : #'player process' }
+{ #category : 'player process' }
 SoundPlayer class >> startPlayerProcessBufferSize: bufferSize rate: samplesPerSecond stereo: stereoFlag [
 	"Start the sound player process. Terminate the old process, if any."
 	"SoundPlayer startPlayerProcessBufferSize: 1000 rate: 11025 stereo: false"
@@ -268,7 +270,7 @@ SoundPlayer class >> startPlayerProcessBufferSize: bufferSize rate: samplesPerSe
 			sound: nil
 ]
 
-{ #category : #'player process' }
+{ #category : 'player process' }
 SoundPlayer class >> startReverb [
 	"Start a delay-line style reverb with the given tap delays and gains. Tap delays are given in samples and should be prime integers; the following comment gives an expression that generates primes."
 	"Integer primesUpTo: 22050"
@@ -279,7 +281,7 @@ SoundPlayer class >> startReverb [
 
 ]
 
-{ #category : #snapshotting }
+{ #category : 'snapshotting' }
 SoundPlayer class >> startUp [
 	"Start up the player process."
 
@@ -291,7 +293,7 @@ SoundPlayer class >> startUp [
 
 ]
 
-{ #category : #snapshotting }
+{ #category : 'snapshotting' }
 SoundPlayer class >> startUpWithSound: aSound [
 	"Start up the player process."
 
@@ -304,20 +306,20 @@ SoundPlayer class >> startUpWithSound: aSound [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundPlayer class >> stereo [
 
 	^ Stereo
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> stopPlayingAll [
 	"Stop playing all sounds."
 	self currentSoundSink stopPlayingAll
 ]
 
-{ #category : #'player process' }
+{ #category : 'player process' }
 SoundPlayer class >> stopReverb [
 
 	UseReverb := false.
@@ -325,19 +327,19 @@ SoundPlayer class >> stopReverb [
 
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundPlayer class >> stopSoundWhenDone [
 	"If true, the sound player is shut down after playing finished"
 	^ SoundsStopWhenDone ifNil: [self defaultStopSoundForPlatform]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundPlayer class >> stopSoundWhenDone: aBoolean [
 	"If true, the sound player is shut down after playing finished"
 	SoundsStopWhenDone := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundPlayer class >> useShortBuffer [
 	"Experimental support for real-time MIDI input. This only works on platforms whose hardware allows very short buffer sizes. It has been tested on a Macintosh Powerbook G3."
 	"SoundPlayer useShortBuffer"
@@ -351,7 +353,7 @@ SoundPlayer class >> useShortBuffer [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundPlayer class >> waitUntilDonePlaying: aSound [
 	"Wait until the given sound is no longer playing."
 	self currentSoundSink waitUntilDonePlaying: aSound.

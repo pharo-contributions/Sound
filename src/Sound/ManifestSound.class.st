@@ -3,7 +3,9 @@ I support sound synthesis.
 I define AIFFFileReader, a large hierarchy of sound, Codec...
 "
 Class {
-	#name : #ManifestSound,
-	#superclass : #PackageManifest,
-	#category : #'Sound-Manifest'
+	#name : 'ManifestSound',
+	#superclass : 'PackageManifest',
+	#category : 'Sound-Manifest',
+	#package : 'Sound',
+	#tag : 'Manifest'
 }

@@ -1,6 +1,6 @@
 Class {
-	#name : #SoundDriver,
-	#superclass : #Object,
+	#name : 'SoundDriver',
+	#superclass : 'Object',
 	#instVars : [
 		'mixerSounds',
 		'mixerMutex',
@@ -12,10 +12,12 @@ Class {
 		'CurrentDriver',
 		'CurrentDriverSession'
 	],
-	#category : #'Sound-Driver'
+	#category : 'Sound-Driver',
+	#package : 'Sound',
+	#tag : 'Driver'
 }
 
-{ #category : #'driver selection' }
+{ #category : 'driver selection' }
 SoundDriver class >> current [
 	"
 	self current.
@@ -28,27 +30,27 @@ SoundDriver class >> current [
 	^ CurrentDriver
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SoundDriver class >> defaultMixerSampleCount [
 	^ 2048
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SoundDriver class >> defaultMixerSampleRate [
 	^ 48000
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SoundDriver class >> isAvailable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SoundDriver class >> isSuitable [
 	^ self isAvailable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SoundDriver class >> masterVolumeFindSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder range: #masterVolume)
@@ -60,13 +62,13 @@ SoundDriver class >> masterVolumeFindSettingsOn: aBuilder [
 		range: (0 to: 100)
 ]
 
-{ #category : #'driver selection' }
+{ #category : 'driver selection' }
 SoundDriver class >> pickDriverClass [
 	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s ] ].
 	^ NullSoundDriver
 ]
 
-{ #category : #'driver selection' }
+{ #category : 'driver selection' }
 SoundDriver class >> reset [
 	<script>
 	(CurrentDriverSession == Smalltalk session and: [ CurrentDriver isNotNil ]) ifTrue: [ 
@@ -76,29 +78,29 @@ SoundDriver class >> reset [
 	CurrentDriver := nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundDriver >> createMainSoundSink [
 	^ self createNullSoundSink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundDriver >> createNullSoundSink [
 	^ NullSoundSink new
 		startMixingProcessWithBufferSize: 1024 samplingRate: 11025 numchannels: 1;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundDriver >> defaultMixerSampleCount [
 	^ self class defaultMixerSampleCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundDriver >> defaultMixerSampleRate [
 	^ self class defaultMixerSampleRate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundDriver >> initialize [
 	super initialize.
 	mutex := Semaphore forMutualExclusion.
@@ -106,19 +108,19 @@ SoundDriver >> initialize [
 	ProcessorScheduler idleTime: 1000.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundDriver >> mainSoundSink [
 	^ mutex critical: [
 		mainSoundSink ifNil: [ mainSoundSink := self createMainSoundSink ]
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundDriver >> samplingRate [
 	^ mixerSamplingRate
 ]
 
-{ #category : #'initialize-destroy' }
+{ #category : 'initialize-destroy' }
 SoundDriver >> shutdown [
 	"This is the place for shutting down the driver when a explicit reset is requested"
 ]

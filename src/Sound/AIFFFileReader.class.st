@@ -3,8 +3,8 @@ I am a parser for AIFF (audio interchange file format) files. I can read uncompr
 
 "
 Class {
-	#name : #AIFFFileReader,
-	#superclass : #Object,
+	#name : 'AIFFFileReader',
+	#superclass : 'Object',
 	#instVars : [
 		'in',
 		'fileType',
@@ -21,101 +21,103 @@ Class {
 		'skipDataChunk',
 		'mergeIfStereo'
 	],
-	#category : #'Sound-Core'
+	#category : 'Sound-Core',
+	#package : 'Sound',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> bitsPerSample [
 
 	^ bitsPerSample
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> channelCount [
 
 	^ channelCount
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> channelData [
 
 	^ channelData
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> channelDataOffset [
 
 	^ channelDataOffset
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> frameCount [
 
 	^ frameCount
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> gain [
 
 	^ gain
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> isLooped [
 
 	^ isLooped
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> isStereo [
 
 	^ channelData size = 2
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> leftSamples [
 
 	^ channelData at: 1
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> loopEnd [
 
 	^ markers last last
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> loopLength [
 
 	^ markers last last - markers first last
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> markers [
 
 	^ markers
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> pitch [
 
 	^ pitch
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 AIFFFileReader >> pitchForKey: midiKey [
 	"Convert my MIDI key number to a pitch and return it."
 
@@ -129,7 +131,7 @@ AIFFFileReader >> pitchForKey: midiKey [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readChunk: chunkType size: chunkSize [
 	"Read a AIFF chunk of the given type. Skip unrecognized chunks. Leave the input stream positioned chunkSize bytes past its position when this method is called."
 
@@ -141,7 +143,7 @@ AIFFFileReader >> readChunk: chunkType size: chunkSize [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readCommonChunk: chunkSize [
 	"Read a COMM chunk. All AIFF files have exactly one chunk of this type."
 
@@ -159,7 +161,7 @@ AIFFFileReader >> readCommonChunk: chunkSize [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readExtendedFloat [
 	"Read and answer an Apple extended-precision 80-bit floating point number from the input stream."
 	"Details: I could not find the specification for this format, so constants were determined empirically based on assumption of 1-bit sign, 15-bit exponent, 64-bit mantissa. This format does not seem to have an implicit one before the mantissa as some float formats do."
@@ -175,7 +177,7 @@ AIFFFileReader >> readExtendedFloat [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readFrom: aBinaryStream [
 	"Read AIFF data from the given binary stream."
 	"Details: An AIFF file consists of a header (FORM chunk) followed by a sequence of tagged data chunks. Each chunk starts with a header consisting of a four-byte tag (a string) and a four byte size. These eight bytes of chunk header are not included in the chunk size. For each chunk, the readChunk:size: method consumes chunkSize bytes of the input stream, parsing recognized chunks or skipping unrecognized ones. If chunkSize is odd, it will be followed by a padding byte. Chunks may occur in any order."
@@ -202,7 +204,7 @@ AIFFFileReader >> readFrom: aBinaryStream [
 
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 AIFFFileReader >> readFromFile: fileName [
 	"Read the AIFF file of the given name."
 	"AIFFFileReader new readFromFile: 'test.aiff'"
@@ -213,7 +215,7 @@ AIFFFileReader >> readFromFile: fileName [
 
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 AIFFFileReader >> readFromFile: fileName mergeIfStereo: mergeFlag skipDataChunk: skipDataFlag [
 	"Read the AIFF file of the given name. See comment in readFromStream:mergeIfStereo:skipDataChunk:."
 	"AIFFFileReader new readFromFile: 'test.aiff' mergeIfStereo: false skipDataChunk: true"
@@ -225,7 +227,7 @@ AIFFFileReader >> readFromFile: fileName mergeIfStereo: mergeFlag skipDataChunk:
 
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 AIFFFileReader >> readFromStream: aBinaryStream mergeIfStereo: mergeFlag skipDataChunk: skipDataFlag [
 	"Read an AIFF file from the given binary stream. If mergeFlag is true and the file contains stereo data, then the left and right channels will be mixed together as the samples are read in. If skipDataFlag is true, then the data chunk to be skipped; this allows the other chunks of a file to be processed in order to extract format information quickly without reading the data."
 
@@ -237,7 +239,7 @@ AIFFFileReader >> readFromStream: aBinaryStream mergeIfStereo: mergeFlag skipDat
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readInstrumentChunk: chunkSize [
 
 	| midiKey detune lowNote highNote lowVelocity highVelocity
@@ -267,7 +269,7 @@ AIFFFileReader >> readInstrumentChunk: chunkSize [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readMarkerChunk: chunkSize [
 
 	| markerCount id position labelBytes label |
@@ -284,7 +286,7 @@ AIFFFileReader >> readMarkerChunk: chunkSize [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readMergedStereoChannelDataFrom: s [
 	"Read stereophonic channel data from the given stream, mixing the two channels to create a single monophonic channel. Each frame contains two samples."
 
@@ -308,7 +310,7 @@ AIFFFileReader >> readMergedStereoChannelDataFrom: s [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readMonoChannelDataFrom: s [
 	"Read monophonic channel data from the given stream. Each frame contains a single sample."
 
@@ -328,7 +330,7 @@ AIFFFileReader >> readMonoChannelDataFrom: s [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readMultiChannelDataFrom: s [
 	"Read multi-channel data from the given stream. Each frame contains channelCount samples."
 
@@ -349,7 +351,7 @@ AIFFFileReader >> readMultiChannelDataFrom: s [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readSamplesChunk: chunkSize [
 	"Read a SSND chunk. All AIFF files with a non-zero frameCount contain exactly one chunk of this type."
 
@@ -386,7 +388,7 @@ AIFFFileReader >> readSamplesChunk: chunkSize [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AIFFFileReader >> readStereoChannelDataFrom: s [
 	"Read stereophonic channel data from the given stream. Each frame contains two samples."
 
@@ -413,21 +415,21 @@ AIFFFileReader >> readStereoChannelDataFrom: s [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> rightSamples [
 
 	^ channelData at: 2
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AIFFFileReader >> samplingRate [
 
 	^ samplingRate
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 AIFFFileReader >> sound [
 	"Answer the sound represented by this AIFFFileReader. This method should be called only after readFrom: has been done."
 
