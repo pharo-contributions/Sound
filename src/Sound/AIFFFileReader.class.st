@@ -221,7 +221,7 @@ AIFFFileReader >> readFromFile: fileName mergeIfStereo: mergeFlag skipDataChunk:
 	"AIFFFileReader new readFromFile: 'test.aiff' mergeIfStereo: false skipDataChunk: true"
 
 	| f |
-	f := (FileStream readOnlyFileNamed: fileName) binary.
+	f := fileName asFileReference binaryReadStream.
 	[ self readFromStream: f mergeIfStereo: mergeFlag skipDataChunk: skipDataFlag]
        ensure: [ f close]
 
