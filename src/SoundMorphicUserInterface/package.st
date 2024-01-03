@@ -1,1 +1,1 @@
-Package { #name : #SoundMorphicUserInterface }
+Package { #name : 'SoundMorphicUserInterface' }

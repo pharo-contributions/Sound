@@ -4,8 +4,8 @@ A ScorePlayerMorph mediates between a score such as a MIDIScore, a PianoRollScor
 It provides control over volume, tempo, instrumentation, and location in the score.
 "
 Class {
-	#name : #ScorePlayerMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'ScorePlayerMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'scorePlayer',
 		'trackInstNames',
@@ -15,17 +15,18 @@ Class {
 	#classVars : [
 		'LastMIDIPort'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #'parts bin' }
+{ #category : 'parts bin' }
 ScorePlayerMorph class >> descriptionForPartsBin [
 	^ self partName: 	'ScorePlayer'
 		categories:		#('Multimedia')
 		documentation:	' Mediates between a score such as a MIDIScore, a PianoRollScoreMorph, and the actual SoundPlayer synthesizer'
 ]
 
-{ #category : #'file service' }
+{ #category : 'file service' }
 ScorePlayerMorph class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 	
@@ -34,13 +35,13 @@ ScorePlayerMorph class >> fileReaderServicesForFile: fullName suffix: suffix [
 		ifFalse: [#()]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph class >> initialize [
 
 	"FileServices registerFileReader: self"
 ]
 
-{ #category : #'system hookup' }
+{ #category : 'system hookup' }
 ScorePlayerMorph class >> onMIDIFileNamed: fileName [
 	"Return a ScorePlayerMorph on the score from the MIDI file of the given name."
 
@@ -51,7 +52,7 @@ ScorePlayerMorph class >> onMIDIFileNamed: fileName [
 
 ]
 
-{ #category : #'system hookup' }
+{ #category : 'system hookup' }
 ScorePlayerMorph class >> openOn: aScore title: aString [
 
 	| player |
@@ -60,7 +61,7 @@ ScorePlayerMorph class >> openOn: aScore title: aString [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ScorePlayerMorph class >> playMidiFile: fullName [
 	"Play a MIDI file."
  
@@ -73,7 +74,7 @@ ScorePlayerMorph class >> playMidiFile: fullName [
 
 ]
 
-{ #category : #'file service' }
+{ #category : 'file service' }
 ScorePlayerMorph class >> servicePlayMidiFile [
 	"Answer a service for opening player on a midi file"
 
@@ -85,7 +86,7 @@ ScorePlayerMorph class >> servicePlayMidiFile [
 		buttonLabel: 'open'
 ]
 
-{ #category : #'file service' }
+{ #category : 'file service' }
 ScorePlayerMorph class >> services [
 
 	^ Array with: self servicePlayMidiFile
@@ -93,7 +94,7 @@ ScorePlayerMorph class >> services [
 	
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 ScorePlayerMorph >> atTrack: trackIndex from: aPopUpChoice selectInstrument: selection [ 
 	| oldSnd name snd |
 	oldSnd := scorePlayer instrumentForTrack: trackIndex.
@@ -122,7 +123,7 @@ ScorePlayerMorph >> atTrack: trackIndex from: aPopUpChoice selectInstrument: sel
 	(instrumentSelector at: trackIndex) contentsClipped: selection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph >> closeMIDIPort [
 
 	scorePlayer closeMIDIPort.
@@ -130,19 +131,19 @@ ScorePlayerMorph >> closeMIDIPort [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color veryLightGray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -157,7 +158,7 @@ ScorePlayerMorph >> initialize [
 		 extent: 20 @ 20 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ScorePlayerMorph >> instrumentChoicesForTrack: trackIndex [
 	| names |
 
@@ -174,7 +175,7 @@ ScorePlayerMorph >> instrumentChoicesForTrack: trackIndex [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ScorePlayerMorph >> invokeMenu [
 	"Invoke a menu of additonal functions for this ScorePlayer."
 
@@ -202,7 +203,7 @@ ScorePlayerMorph >> invokeMenu [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ScorePlayerMorph >> makeAPauseEvent: evt [
 
 	| newWidget |
@@ -223,7 +224,7 @@ ScorePlayerMorph >> makeAPauseEvent: evt [
 	evt hand attachMorph: newWidget.
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> makeControls [
 
 	| bb r reverbSwitch repeatSwitch |
@@ -269,7 +270,7 @@ ScorePlayerMorph >> makeControls [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> makeMIDIController: evt [
 
 	self world activeHand attachMorph:
@@ -277,7 +278,7 @@ ScorePlayerMorph >> makeMIDIController: evt [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> makePianoRoll [
 	"Create a piano roll viewer for this score player."
 
@@ -293,7 +294,7 @@ ScorePlayerMorph >> makePianoRoll [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> makeRow [
 
 	^ AlignmentMorph newRow
@@ -305,7 +306,7 @@ ScorePlayerMorph >> makeRow [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph >> onScorePlayer: aScorePlayer title: scoreName [
 	| divider col r |
 	scorePlayer := aScorePlayer.
@@ -346,7 +347,7 @@ ScorePlayerMorph >> onScorePlayer: aScorePlayer title: scoreName [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph >> openMIDIFile [
 	"Open a MIDI score and re-init controls..."
 	| score fileName f player |
@@ -362,7 +363,7 @@ ScorePlayerMorph >> openMIDIFile [
 	self onScorePlayer: player title: fileName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScorePlayerMorph >> openMIDIPort [
 
 	| portNum |
@@ -373,31 +374,31 @@ ScorePlayerMorph >> openMIDIPort [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> panAndVolControlsFor: trackIndex [
 
 	| volSlider panSlider c r middleLine pianoRollColor |
 	pianoRollColor := (Color wheel: scorePlayer score tracks size) at: trackIndex.
-	volSlider := SimpleSliderMorph new
+	volSlider := PluggableSliderMorph new
 		color: color;
 		sliderColor: pianoRollColor;
 		extent: 101@2;
 		target: scorePlayer;
 		arguments: (Array with: trackIndex);
-		actionSelector: #volumeForTrack:put:;
-		minVal: 0.0;
-		maxVal: 1.0;
-		adjustToValue: (scorePlayer volumeForTrack: trackIndex).
-	panSlider := SimpleSliderMorph new
+		setValueSelector: #volumeForTrack:put:;
+		min: 0.0;
+		max: 1.0;
+		setValue: (scorePlayer volumeForTrack: trackIndex).
+	panSlider := PluggableSliderMorph new
 		color: color;
 		sliderColor: pianoRollColor;
 		extent: 101@2;
 		target: scorePlayer;
 		arguments: (Array with: trackIndex);
-		actionSelector: #panForTrack:put:;
-		minVal: 0.0;
-		maxVal: 1.0;		
-		adjustToValue: (scorePlayer panForTrack: trackIndex).
+		setValueSelector: #panForTrack:put:;
+		min: 0.0;
+		max: 1.0;		
+		setValue: (scorePlayer panForTrack: trackIndex).
 	c := AlignmentMorph newColumn
 		color: color;
 		layoutInset: 0;
@@ -423,19 +424,19 @@ ScorePlayerMorph >> panAndVolControlsFor: trackIndex [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> rateControl [
 
 	| rateSlider middleLine r |
-	rateSlider := SimpleSliderMorph new
+	rateSlider := PluggableSliderMorph new
 		color: color;
 		sliderColor: Color gray;
 		extent: 180@2;
 		target: self;
-		actionSelector: #setLogRate:;
-		minVal: -1.0;
-		maxVal: 1.0;
-		adjustToValue: 0.0.
+		setValueSelector: #setLogRate:;
+		min: -1.0;
+		max: 1.0;
+		setValue: 0.0.
 	middleLine := Morph new  "center indicator for pan slider"
 		color: (Color r: 0.4 g: 0.4 b: 0.4);
 		extent: 1@(rateSlider height - 4);
@@ -452,14 +453,14 @@ ScorePlayerMorph >> rateControl [
 
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 ScorePlayerMorph >> rewind [
 
 	scorePlayer pause; reset.
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ScorePlayerMorph >> saveAsAIFF [
 	"Create a stereo AIFF audio file with the result of performing my score."
 
@@ -473,7 +474,7 @@ ScorePlayerMorph >> saveAsAIFF [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ScorePlayerMorph >> saveAsSunAudio [
 	"Create a stereo Sun audio file with the result of performing my score."
 
@@ -487,7 +488,7 @@ ScorePlayerMorph >> saveAsSunAudio [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ScorePlayerMorph >> saveAsWAV [
 	"Create a stereo WAV audio file with the result of performing my score."
 
@@ -501,24 +502,24 @@ ScorePlayerMorph >> saveAsWAV [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScorePlayerMorph >> scorePlayer [
 
 	^ scorePlayer
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> scrollControl [
 
 	| r |
-	scrollSlider := SimpleSliderMorph new
+	scrollSlider := PluggableSliderMorph new
 		color: color;
 		sliderColor: Color gray;
 		extent: 360@2;
 		target: scorePlayer;
-		actionSelector: #positionInScore:;
-		adjustToValue: scorePlayer positionInScore.
+		setValueSelector: #positionInScore:;
+		setValue: scorePlayer positionInScore.
 	r := self makeRow
 		hResizing: #shrinkWrap;
 		vResizing: #rigid;
@@ -530,14 +531,14 @@ ScorePlayerMorph >> scrollControl [
 
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 ScorePlayerMorph >> setLogRate: logOfRate [
 
 	scorePlayer rate: (3.5 raisedTo: logOfRate).
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> showResumeButtonInTheWorld [
 	WorldState addDeferredUIMessage: [
 		| w |
@@ -551,7 +552,7 @@ ScorePlayerMorph >> showResumeButtonInTheWorld [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> standaloneResumeButton [
 
 	| r |
@@ -578,7 +579,7 @@ ScorePlayerMorph >> standaloneResumeButton [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 ScorePlayerMorph >> step [
 
 	scrollSlider adjustToValue: scorePlayer positionInScore.
@@ -586,7 +587,7 @@ ScorePlayerMorph >> step [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> trackControlsFor: trackIndex [
 
 	| r |
@@ -600,7 +601,7 @@ ScorePlayerMorph >> trackControlsFor: trackIndex [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> trackNumAndMuteButtonFor: trackIndex [
 
 	| muteButton instSelector pianoRollColor r |
@@ -649,7 +650,7 @@ ScorePlayerMorph >> trackNumAndMuteButtonFor: trackIndex [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ScorePlayerMorph >> updateInstrumentsFromLibraryExcept: soundsBeingEdited [
 	"The instrument library has been modified. Update my instruments with the new versions from the library. Use a single instrument prototype for all parts with the same name; this allows the envelope editor to edit all the parts by changing a single sound prototype."
 
@@ -689,17 +690,17 @@ ScorePlayerMorph >> updateInstrumentsFromLibraryExcept: soundsBeingEdited [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ScorePlayerMorph >> volumeControl [
 
 	| volumeSlider r |
-	volumeSlider := SimpleSliderMorph new
+	volumeSlider := PluggableSliderMorph new
 		color: color;
 		sliderColor: Color gray;
 		extent: 80@2;
 		target: scorePlayer;
-		actionSelector: #overallVolume:;
-		adjustToValue: scorePlayer overallVolume.
+		setValueSelector: #overallVolume:;
+		setValue: scorePlayer overallVolume.
 	r := self makeRow
 		hResizing: #shrinkWrap;
 		vResizing: #rigid;
@@ -711,7 +712,7 @@ ScorePlayerMorph >> volumeControl [
 
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 ScorePlayerMorph >> wantsRoundedCorners [
 	^ UITheme currentSettings preferRoundCorner or: [super wantsRoundedCorners]
 ]

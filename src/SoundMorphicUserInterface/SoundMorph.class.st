@@ -2,15 +2,16 @@
 Note: as of December 2000, this does not work. SoundMorph>>buildImage requires the sound to implement #volumeEnvelopeScaledTo: and as yet, no one does.
 "
 Class {
-	#name : #SoundMorph,
-	#superclass : #ImageMorph,
+	#name : 'SoundMorph',
+	#superclass : 'ImageMorph',
 	#instVars : [
 		'sound'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SoundMorph >> buildImage [
 	| scale env h imageColor |
 	owner ifNil: [scale := 128@128]  "Default is 128 pix/second, 128 pix fullscale"
@@ -26,7 +27,7 @@ SoundMorph >> buildImage [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundMorph >> initialize [
 
 	super initialize.
@@ -34,7 +35,7 @@ SoundMorph >> initialize [
 
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 SoundMorph >> justDroppedInto: aMorph event: anEvent [
 	| relPosition |
 	relPosition := self position - aMorph innerBounds topLeft.
@@ -44,17 +45,17 @@ SoundMorph >> justDroppedInto: aMorph event: anEvent [
 	^super justDroppedInto: aMorph event: anEvent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundMorph >> reset [
 	sound reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundMorph >> sound [
 	^ sound
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundMorph >> sound: aSound [
 	sound := aSound copy.
 	sound reset.

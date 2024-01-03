@@ -49,8 +49,8 @@ SoundPlayer class >> boinkScale [
 	"Tests the sound output primitives by playing a scale."
 
 	| sineTable pan |
-	self flag: 'FIXME: Fix this to not use the primitive directly.'.
-	true ifTrue: [ ^ self].
+"	self flag: 'FIXME: Fix this to not use the primitive directly.'.
+	true ifTrue: [ ^ self]."
 	
 	self shutDown.
 	SamplingRate := 11025.
@@ -58,16 +58,16 @@ SoundPlayer class >> boinkScale [
 	sineTable := self sineTable: 1000.
 	Buffer := SoundBuffer newStereoSampleCount: 1000.
 	BufferIndex := 1.
-	self primSoundStartBufferSize: Buffer stereoSampleCount
+	"self primSoundStartBufferSize: Buffer stereoSampleCount
 		rate: SamplingRate
-		stereo: Stereo.
+		stereo: Stereo."
 	pan := 0.
 	#(261.626 293.665 329.628 349.229 391.996 440.001 493.884 523.252) do: [:p |
 		self boinkPitch: p dur: 0.3 loudness: 300 waveTable: sineTable pan: pan.
 		pan := pan + 125].
 
 	self boinkPitch: 261.626 dur: 1.0 loudness: 300 waveTable: sineTable pan: 500.
-	self primSoundStop.
+	self pauseSound: Buffer stereoSampleCount.
 	self shutDown.
 	SoundPlayer initialize.  "reset sampling rate, buffer size, and stereo flag"
 
@@ -159,9 +159,9 @@ SoundPlayer class >> playTestSample: s pan: pan [
 	BufferIndex >= Buffer size
 		ifTrue: [
 			"current buffer is full; play it"
-			[self primSoundAvailableBytes > 0]
-				whileFalse. "wait for space to be available"
-			self primSoundPlaySamples: Buffer stereoSampleCount from: Buffer startingAt: 1.
+			[(self currentSoundSink computeNextRequiredSampleCount) = 0]
+				whileFalse. "wait for space to be available".
+			self currentSoundSink doEnqueueAudioBuffer: Buffer count: (self currentSoundSink computeNextRequiredSampleCount).
 			Buffer primFill: 0.
 			BufferIndex := 1].
 
@@ -222,7 +222,7 @@ SoundPlayer class >> setVolumeLeft: aLeftVolume volumeRight: aRightVolume [
 SoundPlayer class >> shutDown [
 	"Stop player process, for example before snapshotting."
 
-	self stopPlayerProcess.
+	self stopPlayingAll.
 	ReverbState := nil.
 
 ]

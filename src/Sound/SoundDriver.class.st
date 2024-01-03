@@ -5,8 +5,10 @@ Class {
 		'mixerSounds',
 		'mixerMutex',
 		'mixerSamplingRate',
-		'mutex',
-		'mainSoundSink'
+		'mainSoundSink',
+		'captureSoundSink',
+		'soundMutex',
+		'captureMutex'
 	],
 	#classVars : [
 		'CurrentDriver',
@@ -79,8 +81,18 @@ SoundDriver class >> reset [
 ]
 
 { #category : 'accessing' }
+SoundDriver >> createMainCaptureSink [
+	^ self createNullCaptureSink 
+]
+
+{ #category : 'accessing' }
 SoundDriver >> createMainSoundSink [
 	^ self createNullSoundSink
+]
+
+{ #category : 'accessing' }
+SoundDriver >> createNullCaptureSink [
+	^ NullCaptureSink new
 ]
 
 { #category : 'accessing' }
@@ -103,14 +115,22 @@ SoundDriver >> defaultMixerSampleRate [
 { #category : 'initialization' }
 SoundDriver >> initialize [
 	super initialize.
-	mutex := Semaphore forMutualExclusion.
+	soundMutex := Semaphore forMutualExclusion.
+	captureMutex := Semaphore forMutualExclusion.
 	"We want low latency for sound."
 	ProcessorScheduler idleTime: 1000.
 ]
 
 { #category : 'accessing' }
+SoundDriver >> mainCaptureSink [
+	^ captureMutex critical: [
+		captureSoundSink ifNil: [ captureSoundSink := self createMainCaptureSink ]
+	]
+]
+
+{ #category : 'accessing' }
 SoundDriver >> mainSoundSink [
-	^ mutex critical: [
+	^ soundMutex critical: [
 		mainSoundSink ifNil: [ mainSoundSink := self createMainSoundSink ]
 	]
 ]

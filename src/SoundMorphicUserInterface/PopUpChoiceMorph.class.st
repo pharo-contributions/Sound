@@ -9,8 +9,8 @@ Better use MenuMorph
 
 "
 Class {
-	#name : #PopUpChoiceMorph,
-	#superclass : #StringMorph,
+	#name : 'PopUpChoiceMorph',
+	#superclass : 'StringMorph',
 	#instVars : [
 		'target',
 		'actionSelector',
@@ -19,17 +19,18 @@ Class {
 		'getItemsArgs',
 		'choiceArgs'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> actionSelector [
 
 	^ actionSelector
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> actionSelector: aSymbolOrString [
 
 	(nil = aSymbolOrString or:
@@ -41,42 +42,42 @@ PopUpChoiceMorph >> actionSelector: aSymbolOrString [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> arguments [
 
 	^ arguments
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> arguments: aCollection [
 
 	arguments := aCollection asArray copy.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> getItemsArgs [
 
 	^ getItemsArgs
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> getItemsArgs: aCollection [
 
 	getItemsArgs := aCollection asArray copy.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> getItemsSelector [
 
 	^ getItemsSelector
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> getItemsSelector: aSymbolOrString [
 
 	(nil = aSymbolOrString or: ['nil' = aSymbolOrString or:
@@ -87,14 +88,14 @@ PopUpChoiceMorph >> getItemsSelector: aSymbolOrString [
 
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PopUpChoiceMorph >> handlesMouseDown: evt [
 
 	^ true
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PopUpChoiceMorph >> initialize [
 	"initialize the state of the receiver"
 
@@ -107,7 +108,7 @@ PopUpChoiceMorph >> initialize [
 	getItemsArgs := EmptyArray
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PopUpChoiceMorph >> mouseDown: evt [ 
 	| items menu selectedItem |
 	(target isNil or: [getItemsSelector isNil]) ifTrue: [^self].
@@ -124,21 +125,21 @@ PopUpChoiceMorph >> mouseDown: evt [
 				withArguments: (arguments copyWith: selectedItem)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> target [
 
 	^ target
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopUpChoiceMorph >> target: anObject [
 
 	target := anObject
 
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PopUpChoiceMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
@@ -152,7 +153,7 @@ choiceArgs ifNotNil: [choiceArgs := choiceArgs collect: [:each |
 	deepCopier references at: each ifAbsent: [each]]].
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PopUpChoiceMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.  Some need to be not copied at all, but shared.  	Warning!!  Every instance variable defined in this class must be handled.  We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
 

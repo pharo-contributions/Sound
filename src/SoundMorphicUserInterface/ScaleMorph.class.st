@@ -17,8 +17,8 @@ Negative value will make ticks go down. Examples on Class side.
 		width: 300) openInWorld
 "
 Class {
-	#name : #ScaleMorph,
-	#superclass : #BorderedMorph,
+	#name : 'ScaleMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'caption',
 		'start',
@@ -31,10 +31,11 @@ Class {
 		'labelsAbove',
 		'captionAbove'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ScaleMorph class >> example1 [
 	"Example 1 captions and labels above, ticks point up"
 	^ (self new
@@ -49,7 +50,7 @@ ScaleMorph class >> example1 [
 		width: 300) openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ScaleMorph class >> example2 [
 	"Example 2 captions and labels above, ticks point down"
 	^ (self new
@@ -64,7 +65,7 @@ ScaleMorph class >> example2 [
 		width: 300) openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ScaleMorph class >> example3 [
 	"Example 3 caption above, labels below, ticks point down"
 	^ (self new
@@ -82,7 +83,7 @@ ScaleMorph class >> example3 [
 		width: 300) openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ScaleMorph class >> example4 [
 	"Example 4 caption below, labels above, ticks point up"
 	^ (self new
@@ -100,7 +101,7 @@ ScaleMorph class >> example4 [
 		width: 300) openInWorld
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ScaleMorph >> buildLabels [
 	| scale x1 y1 y2 captionMorph loopStart offset |
 	majorTickLength * minorTickLength < 0 
@@ -145,22 +146,22 @@ ScaleMorph >> buildLabels [
 					self addMorph: tickMorph ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> caption [
 	^ caption
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> caption: aString [
 	caption := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> captionAbove: aBoolean [ 
 	captionAbove := aBoolean
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScaleMorph >> checkExtent: newExtent [ 
 	| pixPerTick newWidth |
 	pixPerTick := newExtent x - (self borderWidth * 2) - 1 / ((stop - start) asFloat / minorTick).
@@ -172,19 +173,19 @@ ScaleMorph >> checkExtent: newExtent [
 	^ (newWidth @ newExtent y).
 ]
 
-{ #category : #default }
+{ #category : 'default' }
 ScaleMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 0
 ]
 
-{ #category : #default }
+{ #category : 'default' }
 ScaleMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color lightGreen
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ScaleMorph >> drawMajorTicksOn: aCanvas [ 
 	| scale x1 y1 y2 y3 loopStart checkStart yoffset randomLabel even |
 	scale := (self innerBounds width - 1) / (stop - start) asFloat.
@@ -228,7 +229,7 @@ ScaleMorph >> drawMajorTicksOn: aCanvas [
 			even := even not]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ScaleMorph >> drawMinorTicksOn: aCanvas [ 
 	| scale x1 y1 y2 loopStart yoffset randomLabel |
 	scale := (self innerBounds width - 1) / (stop - start) asFloat.
@@ -261,20 +262,20 @@ ScaleMorph >> drawMinorTicksOn: aCanvas [
 				color: Color black]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ScaleMorph >> drawOn: aCanvas [ 
 	
 	super drawOn: aCanvas.
 	self drawTicksOn: aCanvas.
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ScaleMorph >> drawTicksOn: aCanvas [ 
 	self drawMajorTicksOn: aCanvas.
 	self drawMinorTicksOn: aCanvas
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScaleMorph >> extent: newExtent [ 
 	| modExtent |
 	modExtent := self checkExtent: newExtent.
@@ -282,7 +283,7 @@ ScaleMorph >> extent: newExtent [
 	self buildLabels
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScaleMorph >> initialize [
 	"initialize the state of the receiver"
 	
@@ -299,32 +300,32 @@ ScaleMorph >> initialize [
 	captionAbove := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> labelsAbove: aBoolean [
 	labelsAbove := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> majorTickLength: anInteger [ 
 	majorTickLength := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> minorTickLength: anInteger [
 	minorTickLength := anInteger
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 ScaleMorph >> start [
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> start: aNumber [
 	start := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScaleMorph >> start: strt stop: stp minorTick: mnt minorTickLength: mntLen majorTick: mjt majorTickLength: mjtLen [
 
 	self 
@@ -339,7 +340,7 @@ ScaleMorph >> start: strt stop: stp minorTick: mnt minorTickLength: mntLen major
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScaleMorph >> start: strt stop: stp minorTick: mnt minorTickLength: mntLen majorTick: mjt majorTickLength: mjtLen caption: cap tickPrintBlock: blk [ 
 
 	self 
@@ -356,7 +357,7 @@ ScaleMorph >> start: strt stop: stp minorTick: mnt minorTickLength: mntLen major
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScaleMorph >> start: strt stop: stp minorTick: mnt minorTickLength: mntLen majorTick: mjt majorTickLength: mjtLen caption: cap tickPrintBlock: blk labelsAbove: aBoolean captionAbove: notherBoolean [ 
 	
 	start := strt.
@@ -372,17 +373,17 @@ ScaleMorph >> start: strt stop: stp minorTick: mnt minorTickLength: mntLen major
 	self buildLabels
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 ScaleMorph >> stop [
 	^ stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> stop: aNumber [
 	stop := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaleMorph >> tickPrintBlock: aBlock [
 	tickPrintBlock := aBlock
 ]

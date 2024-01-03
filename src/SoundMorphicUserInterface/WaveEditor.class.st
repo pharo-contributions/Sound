@@ -4,8 +4,8 @@ This tool was created to aid in the preparation of LoopedSampledSound objects. I
 This tool can also be used as a general viewer of numerical sequences of any kind, such as time-varying functions, FFT data, etc.
 "
 Class {
-	#name : #WaveEditor,
-	#superclass : #AlignmentMorph,
+	#name : 'WaveEditor',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'graph',
 		'samplingRate',
@@ -16,17 +16,18 @@ Class {
 		'possibleLoopStarts',
 		'keyboard'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #'parts bin' }
+{ #category : 'parts bin' }
 WaveEditor class >> descriptionForPartsBin [
 	^ self partName:	'WaveEditor'
 		categories:		#('Multimedia')
 		documentation:	'A workbench for seing and editing wave forms'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WaveEditor class >> openOn: dataCollection [
 	"Open a new WaveEditor on the given sequencable collection of data."
 	"self openOn: #()"
@@ -34,7 +35,7 @@ WaveEditor class >> openOn: dataCollection [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WaveEditor >> addControls [
 
 	| slider bb r m |
@@ -86,11 +87,11 @@ WaveEditor >> addControls [
 		growable: false; width: 50; step.
 	r addMorphBack: m.
 
-	slider := SimpleSliderMorph new
+	slider := PluggableSliderMorph new
 		color: color;
 		extent: 200@2;
 		target: self;
-		actionSelector: #scrollTime:.
+		setValueSelector: #scrollTime:.
 	r addMorphBack: slider.
 
 	m := Morph new color: r color; extent: 10@5.  "spacer"
@@ -105,7 +106,7 @@ WaveEditor >> addControls [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WaveEditor >> addLoopPointControls [
 
 	| r m |
@@ -148,7 +149,7 @@ WaveEditor >> addLoopPointControls [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> autoCorrolationBetween: index1 and: index2 length: length [
 	"Answer the cummulative error between the portions of my waveform starting at the given two indices and extending for the given length. The larger this error, the greater the difference between the two waveforms."
 
@@ -165,7 +166,7 @@ WaveEditor >> autoCorrolationBetween: index1 and: index2 length: length [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> chooseLoopStart [ 
 
 	| bestLoops choice start labels values |
@@ -189,26 +190,26 @@ WaveEditor >> chooseLoopStart [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> data: newData [
 
 	graph data: newData.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WaveEditor >> defaultBorderWidth [
 "answer the default border width for the receiver"
 	^ 2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WaveEditor >> defaultColor [
 "answer the default color/fill style for the receiver"
 	^ Color lightGray
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> errorBetween: sampleArray1 and: sampleArray2 [
 	"Answer the cummulative error between the two sample arrays, which are assumed to be the same size."
 
@@ -222,7 +223,7 @@ WaveEditor >> errorBetween: sampleArray1 and: sampleArray2 [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> findPossibleLoopStartsFrom: index [ 
 	"Assume loopEnd is one sample before a zero-crossing."
 
@@ -259,7 +260,7 @@ WaveEditor >> findPossibleLoopStartsFrom: index [
 	^r asArray sort: [:e1 :e2 | e1 second < e2 second]
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> fractionalLoopStartAt: index [
 	"Answer the fractional index starting point near the given integral index that results in the closest match with the cycle following the loop end."
 	"Note: could do this more efficiently by sliding downhill on the error curve to find lowest error."
@@ -278,14 +279,14 @@ WaveEditor >> fractionalLoopStartAt: index [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> graph [
 
 	^ graph
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WaveEditor >> initialize [
 	"initialize the state of the receiver"
 	
@@ -317,7 +318,7 @@ WaveEditor >> initialize [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> interpolatedWindowAt: index width: nSamples [
 	"Return an array of N samples starting at the given index in my data."
 
@@ -338,7 +339,7 @@ WaveEditor >> interpolatedWindowAt: index width: nSamples [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> invokeMenu [
 	"Invoke a menu of additonal functions for this WaveEditor."
 
@@ -363,28 +364,28 @@ WaveEditor >> invokeMenu [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> jumpToLoopEnd [
 
 	graph cursor: loopEnd; centerCursor.
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> jumpToLoopStart [
 
 	graph cursor: (loopEnd - loopLength) truncated; centerCursor.
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopCycles [
 
 	^ loopCycles
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopCycles: aNumber [
 
 	loopCycles := aNumber.
@@ -392,14 +393,14 @@ WaveEditor >> loopCycles: aNumber [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopEnd [
 
 	^ loopEnd
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopEnd: aNumber [
 
 	loopEnd := (aNumber asInteger max: 1) min: graph data size.
@@ -407,14 +408,14 @@ WaveEditor >> loopEnd: aNumber [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopLength [
 
 	^ loopLength
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopLength: aNumber [
 
 	loopLength := aNumber.
@@ -424,14 +425,14 @@ WaveEditor >> loopLength: aNumber [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopStart [
 
 	^ (loopEnd - loopLength) truncated + 1
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> loopStart: index [
 
 	| start len |
@@ -442,7 +443,7 @@ WaveEditor >> loopStart: index [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> makeLoopedSampledSound [
 	| data end snd basePitch |
 	data := graph data.
@@ -470,7 +471,7 @@ WaveEditor >> makeLoopedSampledSound [
 	^snd
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> normalize: sampleArray [ 
 	"Return a copy of the given sample array scaled to use the maximum 16-bit sample range. Remove any D.C. offset."
 
@@ -486,7 +487,7 @@ WaveEditor >> normalize: sampleArray [
 	^out
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> perceivedFrequency [
 
 	^ perceivedFrequency
@@ -494,7 +495,7 @@ WaveEditor >> perceivedFrequency [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> perceivedFrequency: aNumber [
 
 	perceivedFrequency := aNumber.
@@ -503,7 +504,7 @@ WaveEditor >> perceivedFrequency: aNumber [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> play [
 
 	graph data size < 2 ifTrue: [^ self].
@@ -512,21 +513,21 @@ WaveEditor >> play [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> playAfterCursor [
 
 	self playFrom: graph cursor to: graph data size.
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> playBeforeCursor [
 
 	self playFrom: 1 to: graph cursor.
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> playFrom: start to: end [
 
 	| sz i1 i2 snd |
@@ -541,7 +542,7 @@ WaveEditor >> playFrom: start to: end [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> playLoop [
 
 	| sz i1 i2 snd len |
@@ -566,7 +567,7 @@ WaveEditor >> playLoop [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> playTestNote [
 
 	| data end snd loopDur dur |
@@ -585,7 +586,7 @@ WaveEditor >> playTestNote [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> samplingRate [
 
 	^ samplingRate
@@ -593,14 +594,14 @@ WaveEditor >> samplingRate [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> samplingRate: samplesPerSecond [
 
 	samplingRate := samplesPerSecond.
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> saveInstrument [
 
 	| name |
@@ -610,14 +611,14 @@ WaveEditor >> saveInstrument [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> scrollTime: relativeValue [
 
 	graph startIndex: relativeValue * (graph data size - (graph width // 2)).
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> setLoopEnd [
 
 	graph cursor: (self zeroCrossingAfter: graph cursor) - 1.
@@ -626,7 +627,7 @@ WaveEditor >> setLoopEnd [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> setLoopStart [
 	"Assuming that the loop end and approximate frequency have been set, this method uses the current cursor position to determine the loop length and the number of cycles."
 
@@ -644,7 +645,7 @@ before the loop end and try this again.' translated].
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> setOneCycle [
 	"Set the approximate frequency based on a single cycle specified by the user. To use this, first set the loop end, then place the cursor one full cycle before the loop end and invoke this method."
 
@@ -656,7 +657,7 @@ WaveEditor >> setOneCycle [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> setUnlooped [
 	"Make this sound play straight through without looping."
 
@@ -665,7 +666,7 @@ WaveEditor >> setUnlooped [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> setUnpitched [
 	"Make this instrument be unpitched and unlooped. Suitable for percussive sounds that should not be pitch-shifted when played. By convention, such sounds are played at a pitch of 100.0 to obtain their original pitch."
 
@@ -675,7 +676,7 @@ WaveEditor >> setUnpitched [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> showEnvelope [
 	"Show an envelope wave constructed by collecting the maximum absolute value of the samples in fixed-size time windows of mSecsPerQuantum."
 
@@ -701,7 +702,7 @@ WaveEditor >> showEnvelope [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> showFFTAtCursor [
 
 	| data start availableSamples nu n fft r |
@@ -722,7 +723,7 @@ WaveEditor >> showFFTAtCursor [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaveEditor >> sound: aSound [
 	| buffer |
 	buffer := aSound samples mergeStereo.
@@ -734,13 +735,13 @@ WaveEditor >> sound: aSound [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 WaveEditor >> step [
 
 	keyboard soundPrototype: self makeLoopedSampledSound
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> stretch: sampleArray by: stretchFactor [
 	"Return an array consisting of the given samples \stretched in time by the given factor."
 
@@ -759,14 +760,14 @@ WaveEditor >> stretch: sampleArray by: stretchFactor [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> trimAfterCursor [
 
 	graph data: (graph data copyFrom: 1 to: graph cursor).
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 WaveEditor >> trimBeforeCursor [
 
 	graph data: (graph data copyFrom: graph cursor to: graph data size).
@@ -775,7 +776,7 @@ WaveEditor >> trimBeforeCursor [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 WaveEditor >> zeroCrossingAfter: index [
 	"Find the index of the next negative-to-non-negative transition at or after the current index. The result is the index, i, of a zero crossing such that the sample at i-1 is negative and the sample at i is zero or positive. Answer the index of the last sample if the end of the array is encountered before finding a zero crossing."
 
