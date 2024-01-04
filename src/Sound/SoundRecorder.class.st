@@ -337,6 +337,9 @@ SoundRecorder >> normalizeFactorFor: percentOfMaxVolume min: min max: max dcOffs
 { #category : 'recording controls' }
 SoundRecorder >> pause [
 	"Go into pause mode. The record level continues to be updated, but no sound is recorded."
+	self class canRecordWhilePlaying ifFalse: [ 
+		SoundDriver current mainSoundSink resumeAudioDeviceSink.
+	].
 
 	paused := true.
 	((currentBuffer ~~ nil) and: [nextIndex > 1])
@@ -595,6 +598,7 @@ SoundRecorder >> startRecording [
 	self class canRecordWhilePlaying ifTrue: [ 
 		dequeueBufferCallback :=  captureSink addDequeueBufferCallback: captureCallback.
 	] ifFalse: [ 
+		SoundDriver current mainSoundSink pauseAudioDeviceSink.
 		recordProcess := captureSink createCaptureWithCallback: captureCallback.
 		recordProcess priority: Processor userInterruptPriority.
 		recordProcess resume.
@@ -616,6 +620,9 @@ SoundRecorder >> stopRecording [
 	((currentBuffer ~~ nil) and: [nextIndex > 1])
 		ifTrue: [self emitPartialBuffer].
 	self initializeRecordingState.
+	self class canRecordWhilePlaying ifFalse: [ 
+		SoundDriver current mainSoundSink resumeAudioDeviceSink.
+	]
 
 ]
 
