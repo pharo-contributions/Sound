@@ -404,24 +404,6 @@ SoundRecorder >> recordLevel: level [
 
 ]
 
-{ #category : 'private' }
-SoundRecorder >> recordLoop [
-	"Record process loop that records samples."
-
-	[true] whileTrue: [
-		| dequeuedBuffer |
-
-		dequeuedBuffer := captureSink doDequeueBuffer.
-		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
-		paused
-			ifFalse: [ self emitBuffer: dequeuedBuffer ].
-
-		"workaround for OSS emulation on top on ALSA (on Linux environments)"
-		(Delay forMilliseconds: 20) wait.
-	].
-
-]
-
 { #category : 'results' }
 SoundRecorder >> recordedSound [
 	"Return the sound that was recorded."
@@ -609,25 +591,12 @@ SoundRecorder >> startRecording [
 	captureSink := SoundDriver current mainCaptureSink .
 	RecorderActive := true.
 	samplingRate := captureSink sampleRate.
-	captureSink startCapturing.
-	
-"	recordProcess := captureSink createCaptureWithCallback: [ : dequeuedBuffer |
-		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
-		paused
-			ifFalse: [ self emitBuffer: dequeuedBuffer ].		
-	].
-"
-	captureSink startCaptureProcess.
 	dequeueBufferCallback :=  captureSink addDequeueBufferCallback: [ : dequeuedBuffer |
 		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
 		paused
 			ifFalse: [ self emitBuffer: dequeuedBuffer ].		
 	].
 
-"	recordProcess := [self recordLoop] newProcess.
-	recordProcess priority: Processor userInterruptPriority.
-	recordProcess resume.
-"
 ]
 
 { #category : 'recording controls' }
@@ -636,7 +605,7 @@ SoundRecorder >> stopRecording [
 
 	recordProcess ifNotNil: [recordProcess terminate].
 	recordProcess := nil.
-	captureSink rejectDequeueBufferCallback: dequeueBufferCallback.
+	captureSink removeDequeueBufferCallback: dequeueBufferCallback.
 	captureSink stopCapture.
 	RecorderActive := false.
 	Smalltalk unregisterExternalObject: bufferAvailableSema.

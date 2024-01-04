@@ -4,8 +4,6 @@ Class {
 	#instVars : [
 		'channels',
 		'sampleRate',
-		'samples',
-		'buffer',
 		'capturingProcess',
 		'dequeueCallbacks',
 		'dequeueCallbacksMutex'
@@ -32,12 +30,8 @@ CaptureSink >> captureWithSampleRate: aSampleRate andChannels: numOfChannels [
 	sampleRate := aSampleRate.
 	channels := numOfChannels.
 	
-	buffer := SoundBuffer new.
-	
 	self startCapturing.
 	self startCaptureProcess.
-	
-	
 	
 ]
 
@@ -89,7 +83,7 @@ CaptureSink >> initialize [
 ]
 
 { #category : 'adding' }
-CaptureSink >> rejectDequeueBufferCallback: aBlock [
+CaptureSink >> removeDequeueBufferCallback: aBlock [
 	dequeueCallbacksMutex critical: [ 
 		dequeueCallbacks remove: aBlock ifAbsent: nil.
 	]
