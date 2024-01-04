@@ -1,3 +1,7 @@
+"
+I capturing audio samples and transfer them to all consumers. SoundRecorder is my main consumer.
+
+"
 Class {
 	#name : 'CaptureSink',
 	#superclass : 'Object',
@@ -39,7 +43,8 @@ CaptureSink >> capturingProcessLoop [
 		dequeueCallbacksMutex critical: [
 			dequeueCallbacks ifNotEmpty: [
 				dequedBuffer := self doDequeueBuffer.
-				dequeueCallbacks do: [ :callback | callback value: dequedBuffer ] ] ].
+				dequeueCallbacks do: [ :callback |
+					callback value: dequedBuffer copy ] ] ].
 		(Delay forMilliseconds: 20) wait ]
 ]
 
