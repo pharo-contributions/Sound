@@ -50,6 +50,7 @@ CaptureSink >> channels [
 
 { #category : 'process' }
 CaptureSink >> createCaptureWithCallback: aBlock [
+
 	^ [
 	  [ true ] whileTrue: [
 		  | dequeuedBuffer |

@@ -400,10 +400,10 @@ SoundRecorder >> recordedSound [
 SoundRecorder >> resumeRecording [
 	"Continue recording from the point at which it was last paused."
 
-	"Note: If canRecordWhilePlaying is true, then recordings may never get started (at least by this method). One possibility, used in a subclass, is to make the #startPlaying unconditional. Another would be to use #startPlaying instead of #resumePlaying in appropriate cases"
-
-	paused := false.
-
+	SoundDriver canRecordWhilePlaying ifFalse: [
+		SoundDriver current mainSoundSink pauseAudioDeviceSink ].
+	
+	paused := false
 ]
 
 { #category : 'private' }
@@ -575,21 +575,10 @@ SoundRecorder >> startRecording [
 	RecorderActive := true.
 	samplingRate := captureSink sampleRate.
 	captureCallback := [ :dequeuedBuffer |
-	                   self
-		                   meterFrom: 1
-		                   count: dequeuedBuffer size
-		                   in: dequeuedBuffer.
-	                   paused ifFalse: [ self emitBuffer: dequeuedBuffer ] ].
-	self class canRecordWhilePlaying
-		ifTrue: [
-			dequeueBufferCallback := captureSink addDequeueBufferCallback:
-				                         captureCallback ]
-		ifFalse: [
-			SoundDriver current mainSoundSink pauseAudioDeviceSink.
-			recordProcess := captureSink createCaptureWithCallback:
-				                 captureCallback.
-			recordProcess priority: Processor userInterruptPriority.
-			recordProcess resume ]
+		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
+	 paused ifFalse: [ self emitBuffer: dequeuedBuffer ] ].
+	dequeueBufferCallback := captureSink addDequeueBufferCallback: captureCallback
+	
 ]
 
 { #category : 'recording controls' }
@@ -606,7 +595,7 @@ SoundRecorder >> stopRecording [
 	(currentBuffer ~~ nil and: [ nextIndex > 1 ]) ifTrue: [
 		self emitPartialBuffer ].
 	self initializeRecordingState.
-	self class canRecordWhilePlaying ifFalse: [
+	SoundDriver canRecordWhilePlaying ifFalse: [
 		SoundDriver current mainSoundSink resumeAudioDeviceSink ]
 ]
 
