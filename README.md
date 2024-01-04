@@ -26,3 +26,9 @@ The most complicated sample is the bach fugue:
 ```Smalltalk
 AbstractSound stereoBachFugue play
 ```
+
+Do you want to record an audio sample, SoundRecorder is the tool for you.
+
+```Smalltalk
+RecordingControlsMorph new openInWindow
+```
