@@ -33,6 +33,5 @@ SoundSettings class >> recordWhilePlayingSettingOn: aBuilder [
 		parent: #soundEnabled;
 		label: 'Allow simultanious recording and playing';
 		description: 'Turn this off if your VM crashes when playing sound';
-		default: true;
 		target: SoundDriver
 ]
