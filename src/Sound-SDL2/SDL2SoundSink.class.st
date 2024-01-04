@@ -1,41 +1,42 @@
 Class {
-	#name : #SDL2SoundSink,
-	#superclass : #SoundSink,
+	#name : 'SDL2SoundSink',
+	#superclass : 'SoundSink',
 	#instVars : [
 		'audioDevice'
 	],
 	#classVars : [
 		'masterVolume'
 	],
-	#category : #'Sound-SDL2'
+	#category : 'Sound-SDL2',
+	#package : 'Sound-SDL2'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2SoundSink class >> initialize [
 	masterVolume := 100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2SoundSink class >> masterVolume [
 	^ masterVolume
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2SoundSink class >> masterVolume: anObject [
 	masterVolume := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2SoundSink >> audioDevice [
 	^ audioDevice
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2SoundSink >> audioDevice: anObject [
 	audioDevice := anObject
 ]
 
-{ #category : #'mixing process' }
+{ #category : 'mixing process' }
 SDL2SoundSink >> computeNextRequiredSampleCount [
 	| samplesInAudioDevice totalBufferSize |
 	samplesInAudioDevice := (SDL2 getQueuedAudioSize: audioDevice) // 4.
@@ -44,7 +45,7 @@ SDL2SoundSink >> computeNextRequiredSampleCount [
 	^ totalBufferSize - samplesInAudioDevice max: 0
 ]
 
-{ #category : #'driver interface' }
+{ #category : 'driver interface' }
 SDL2SoundSink >> doEnqueueAudioBuffer: aBuffer count: sampleCount [
 	| result |
 	"(self isAllSilence: aBuffer size: sampleCount) ifTrue: [ ^ self ]."
@@ -56,12 +57,12 @@ SDL2SoundSink >> doEnqueueAudioBuffer: aBuffer count: sampleCount [
 	]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 SDL2SoundSink >> pauseAudioDeviceSink [
 	SDL2 pauseAudioDevice: audioDevice pauseOn: 1.
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 SDL2SoundSink >> resumeAudioDeviceSink [
 	SDL2 pauseAudioDevice: audioDevice pauseOn: 0.
 ]

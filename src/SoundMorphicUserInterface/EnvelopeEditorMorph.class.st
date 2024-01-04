@@ -6,8 +6,8 @@ Here is a typical example of how to open me.
 EnvelopeEditorMorph openOn: (FMSound brass1) copy title: 'brass1'
 "
 Class {
-	#name : #EnvelopeEditorMorph,
-	#superclass : #BorderedMorph,
+	#name : 'EnvelopeEditorMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'sound',
 		'soundName',
@@ -26,16 +26,17 @@ Class {
 		'denominator',
 		'keyboard'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #open }
+{ #category : 'open' }
 EnvelopeEditorMorph class >> openOn: aSound title: aString [
 	"EnvelopeEditorMorph openOn: (FMsound brass1) copy title: 'brass1'"
 	(self basicNew initOnSound: aSound title: aString) openInWorld
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> acceptGraphPoint: p at: index [ 
 	| ms val points whichLim linePoint other boundedP |
 	boundedP := p adhereTo: graphArea bounds.
@@ -68,7 +69,7 @@ EnvelopeEditorMorph >> acceptGraphPoint: p at: index [
 	^linePoint
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> addControls [
 	| chooser |
 	chooser := PopUpChoiceMorph new extent: 110@14;
@@ -91,7 +92,7 @@ EnvelopeEditorMorph >> addControls [
 
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> addCurves [
 	"Add the polyLine corresponding to the currently selected envelope,
 	and possibly all the others, too."
@@ -112,7 +113,7 @@ EnvelopeEditorMorph >> addCurves [
 	self addMorph: line  "add the active one last (in front)"
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> addCustomMenuItems: menu hand: aHandMorph [
 	super addCustomMenuItems: menu hand: aHandMorph.
 	menu addLine.
@@ -131,7 +132,7 @@ EnvelopeEditorMorph >> addCustomMenuItems: menu hand: aHandMorph [
 
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> addEnvelopeNamed: envName [
 	| points env |
 	points := OrderedCollection new.
@@ -171,7 +172,7 @@ EnvelopeEditorMorph >> addEnvelopeNamed: envName [
 		self editEnvelope: env]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> addHandlesIn: frame [
 	| handle |
 	handle := PolygonMorph
@@ -196,14 +197,14 @@ EnvelopeEditorMorph >> addHandlesIn: frame [
 				(graphArea top)) - (self handleOffset: handle)]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> addKeyboard [
 	keyboard := PianoKeyboardMorph new soundPrototype: sound.
 	keyboard align: keyboard bounds bottomCenter with: bounds bottomCenter - (0@4).
 	self addMorph: keyboard
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> adjustScale: evt [ 
 	| scaleString oldScale baseValue |
 	oldScale := envelope scale.
@@ -222,7 +223,7 @@ EnvelopeEditorMorph >> adjustScale: evt [
 	self buildView
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> buildGraphAreaIn: frame [
 	| r y |
 	graphArea := BorderedMorph
@@ -254,7 +255,7 @@ EnvelopeEditorMorph >> buildGraphAreaIn: frame [
 
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> buildScalesIn: frame [
 	| env hmajortick hminortick |
 	env := envelope.
@@ -305,7 +306,7 @@ EnvelopeEditorMorph >> buildScalesIn: frame [
 
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> buildView [
 	| frame |
 	self color: Color lightGreen.
@@ -320,7 +321,7 @@ EnvelopeEditorMorph >> buildView [
 	self addKeyboard
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> chooseDenominator: evt [
 	| menu |
 	menu := MenuMorph new.
@@ -334,7 +335,7 @@ EnvelopeEditorMorph >> chooseDenominator: evt [
 	menu popUpEvent: evt in: self world
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> chooseEnvelope: choice [
 	| name |
 	(choice beginsWith: 'edit ') ifTrue:
@@ -349,7 +350,7 @@ EnvelopeEditorMorph >> chooseEnvelope: choice [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> chooseFrom: chooserMorph envelopeItem: item [
 	| name |
 	(item beginsWith: 'edit ') ifTrue:
@@ -364,13 +365,13 @@ EnvelopeEditorMorph >> chooseFrom: chooserMorph envelopeItem: item [
 	chooserMorph contentsClipped: envelope name
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> chooseFrom: chooserMorph soundItem: item [
 	self editSoundNamed: item.
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> chooseSound: evt [
 	| menu |
 	menu := MenuMorph new.
@@ -384,19 +385,19 @@ EnvelopeEditorMorph >> chooseSound: evt [
 	menu popUpEvent: evt in: self world
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> clickOn: env evt: anEvent from: aLine [
 	self editEnvelope: env
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> clickOnLine: arg1 evt: arg2 envelope: arg3 [
 	"Reorder the arguments for existing event handlers"
 	(arg3 isMorph and:[arg3 eventHandler notNil]) ifTrue:[arg3 eventHandler fixReversedValueMessages].
 	^self clickOn: arg1 evt: arg2 from: arg3
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> colorForEnvelope: env [
 	| name index |
 	name := env name.
@@ -405,7 +406,7 @@ EnvelopeEditorMorph >> colorForEnvelope: env [
 	^ Color perform: (#(red green blue magenta black) at: index)
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> constrain: xVal adjacentTo: ix in: points [
 	"Return xVal, restricted between points adjacent to vertX"
 	| newVal |
@@ -415,7 +416,7 @@ EnvelopeEditorMorph >> constrain: xVal adjacentTo: ix in: points [
 	^ newVal
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> curveChoices [
 	| extant others |
 	extant := sound envelopes collect: [:env | env name].
@@ -428,7 +429,7 @@ EnvelopeEditorMorph >> curveChoices [
 		ifFalse: [Array new])
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> deletePoint: ix [ 
 	"If the point is a limit point, return false,
 	otherwise, delete the point at ix, and return true."
@@ -450,7 +451,7 @@ EnvelopeEditorMorph >> deletePoint: ix [
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EnvelopeEditorMorph >> editEnvelope: env [
 	envelope := env.
 	limits := Array with: envelope loopStartIndex
@@ -460,7 +461,7 @@ EnvelopeEditorMorph >> editEnvelope: env [
 	self buildView
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> editNewSound [
 	| known i |
 	known := AbstractSound soundNames.
@@ -472,7 +473,7 @@ EnvelopeEditorMorph >> editNewSound [
 	self editSound: FMSound default copy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EnvelopeEditorMorph >> editSound: aSound [
 
 	| p |
@@ -493,7 +494,7 @@ EnvelopeEditorMorph >> editSound: aSound [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> editSoundNamed: name [
 
 	name = 'new...' ifTrue: [^ self editNewSound].
@@ -501,20 +502,20 @@ EnvelopeEditorMorph >> editSoundNamed: name [
 	self editSound: (AbstractSound soundNamed: soundName) copy
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 EnvelopeEditorMorph >> extent: newExtent [
 	super extent: (newExtent max: (self maxTime//10*3+50 max: 355) @ 284).
 	self buildView
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> handleOffset: handle [
 	"This is the offset from position to the bottom vertex"
 	^ (handle width//2+1) @ handle height
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EnvelopeEditorMorph >> initOnSound: aSound title: title [
 	sound := aSound.
 	soundName := title.
@@ -522,7 +523,7 @@ EnvelopeEditorMorph >> initOnSound: aSound title: title [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EnvelopeEditorMorph >> initialize [
 	super initialize.
 	prevMouseDown := false.
@@ -535,7 +536,7 @@ EnvelopeEditorMorph >> initialize [
 
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> insertPointAfter: ix [ 
 	"If there is not enough roon (in x) then return false.
 	Otherwise insert a point between ix and ix+1 and return true."
@@ -560,7 +561,7 @@ EnvelopeEditorMorph >> insertPointAfter: ix [
 	^true
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> limitHandleMove: index event: evt from: handle [
 	"index is the handle index = 1, 2 or 3"
 	| ix p ms x points limIx |
@@ -587,29 +588,29 @@ EnvelopeEditorMorph >> limitHandleMove: index event: evt from: handle [
 		env setPoints: points loopStart: env loopStartIndex loopEnd: env loopEndIndex].
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeEditorMorph >> limitHandleMoveEvent: arg1 from: arg2 index: arg3 [
 	"Reorder the arguments for existing event handlers"
 	(arg3 isMorph and:[arg3 eventHandler notNil]) ifTrue:[arg3 eventHandler fixReversedValueMessages].
 	^self limitHandleMove: arg1 event: arg2 from: arg3
 ]
 
-{ #category : #scaling }
+{ #category : 'scaling' }
 EnvelopeEditorMorph >> maxTime [
 	^ (envelope points at: limits last) x + 100
 ]
 
-{ #category : #scaling }
+{ #category : 'scaling' }
 EnvelopeEditorMorph >> msFromX: x [
 	^ (x - graphArea left)//pixPerTick*10
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 EnvelopeEditorMorph >> playNothing [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> readFileNamed: fileName [
 	| snd |
 	snd := self class evaluate: fileName asFileReference contents.
@@ -617,7 +618,7 @@ EnvelopeEditorMorph >> readFileNamed: fileName [
 	self editSound: snd
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> readFromDisk: evt [
 	| menu |
 	menu := MenuMorph new.
@@ -629,7 +630,7 @@ EnvelopeEditorMorph >> readFromDisk: evt [
 	menu popUpEvent: evt in: self world
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> removeEnvelope [
 	(self confirm: 'Really remove ' translated, envelope name , '?')
 		ifFalse: [^ self].
@@ -637,7 +638,7 @@ EnvelopeEditorMorph >> removeEnvelope [
 	self editEnvelope: sound envelopes first.
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> saveLibToDisk: evt [
 	"Save the library to disk"
 
@@ -653,7 +654,7 @@ EnvelopeEditorMorph >> saveLibToDisk: evt [
 	f close
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> saveSound: evt [
 	| newName |
 	newName := UIManager default request: 'Please confirm name for save...' translated
@@ -663,7 +664,7 @@ EnvelopeEditorMorph >> saveSound: evt [
 	soundName := newName.
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> saveToDisk: evt [
 	| newName f |
 	newName := UIManager default request: 'Please confirm name for save...' translated
@@ -674,24 +675,24 @@ EnvelopeEditorMorph >> saveToDisk: evt [
 	f close
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EnvelopeEditorMorph >> setDenominator: denom [
 	denominator := denom.
 	self buildView
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EnvelopeEditorMorph >> soundBeingEdited [
 
 	^ sound
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 EnvelopeEditorMorph >> soundChoices [
 	^ #('new...') , AbstractSound soundNames
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 EnvelopeEditorMorph >> step [
 	| mouseDown hand |
 	hand := self world firstHand.
@@ -706,12 +707,12 @@ EnvelopeEditorMorph >> step [
 	prevMouseDown := mouseDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EnvelopeEditorMorph >> stepTime [
 	^ 100
 ]
 
-{ #category : #scaling }
+{ #category : 'scaling' }
 EnvelopeEditorMorph >> valueFromY: y [
 	"The convention is that envelope values are between 0.0 and 1.0"
 	| value |
@@ -722,17 +723,17 @@ EnvelopeEditorMorph >> valueFromY: y [
 	^ value
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 EnvelopeEditorMorph >> wantsRoundedCorners [
 	^ UITheme currentSettings preferRoundCorner or: [super wantsRoundedCorners]
 ]
 
-{ #category : #scaling }
+{ #category : 'scaling' }
 EnvelopeEditorMorph >> xFromMs: ms [
 	^ graphArea left + (ms//10*pixPerTick)
 ]
 
-{ #category : #scaling }
+{ #category : 'scaling' }
 EnvelopeEditorMorph >> yFromValue: val [
 	"The convention is that envelope values are between 0.0 and 1.0"
 	^ graphArea bottom - (val* (graphArea height))

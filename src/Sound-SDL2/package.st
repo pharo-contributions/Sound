@@ -1,1 +1,1 @@
-Package { #name : #'Sound-SDL2' }
+Package { #name : 'Sound-SDL2' }

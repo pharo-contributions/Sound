@@ -1,13 +1,14 @@
 Class {
-	#name : #SoundEventMorph,
-	#superclass : #AbstractMediaEventMorph,
+	#name : 'SoundEventMorph',
+	#superclass : 'AbstractMediaEventMorph',
 	#instVars : [
 		'sound'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #'piano rolls' }
+{ #category : 'piano rolls' }
 SoundEventMorph >> addMorphsTo: morphList pianoRoll: pianoRoll eventTime: t betweenTime: leftTime and: rightTime [
 
 	| startX lengthInTicks endX |
@@ -23,13 +24,13 @@ SoundEventMorph >> addMorphsTo: morphList pianoRoll: pianoRoll eventTime: t betw
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundEventMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color lightGreen
 ]
 
-{ #category : #'piano rolls' }
+{ #category : 'piano rolls' }
 SoundEventMorph >> encounteredAtTime: ticks inScorePlayer: scorePlayer atIndex: index inEventTrack: track secsPerTick: secsPerTick [
 
 	"hack... since we are called from within the SoundPlayer loop, the Semaphore will
@@ -37,7 +38,7 @@ SoundEventMorph >> encounteredAtTime: ticks inScorePlayer: scorePlayer atIndex: 
 	WorldState addDeferredUIMessage: [sound play].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundEventMorph >> initialize [
 "initialize the state of the receiver"
 	super initialize.
@@ -45,7 +46,7 @@ SoundEventMorph >> initialize [
 	self height: 10
 ]
 
-{ #category : #'piano rolls' }
+{ #category : 'piano rolls' }
 SoundEventMorph >> justDroppedIntoPianoRoll: newOwner event: evt [
 	
 	| startX lengthInTicks endX |
@@ -66,7 +67,7 @@ SoundEventMorph >> justDroppedIntoPianoRoll: newOwner event: evt [
 
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 SoundEventMorph >> releaseCachedState [
 
 	super releaseCachedState.
@@ -74,7 +75,7 @@ SoundEventMorph >> releaseCachedState [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundEventMorph >> sound: aSound [
 
 	sound := aSound.

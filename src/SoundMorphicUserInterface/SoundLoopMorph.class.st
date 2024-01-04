@@ -1,16 +1,17 @@
 Class {
-	#name : #SoundLoopMorph,
-	#superclass : #BorderedMorph,
+	#name : 'SoundLoopMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'samplesUntilNextControl',
 		'seqSound',
 		'cursor',
 		'controlIndex'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 SoundLoopMorph >> addCursorMorph [
 	self addMorph:
 		(cursor := (BorderedMorph
@@ -19,7 +20,7 @@ SoundLoopMorph >> addCursorMorph [
 						borderWidth: 0)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundLoopMorph >> buildSound [
 	"Build a compound sound for the next iteration of the loop."
 
@@ -35,7 +36,7 @@ SoundLoopMorph >> buildSound [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> controlRate [
 	"Answer the number of control changes per second."
 
@@ -43,25 +44,25 @@ SoundLoopMorph >> controlRate [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundLoopMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundLoopMorph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 corner: 128 @ 128 + (self defaultBorderWidth * 2)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundLoopMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color lightBlue
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> doControl [
 
 	seqSound doControl.
@@ -71,12 +72,12 @@ SoundLoopMorph >> doControl [
 
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SoundLoopMorph >> extent: newExtent [
 	super extent: (newExtent truncateTo: 128@128) + (self borderWidth*2)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundLoopMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -86,7 +87,7 @@ SoundLoopMorph >> initialize [
 	self addCursorMorph
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex leftVol: leftVol rightVol: rightVol [
 	"Repeatedly play my sounds."
 
@@ -105,7 +106,7 @@ SoundLoopMorph >> mixSampleCount: n into: aSoundBuffer startingAt: startIndex le
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> play [
 	"Play this sound to the sound ouput port in real time."
 
@@ -114,7 +115,7 @@ SoundLoopMorph >> play [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> playSampleCount: n into: aSoundBuffer startingAt: startIndex [
 	"Mixes the next count samples of this sound into the given buffer starting at the given index, updating the receiver's control parameters at periodic intervals."
 
@@ -138,7 +139,7 @@ SoundLoopMorph >> playSampleCount: n into: aSoundBuffer startingAt: startIndex [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> positionCursor [
 	| x |
 	x := controlIndex * 128 // self controlRate.
@@ -146,7 +147,7 @@ SoundLoopMorph >> positionCursor [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> reset [
 	"Reset my internal state for a replay."
 
@@ -156,33 +157,33 @@ SoundLoopMorph >> reset [
 	self positionCursor
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> samplesRemaining [
 
 	^ 1000000
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundLoopMorph >> samplingRate [
 	"Answer the sampling rate in samples per second."
 
 	^ SoundPlayer samplingRate
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 SoundLoopMorph >> step [
 	self positionCursor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SoundLoopMorph >> stepTime [
 
 	^ 50
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 SoundLoopMorph >> stop [
 	"Stop playing this sound."
 
@@ -190,7 +191,7 @@ SoundLoopMorph >> stop [
 
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 SoundLoopMorph >> wantsDroppedMorph: aMorph event: evt [
 
 	^ aMorph respondsTo: #sound

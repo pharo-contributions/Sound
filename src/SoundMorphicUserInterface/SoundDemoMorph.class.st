@@ -1,25 +1,26 @@
 Class {
-	#name : #SoundDemoMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'SoundDemoMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'soundColumn'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundDemoMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundDemoMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color lightGray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundDemoMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -35,7 +36,7 @@ SoundDemoMorph >> initialize [
 	self extent: 118 @ 150
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundDemoMorph >> initializeSoundColumn [
 "initialize the receiver's soundColumn"
 	soundColumn := AlignmentMorph newColumn.
@@ -43,7 +44,7 @@ SoundDemoMorph >> initializeSoundColumn [
 	self addMorphBack: soundColumn
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 SoundDemoMorph >> makeControls [
 
 	| bb r cc |
@@ -65,7 +66,7 @@ SoundDemoMorph >> makeControls [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SoundDemoMorph >> playAll [
 	| snd |
 	soundColumn submorphs isEmpty
@@ -83,7 +84,7 @@ SoundDemoMorph >> playAll [
 	snd play
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SoundDemoMorph >> playV1 [
 	soundColumn submorphs isEmpty
 		ifTrue: [^ self].
@@ -92,7 +93,7 @@ SoundDemoMorph >> playV1 [
 	(SampledSound bachFugueVoice1On: SampledSound new) play
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SoundDemoMorph >> playV2 [
 	soundColumn submorphs size < 2
 		ifTrue: [^ self].
@@ -102,7 +103,7 @@ SoundDemoMorph >> playV2 [
 		 resumePlaying
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SoundDemoMorph >> playV3 [
 	soundColumn submorphs size < 3
 		ifTrue: [^ self].
@@ -112,7 +113,7 @@ SoundDemoMorph >> playV3 [
 		 resumePlaying
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundDemoMorph >> setTimbreFromTile: aSoundTile [
 
 	SampledSound defaultSampleTable: aSoundTile sound samples.
@@ -120,7 +121,7 @@ SoundDemoMorph >> setTimbreFromTile: aSoundTile [
 
 ]
 
-{ #category : #speaker }
+{ #category : 'speaker' }
 SoundDemoMorph >> stopSound [
 
 	SoundPlayer shutDown.

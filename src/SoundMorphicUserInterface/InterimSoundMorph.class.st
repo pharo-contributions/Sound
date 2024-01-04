@@ -2,16 +2,17 @@
 I'm a little graphic associated with a sound.
 "
 Class {
-	#name : #InterimSoundMorph,
-	#superclass : #BorderedMorph,
+	#name : 'InterimSoundMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'graphic',
 		'sound'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 InterimSoundMorph >> addGraphic [
 
 	graphic := self speakerGraphic asMorph.
@@ -19,13 +20,13 @@ InterimSoundMorph >> addGraphic [
 	self addMorph: graphic.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InterimSoundMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InterimSoundMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color
@@ -34,7 +35,7 @@ InterimSoundMorph >> defaultColor [
 		b: 0.6
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 InterimSoundMorph >> handlesMouseDown: evt [
 
 	(graphic containsPoint: evt cursorPoint)
@@ -43,7 +44,7 @@ InterimSoundMorph >> handlesMouseDown: evt [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InterimSoundMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -57,7 +58,7 @@ InterimSoundMorph >> initialize [
 				loudness: 0.5
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 InterimSoundMorph >> mouseDown: evt [
 
 	(graphic containsPoint: evt cursorPoint)
@@ -66,21 +67,21 @@ InterimSoundMorph >> mouseDown: evt [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InterimSoundMorph >> sound [
 
 	^ sound
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InterimSoundMorph >> sound: aSound [
 
 	sound := aSound.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InterimSoundMorph >> speakerGraphic [
 
 	^ Form

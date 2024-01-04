@@ -3,17 +3,18 @@ I implement a piano keyboard that can be played with the mouse. I can output to 
 
 "
 Class {
-	#name : #MIDIPianoKeyboardMorph,
-	#superclass : #PianoKeyboardMorph,
+	#name : 'MIDIPianoKeyboardMorph',
+	#superclass : 'PianoKeyboardMorph',
 	#instVars : [
 		'midiPort',
 		'channel',
 		'velocity'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #menus }
+{ #category : 'menus' }
 MIDIPianoKeyboardMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
@@ -25,14 +26,14 @@ MIDIPianoKeyboardMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MIDIPianoKeyboardMorph >> closeMIDIPort [
 
 	midiPort := nil.
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MIDIPianoKeyboardMorph >> initialize [
 "initialize the state of the receiver"
 	super initialize.
@@ -43,7 +44,7 @@ MIDIPianoKeyboardMorph >> initialize [
 	velocity := 100
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MIDIPianoKeyboardMorph >> makeMIDIController: evt [
 
 	self world activeHand attachMorph:
@@ -51,7 +52,7 @@ MIDIPianoKeyboardMorph >> makeMIDIController: evt [
 
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 MIDIPianoKeyboardMorph >> mouseDownPitch: midiKey event: event noteMorph: noteMorph [
 
 	midiPort ifNil: [^ super mouseDownPitch: midiKey-1 event: event noteMorph: noteMorph].
@@ -63,7 +64,7 @@ MIDIPianoKeyboardMorph >> mouseDownPitch: midiKey event: event noteMorph: noteMo
 
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 MIDIPianoKeyboardMorph >> mouseUpPitch: midiKey event: event noteMorph: noteMorph [
 
 	midiPort ifNil: [
@@ -77,7 +78,7 @@ MIDIPianoKeyboardMorph >> mouseUpPitch: midiKey event: event noteMorph: noteMorp
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MIDIPianoKeyboardMorph >> openMIDIPort [
 
 	| portNum |
@@ -87,7 +88,7 @@ MIDIPianoKeyboardMorph >> openMIDIPort [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIPianoKeyboardMorph >> turnOffNote [
 
 	midiPort notNil & soundPlaying notNil ifTrue: [
@@ -97,7 +98,7 @@ MIDIPianoKeyboardMorph >> turnOffNote [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIPianoKeyboardMorph >> turnOnNote: midiKey [
 
 	midiPort midiCmd: 16r90 channel: channel byte: midiKey byte: velocity.

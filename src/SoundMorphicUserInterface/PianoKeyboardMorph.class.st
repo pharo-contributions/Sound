@@ -1,6 +1,6 @@
 Class {
-	#name : #PianoKeyboardMorph,
-	#superclass : #BorderedMorph,
+	#name : 'PianoKeyboardMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'whiteKeyColor',
 		'blackKeyColor',
@@ -12,17 +12,18 @@ Class {
 		'soundPrototype',
 		'soundPlaying'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #'parts bin' }
+{ #category : 'parts bin' }
 PianoKeyboardMorph class >> descriptionForPartsBin [
 	^ self partName:	'PianoKeyboard'
 		categories:		#('Multimedia')
 		documentation:	'A piano keyboard'
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> buildKeyboard [
 	| wtWid bkWid keyRect octavePt nWhite nBlack |
 	self removeAllMorphs.
@@ -80,13 +81,13 @@ PianoKeyboardMorph >> buildKeyboard [
 	self extent: (self fullBounds extent + borderWidth - 1)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PianoKeyboardMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color veryLightGray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PianoKeyboardMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -100,14 +101,14 @@ PianoKeyboardMorph >> initialize [
 	soundPrototype := FMSound brass1 duration: 9.9
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> mouseDownEvent: arg1 noteMorph: arg2 pitch: arg3 [
 	"Reorder the arguments for existing event handlers"
 	(arg3 isMorph and:[arg3 eventHandler notNil]) ifTrue:[arg3 eventHandler fixReversedValueMessages].
 	^self mouseDownPitch: arg1 event: arg2 noteMorph: arg3
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> mouseDownPitch: midiKey event: event noteMorph: noteMorph [
 	| pitch |
 	event hand hasSubmorphs ifTrue: [^ self  "no response if drag something over me"].
@@ -122,14 +123,14 @@ PianoKeyboardMorph >> mouseDownPitch: midiKey event: event noteMorph: noteMorph 
 
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> mouseMoveEvent: arg1 noteMorph: arg2 pitch: arg3 [
 	"Reorder the arguments for existing event handlers"
 	(arg3 isMorph and:[arg3 eventHandler notNil]) ifTrue:[arg3 eventHandler fixReversedValueMessages].
 	^self mouseMovePitch: arg1 event: arg2 noteMorph: arg3
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> mouseMovePitch: pitch event: event noteMorph: noteMorph [
 
 	(noteMorph containsPoint: event cursorPoint) ifFalse:
@@ -138,14 +139,14 @@ PianoKeyboardMorph >> mouseMovePitch: pitch event: event noteMorph: noteMorph [
 
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> mouseUpEvent: arg1 noteMorph: arg2 pitch: arg3 [
 	"Reorder the arguments for existing event handlers"
 	(arg3 isMorph and:[arg3 eventHandler notNil]) ifTrue:[arg3 eventHandler fixReversedValueMessages].
 	^self mouseUpPitch: arg1 event: arg2 noteMorph: arg3
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> mouseUpPitch: pitch event: event noteMorph: noteMorph [
 
 	noteMorph color: ((#(0 1 3 5 6 8 10) includes: pitch\\12)
@@ -155,7 +156,7 @@ PianoKeyboardMorph >> mouseUpPitch: pitch event: event noteMorph: noteMorph [
 
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 PianoKeyboardMorph >> soundPrototype: aSound [
 	soundPrototype := aSound
 ]

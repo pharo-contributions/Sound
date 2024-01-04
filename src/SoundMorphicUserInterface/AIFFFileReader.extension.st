@@ -1,6 +1,6 @@
-Extension { #name : #AIFFFileReader }
+Extension { #name : 'AIFFFileReader' }
 
-{ #category : #'*SoundMorphicUserInterface' }
+{ #category : '*SoundMorphicUserInterface' }
 AIFFFileReader >> edit [
 
 	| ed |
