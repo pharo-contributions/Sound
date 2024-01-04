@@ -346,9 +346,6 @@ SoundRecorder >> pause [
 	soundPlaying ifNotNil: [
 		soundPlaying pause.
 		soundPlaying := nil].
-	"Note: there can be problems if canRecordWhilePlaying is true. Recorders which only pause will inhibit other recorders from recording. I chose to make #stopPlaying unconditional in a subclass. The same might be appropriate here at the expense of making recorders resumable"
-
-	self class canRecordWhilePlaying ifFalse: [self stopRecording].
 
 ]
 
@@ -418,7 +415,6 @@ SoundRecorder >> resumeRecording [
 
 	"Note: If canRecordWhilePlaying is true, then recordings may never get started (at least by this method). One possibility, used in a subclass, is to make the #startPlaying unconditional. Another would be to use #startPlaying instead of #resumePlaying in appropriate cases"
 
-	self class canRecordWhilePlaying ifFalse: [self startRecording].
 	paused := false.
 
 ]
@@ -577,7 +573,7 @@ SoundRecorder >> soundSegments [
 SoundRecorder >> startRecording [
 	"Turn of the sound input driver and start the recording process. Initially, recording is paused."
 
-	| semaIndex |
+	| semaIndex captureCallback |
 	recordLevel ifNil: [recordLevel := 0.5].  "lazy initialization"
 	self class canRecordWhilePlaying ifFalse: [SoundPlayer shutDown].
 	recordProcess ifNotNil: [self stopRecording].
@@ -591,12 +587,18 @@ SoundRecorder >> startRecording [
 	captureSink := SoundDriver current mainCaptureSink .
 	RecorderActive := true.
 	samplingRate := captureSink sampleRate.
-	dequeueBufferCallback :=  captureSink addDequeueBufferCallback: [ : dequeuedBuffer |
-		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
-		paused
-			ifFalse: [ self emitBuffer: dequeuedBuffer ].		
-	].
-
+	captureCallback := [ : dequeuedBuffer |
+			self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
+			paused
+				ifFalse: [ self emitBuffer: dequeuedBuffer ].		
+		].
+	self class canRecordWhilePlaying ifTrue: [ 
+		dequeueBufferCallback :=  captureSink addDequeueBufferCallback: captureCallback.
+	] ifFalse: [ 
+		recordProcess := captureSink createCaptureWithCallback: captureCallback.
+		recordProcess priority: Processor userInterruptPriority.
+		recordProcess resume.
+	]
 ]
 
 { #category : 'recording controls' }
@@ -605,7 +607,9 @@ SoundRecorder >> stopRecording [
 
 	recordProcess ifNotNil: [recordProcess terminate].
 	recordProcess := nil.
-	captureSink removeDequeueBufferCallback: dequeueBufferCallback.
+	self class canRecordWhilePlaying ifTrue: [ 
+		captureSink removeDequeueBufferCallback: dequeueBufferCallback.
+	].
 	captureSink stopCapture.
 	RecorderActive := false.
 	Smalltalk unregisterExternalObject: bufferAvailableSema.
