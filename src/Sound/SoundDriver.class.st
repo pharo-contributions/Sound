@@ -143,4 +143,8 @@ SoundDriver >> samplingRate [
 { #category : 'initialize-destroy' }
 SoundDriver >> shutdown [
 	"This is the place for shutting down the driver when a explicit reset is requested"
+	soundMutex terminateProcess.
+	captureMutex terminateProcess.
+	soundMutex := nil.
+	captureMutex := nil.
 ]

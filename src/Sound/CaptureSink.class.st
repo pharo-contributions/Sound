@@ -37,15 +37,14 @@ CaptureSink >> captureWithSampleRate: aSampleRate andChannels: numOfChannels [
 
 { #category : 'as yet unclassified' }
 CaptureSink >> capturingProcessLoop [
-	[ true ] whileTrue: [	| dequedBuffer |
-		dequedBuffer := self doDequeueBuffer.
-		dequeueCallbacksMutex critical: [ 
-			dequeueCallbacks do: [ :callback |
-				callback value: dequedBuffer 
-			]
-		].
-		(Delay forMilliseconds: 200) wait
-	].
+
+	[ true ] whileTrue: [
+		| dequedBuffer |
+		dequeueCallbacksMutex critical: [
+			dequeueCallbacks ifNotEmpty: [
+				dequedBuffer := self doDequeueBuffer.
+				dequeueCallbacks do: [ :callback | callback value: dequedBuffer ] ] ].
+		(Delay forMilliseconds: 20) wait ]
 ]
 
 { #category : 'accessing' }
