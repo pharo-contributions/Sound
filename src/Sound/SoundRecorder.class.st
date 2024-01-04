@@ -40,21 +40,6 @@ SoundRecorder class >> anyActive [
 	^RecorderActive == true
 ]
 
-{ #category : 'settings' }
-SoundRecorder class >> canRecordWhilePlaying [
-	"Return true if this platform supports simultaneous sound recording and playback."
-
-	^CanRecordWhilePlaying ifNil: [false]
-
-]
-
-{ #category : 'settings' }
-SoundRecorder class >> canRecordWhilePlaying: aBoolean [
-	"Return true if this platform supports simultaneous sound recording and playback."
-
-	CanRecordWhilePlaying := aBoolean
-]
-
 { #category : 'initialization' }
 SoundRecorder class >> initialize [
 	"SoundRecorder initialize"
@@ -337,19 +322,18 @@ SoundRecorder >> normalizeFactorFor: percentOfMaxVolume min: min max: max dcOffs
 { #category : 'recording controls' }
 SoundRecorder >> pause [
 	"Go into pause mode. The record level continues to be updated, but no sound is recorded."
-	self class canRecordWhilePlaying ifFalse: [ 
-		SoundDriver current mainSoundSink resumeAudioDeviceSink.
-	].
+
+	SoundDriver canRecordWhilePlaying ifFalse: [
+		SoundDriver current mainSoundSink resumeAudioDeviceSink ].
 
 	paused := true.
-	((currentBuffer ~~ nil) and: [nextIndex > 1])
-		ifTrue: [self emitPartialBuffer.
-				self allocateBuffer].
+	(currentBuffer ~~ nil and: [ nextIndex > 1 ]) ifTrue: [
+		self emitPartialBuffer.
+		self allocateBuffer ].
 
 	soundPlaying ifNotNil: [
 		soundPlaying pause.
-		soundPlaying := nil].
-
+		soundPlaying := nil ]
 ]
 
 { #category : 'trimming' }
@@ -577,9 +561,9 @@ SoundRecorder >> startRecording [
 	"Turn of the sound input driver and start the recording process. Initially, recording is paused."
 
 	| semaIndex captureCallback |
-	recordLevel ifNil: [recordLevel := 0.5].  "lazy initialization"
-	self class canRecordWhilePlaying ifFalse: [SoundPlayer shutDown].
-	recordProcess ifNotNil: [self stopRecording].
+	recordLevel ifNil: [ recordLevel := 0.5 ]. "lazy initialization"
+	SoundDriver canRecordWhilePlaying ifFalse: [ SoundPlayer shutDown ].
+	recordProcess ifNotNil: [ self stopRecording ].
 	paused := true.
 	meteringBuffer := SoundBuffer newMonoSampleCount: 1024.
 	meterLevel := 0.
@@ -587,43 +571,43 @@ SoundRecorder >> startRecording [
 	bufferAvailableSema := Semaphore new.
 	semaIndex := Smalltalk registerExternalObject: bufferAvailableSema.
 	recordedSound := SequentialSound new.
-	captureSink := SoundDriver current mainCaptureSink .
+	captureSink := SoundDriver current mainCaptureSink.
 	RecorderActive := true.
 	samplingRate := captureSink sampleRate.
-	captureCallback := [ : dequeuedBuffer |
-			self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
-			paused
-				ifFalse: [ self emitBuffer: dequeuedBuffer ].		
-		].
-	self class canRecordWhilePlaying ifTrue: [ 
-		dequeueBufferCallback :=  captureSink addDequeueBufferCallback: captureCallback.
-	] ifFalse: [ 
-		SoundDriver current mainSoundSink pauseAudioDeviceSink.
-		recordProcess := captureSink createCaptureWithCallback: captureCallback.
-		recordProcess priority: Processor userInterruptPriority.
-		recordProcess resume.
-	]
+	captureCallback := [ :dequeuedBuffer |
+	                   self
+		                   meterFrom: 1
+		                   count: dequeuedBuffer size
+		                   in: dequeuedBuffer.
+	                   paused ifFalse: [ self emitBuffer: dequeuedBuffer ] ].
+	self class canRecordWhilePlaying
+		ifTrue: [
+			dequeueBufferCallback := captureSink addDequeueBufferCallback:
+				                         captureCallback ]
+		ifFalse: [
+			SoundDriver current mainSoundSink pauseAudioDeviceSink.
+			recordProcess := captureSink createCaptureWithCallback:
+				                 captureCallback.
+			recordProcess priority: Processor userInterruptPriority.
+			recordProcess resume ]
 ]
 
 { #category : 'recording controls' }
 SoundRecorder >> stopRecording [
 	"Stop the recording process and turn of the sound input driver."
 
-	recordProcess ifNotNil: [recordProcess terminate].
+	recordProcess ifNotNil: [ recordProcess terminate ].
 	recordProcess := nil.
-	self class canRecordWhilePlaying ifTrue: [ 
-		captureSink removeDequeueBufferCallback: dequeueBufferCallback.
-	].
+	SoundDriver canRecordWhilePlaying ifTrue: [
+		captureSink removeDequeueBufferCallback: dequeueBufferCallback ].
 	captureSink stopCapture.
 	RecorderActive := false.
 	Smalltalk unregisterExternalObject: bufferAvailableSema.
-	((currentBuffer ~~ nil) and: [nextIndex > 1])
-		ifTrue: [self emitPartialBuffer].
+	(currentBuffer ~~ nil and: [ nextIndex > 1 ]) ifTrue: [
+		self emitPartialBuffer ].
 	self initializeRecordingState.
-	self class canRecordWhilePlaying ifFalse: [ 
-		SoundDriver current mainSoundSink resumeAudioDeviceSink.
-	]
-
+	self class canRecordWhilePlaying ifFalse: [
+		SoundDriver current mainSoundSink resumeAudioDeviceSink ]
 ]
 
 { #category : 'trimming' }

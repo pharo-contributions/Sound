@@ -5,3 +5,9 @@ Class {
 	#package : 'Sound',
 	#tag : 'Driver'
 }
+
+{ #category : 'capture' }
+NullCaptureSink >> doDequeueBuffer [
+
+	^ SoundBuffer new
+]

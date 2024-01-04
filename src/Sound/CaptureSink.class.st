@@ -15,14 +15,11 @@ Class {
 
 { #category : 'adding' }
 CaptureSink >> addDequeueBufferCallback: aBlock [
-	dequeueCallbacksMutex critical: [ 
-		dequeueCallbacks add: aBlock.
-	].
+	dequeueCallbacksMutex critical: [ dequeueCallbacks add: aBlock ].
 	^ aBlock
-
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 CaptureSink >> captureWithSampleRate: aSampleRate andChannels: numOfChannels [
 	self assert: numOfChannels >= 1.
 	self assert: numOfChannels <= 2. "Until we support more than two channels."
@@ -35,9 +32,8 @@ CaptureSink >> captureWithSampleRate: aSampleRate andChannels: numOfChannels [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'process' }
 CaptureSink >> capturingProcessLoop [
-
 	[ true ] whileTrue: [
 		| dequedBuffer |
 		dequeueCallbacksMutex critical: [
@@ -49,30 +45,29 @@ CaptureSink >> capturingProcessLoop [
 
 { #category : 'accessing' }
 CaptureSink >> channels [
-	^ channels 
+	^ channels
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'process' }
 CaptureSink >> createCaptureWithCallback: aBlock [
-	^ [ [true] whileTrue: [
-		| dequeuedBuffer |
+	^ [
+	  [ true ] whileTrue: [
+		  | dequeuedBuffer |
+		  dequeuedBuffer := self doDequeueBuffer.
+		  aBlock value: dequeuedBuffer.
 
-		dequeuedBuffer := self doDequeueBuffer.
-		aBlock value: dequeuedBuffer.
-
-		"workaround for OSS emulation on top on ALSA (on Linux environments)"
-		(Delay forMilliseconds: 20) wait.
-	]] newProcess
-
+		  "workaround for OSS emulation on top on ALSA (on Linux environments)"
+		  (Delay forMilliseconds: 20) wait ] ] newProcess
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 CaptureSink >> createNullCaptureSink [
 	^ NullCaptureSink new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capture' }
 CaptureSink >> doDequeueBuffer [
+
 ]
 
 { #category : 'initialization' }
@@ -83,28 +78,26 @@ CaptureSink >> initialize [
 
 { #category : 'adding' }
 CaptureSink >> removeDequeueBufferCallback: aBlock [
-	dequeueCallbacksMutex critical: [ 
-		dequeueCallbacks remove: aBlock ifAbsent: nil.
-	]
+	dequeueCallbacksMutex critical: [
+		dequeueCallbacks remove: aBlock ifAbsent: nil ]
 ]
 
 { #category : 'accessing' }
 CaptureSink >> sampleRate [
-	^ sampleRate 
+	^ sampleRate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'process' }
 CaptureSink >> startCaptureProcess [
 	capturingProcess := [ self capturingProcessLoop ] newProcess.
 	capturingProcess priority: Processor userInterruptPriority.
-	capturingProcess resume.
-
+	capturingProcess resume
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capture' }
 CaptureSink >> startCapturing [
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capture' }
 CaptureSink >> stopCapture [
 ]

@@ -21,12 +21,12 @@ SDL2CaptureSink >> audioDevice: anObject [
 	audioDevice := anObject 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capture' }
 SDL2CaptureSink >> dequeueCapturedCount [
 	^ SDL2 getQueuedAudioSize: self audioDevice
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capture' }
 SDL2CaptureSink >> doDequeueBuffer [
 	| result sampleCount dequeueBuffer |
 	sampleCount := self dequeueCapturedCount.
@@ -39,12 +39,12 @@ SDL2CaptureSink >> doDequeueBuffer [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capture' }
 SDL2CaptureSink >> startCapturing [
 	SDL2 pauseAudioDevice: audioDevice pauseOn: 0.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'capture' }
 SDL2CaptureSink >> stopCapture [
 	SDL2 pauseAudioDevice: audioDevice pauseOn: 1
 ]
