@@ -22,7 +22,8 @@ Class {
 		'nextIndex',
 		'codec',
 		'desiredSampleRate',
-		'captureSink'
+		'captureSink',
+		'dequeueBufferCallback'
 	],
 	#classVars : [
 		'CanRecordWhilePlaying',
@@ -407,9 +408,9 @@ SoundRecorder >> recordLevel: level [
 SoundRecorder >> recordLoop [
 	"Record process loop that records samples."
 
-	| dequeuedBuffer |
-
 	[true] whileTrue: [
+		| dequeuedBuffer |
+
 		dequeuedBuffer := captureSink doDequeueBuffer.
 		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
 		paused
@@ -606,14 +607,27 @@ SoundRecorder >> startRecording [
 	semaIndex := Smalltalk registerExternalObject: bufferAvailableSema.
 	recordedSound := SequentialSound new.
 	captureSink := SoundDriver current mainCaptureSink .
-	captureSink startCapturing .
 	RecorderActive := true.
 	samplingRate := captureSink sampleRate.
-"	self primSetRecordLevel: (1000.0 * recordLevel) asInteger."
-	recordProcess := [self recordLoop] newProcess.
+	captureSink startCapturing.
+	
+"	recordProcess := captureSink createCaptureWithCallback: [ : dequeuedBuffer |
+		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
+		paused
+			ifFalse: [ self emitBuffer: dequeuedBuffer ].		
+	].
+"
+	captureSink startCaptureProcess.
+	dequeueBufferCallback :=  captureSink addDequeueBufferCallback: [ : dequeuedBuffer |
+		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
+		paused
+			ifFalse: [ self emitBuffer: dequeuedBuffer ].		
+	].
+
+"	recordProcess := [self recordLoop] newProcess.
 	recordProcess priority: Processor userInterruptPriority.
 	recordProcess resume.
-
+"
 ]
 
 { #category : 'recording controls' }
@@ -622,6 +636,7 @@ SoundRecorder >> stopRecording [
 
 	recordProcess ifNotNil: [recordProcess terminate].
 	recordProcess := nil.
+	captureSink rejectDequeueBufferCallback: dequeueBufferCallback.
 	captureSink stopCapture.
 	RecorderActive := false.
 	Smalltalk unregisterExternalObject: bufferAvailableSema.

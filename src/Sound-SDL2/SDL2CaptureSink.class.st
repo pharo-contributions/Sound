@@ -2,9 +2,7 @@ Class {
 	#name : 'SDL2CaptureSink',
 	#superclass : 'CaptureSink',
 	#instVars : [
-		'audioDevice',
-		'sampleRate',
-		'channels'
+		'audioDevice'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -23,16 +21,6 @@ SDL2CaptureSink >> audioDevice: anObject [
 	audioDevice := anObject 
 ]
 
-{ #category : 'accessing' }
-SDL2CaptureSink >> channels [
-	^ channels 
-]
-
-{ #category : 'accessing' }
-SDL2CaptureSink >> channels: aInteger [
- 	channels := aInteger 
-]
-
 { #category : 'as yet unclassified' }
 SDL2CaptureSink >> dequeueCapturedCount [
 	^ SDL2 getQueuedAudioSize: self audioDevice
@@ -49,16 +37,6 @@ SDL2CaptureSink >> doDequeueBuffer [
 	].
 	^ dequeueBuffer 
 	
-]
-
-{ #category : 'accessing' }
-SDL2CaptureSink >> sampleRate [
-	^ sampleRate 
-]
-
-{ #category : 'accessing' }
-SDL2CaptureSink >> sampleRate: aInteger [
-	sampleRate := aInteger
 ]
 
 { #category : 'as yet unclassified' }
