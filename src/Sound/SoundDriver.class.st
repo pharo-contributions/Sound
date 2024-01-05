@@ -5,10 +5,13 @@ Class {
 		'mixerSounds',
 		'mixerMutex',
 		'mixerSamplingRate',
-		'mutex',
-		'mainSoundSink'
+		'mainSoundSink',
+		'captureSoundSink',
+		'soundMutex',
+		'captureMutex'
 	],
 	#classVars : [
+		'CanRecordWhilePlaying',
 		'CurrentDriver',
 		'CurrentDriverSession'
 	],
@@ -16,6 +19,20 @@ Class {
 	#package : 'Sound',
 	#tag : 'Driver'
 }
+
+{ #category : 'settings' }
+SoundDriver class >> canRecordWhilePlaying [
+	"Return true if this platform supports simultaneous sound recording and playback."
+
+	^ CanRecordWhilePlaying ifNil: [ true ]
+]
+
+{ #category : 'settings' }
+SoundDriver class >> canRecordWhilePlaying: aBoolean [
+	"Return true if this platform supports simultaneous sound recording and playback."
+
+	CanRecordWhilePlaying := aBoolean
+]
 
 { #category : 'driver selection' }
 SoundDriver class >> current [
@@ -30,12 +47,12 @@ SoundDriver class >> current [
 	^ CurrentDriver
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'defaults' }
 SoundDriver class >> defaultMixerSampleCount [
 	^ 2048
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'defaults' }
 SoundDriver class >> defaultMixerSampleRate [
 	^ 48000
 ]
@@ -79,8 +96,18 @@ SoundDriver class >> reset [
 ]
 
 { #category : 'accessing' }
+SoundDriver >> createMainCaptureSink [
+	^ self createNullCaptureSink 
+]
+
+{ #category : 'accessing' }
 SoundDriver >> createMainSoundSink [
 	^ self createNullSoundSink
+]
+
+{ #category : 'accessing' }
+SoundDriver >> createNullCaptureSink [
+	^ NullCaptureSink new
 ]
 
 { #category : 'accessing' }
@@ -103,14 +130,22 @@ SoundDriver >> defaultMixerSampleRate [
 { #category : 'initialization' }
 SoundDriver >> initialize [
 	super initialize.
-	mutex := Semaphore forMutualExclusion.
+	soundMutex := Semaphore forMutualExclusion.
+	captureMutex := Semaphore forMutualExclusion.
 	"We want low latency for sound."
 	ProcessorScheduler idleTime: 1000.
 ]
 
 { #category : 'accessing' }
+SoundDriver >> mainCaptureSink [
+	^ captureMutex critical: [
+		captureSoundSink ifNil: [ captureSoundSink := self createMainCaptureSink ]
+	]
+]
+
+{ #category : 'accessing' }
 SoundDriver >> mainSoundSink [
-	^ mutex critical: [
+	^ soundMutex critical: [
 		mainSoundSink ifNil: [ mainSoundSink := self createMainSoundSink ]
 	]
 ]
@@ -123,4 +158,13 @@ SoundDriver >> samplingRate [
 { #category : 'initialize-destroy' }
 SoundDriver >> shutdown [
 	"This is the place for shutting down the driver when a explicit reset is requested"
+
+	soundMutex critical: [  
+		soundMutex terminateProcess.
+		soundMutex := nil.
+	].
+	captureMutex critical: [  
+		captureMutex terminateProcess.
+		captureMutex := nil.
+	]
 ]

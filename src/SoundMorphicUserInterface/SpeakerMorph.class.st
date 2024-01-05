@@ -1,16 +1,17 @@
 Class {
-	#name : #SpeakerMorph,
-	#superclass : #Morph,
+	#name : 'SpeakerMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'bufferSize',
 		'buffer',
 		'lastConePosition',
 		'sound'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpeakerMorph >> addGraphic [
 
 	| graphic |
@@ -20,7 +21,7 @@ SpeakerMorph >> addGraphic [
 
 ]
 
-{ #category : #nil }
+{ #category : 'nil' }
 SpeakerMorph >> appendSample: aFloat [
 	"Append the given sample, a number between -100.0 and 100.0, to my buffer. Flush the buffer if it is full."
 
@@ -32,21 +33,21 @@ SpeakerMorph >> appendSample: aFloat [
 
 ]
 
-{ #category : #speaker }
+{ #category : 'speaker' }
 SpeakerMorph >> conePosition [
 
 	^ lastConePosition
 
 ]
 
-{ #category : #speaker }
+{ #category : 'speaker' }
 SpeakerMorph >> conePosition: aNumber [
 
 	self appendSample: aNumber asFloat.  "sets lastConePosition"
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpeakerMorph >> defaultColor [
 "answer the default color/fill style for the receiver"
 	^ Color
@@ -55,7 +56,7 @@ SpeakerMorph >> defaultColor [
 		b: 0.258
 ]
 
-{ #category : #speaker }
+{ #category : 'speaker' }
 SpeakerMorph >> flushBuffer [
 
 	| buf |
@@ -69,7 +70,7 @@ SpeakerMorph >> flushBuffer [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpeakerMorph >> initialize [
 "initialize the state of the receiver"
 	super initialize.
@@ -82,7 +83,7 @@ SpeakerMorph >> initialize [
 	sound := SequentialSound new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpeakerMorph >> speakerGraphic [
 
 	^ Form
@@ -93,7 +94,7 @@ SpeakerMorph >> speakerGraphic [
 
 ]
 
-{ #category : #speaker }
+{ #category : 'speaker' }
 SpeakerMorph >> stopSound [
 
 	sound pause.

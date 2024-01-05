@@ -21,7 +21,9 @@ Class {
 		'currentBuffer',
 		'nextIndex',
 		'codec',
-		'desiredSampleRate'
+		'desiredSampleRate',
+		'captureSink',
+		'dequeueBufferCallback'
 	],
 	#classVars : [
 		'CanRecordWhilePlaying',
@@ -36,21 +38,6 @@ Class {
 SoundRecorder class >> anyActive [
 	"Return true if any sound recorder is actively recording"
 	^RecorderActive == true
-]
-
-{ #category : 'settings' }
-SoundRecorder class >> canRecordWhilePlaying [
-	"Return true if this platform supports simultaneous sound recording and playback."
-
-	^CanRecordWhilePlaying ifNil: [false]
-
-]
-
-{ #category : 'settings' }
-SoundRecorder class >> canRecordWhilePlaying: aBoolean [
-	"Return true if this platform supports simultaneous sound recording and playback."
-
-	CanRecordWhilePlaying := aBoolean
 ]
 
 { #category : 'initialization' }
@@ -204,7 +191,7 @@ SoundRecorder >> emitBuffer: buffer [
 	trim the samples down if the user really wanted fewer samples"
 
 	(desiredSampleRate isNil or: [(ratio := samplingRate // desiredSampleRate) <= 1]) ifTrue: [
-		sound := SampledSound new setSamples: buffer samplingRate: samplingRate.
+		sound := SampledSound new setSamples: buffer samplingRate: samplingRate * 2.
 	] ifFalse: [
 		resultBuf := SoundBuffer 
 			averageEvery: ratio 
@@ -212,7 +199,6 @@ SoundRecorder >> emitBuffer: buffer [
 			upTo: buffer monoSampleCount.
 		sound := SampledSound new setSamples: resultBuf samplingRate: samplingRate / ratio.
 	].
-
 	recordedSound add: (codec ifNil: [sound] ifNotNil: [codec compressSound: sound])
 ]
 
@@ -337,18 +323,17 @@ SoundRecorder >> normalizeFactorFor: percentOfMaxVolume min: min max: max dcOffs
 SoundRecorder >> pause [
 	"Go into pause mode. The record level continues to be updated, but no sound is recorded."
 
+	SoundDriver canRecordWhilePlaying ifFalse: [
+		SoundDriver current mainSoundSink resumeAudioDeviceSink ].
+
 	paused := true.
-	((currentBuffer ~~ nil) and: [nextIndex > 1])
-		ifTrue: [self emitPartialBuffer.
-				self allocateBuffer].
+	(currentBuffer ~~ nil and: [ nextIndex > 1 ]) ifTrue: [
+		self emitPartialBuffer.
+		self allocateBuffer ].
 
 	soundPlaying ifNotNil: [
 		soundPlaying pause.
-		soundPlaying := nil].
-	"Note: there can be problems if canRecordWhilePlaying is true. Recorders which only pause will inhibit other recorders from recording. I chose to make #stopPlaying unconditional in a subclass. The same might be appropriate here at the expense of making recorders resumable"
-
-	self class canRecordWhilePlaying ifFalse: [self stopRecording].
-
+		soundPlaying := nil ]
 ]
 
 { #category : 'trimming' }
@@ -385,49 +370,6 @@ SoundRecorder >> playback [
 
 ]
 
-{ #category : 'primitives' }
-SoundRecorder >> primGetActualRecordingSampleRate [
-	"Return the actual sample rate being used for recording. This primitive fails unless sound recording is currently in progress."
-
-	<primitive: 'primitiveSoundGetRecordingSampleRate' module: 'SoundPlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : 'primitives' }
-SoundRecorder >> primRecordSamplesInto: aWordArray startingAt: index [
-	"Record a sequence of 16-bit sound samples into the given array starting at the given sample index. Return the number of samples recorded, which may be zero if no samples are currently available."
-
-	<primitive: 'primitiveSoundRecordSamples' module: 'SoundPlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : 'primitives' }
-SoundRecorder >> primSetRecordLevel: anInteger [
-	"Set the desired recording level to the given value in the range 0-1000, where 0 is the lowest recording level and 1000 is the maximum. Do nothing if the sound input hardware does not support changing the recording level."
-
-	<primitive: 'primitiveSoundSetRecordLevel' module: 'SoundPlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : 'primitives' }
-SoundRecorder >> primStartRecordingDesiredSampleRate: samplesPerSec stereo: stereoFlag semaIndex: anInteger [
-	"Start sound recording with the given stereo setting. Use a sampling rate as close to the desired rate as the underlying platform will support. If the given semaphore index is > 0, it is taken to be the index of a Semaphore in the external objects array to be signalled every time a recording buffer is filled."
-
-	<primitive: 'primitiveSoundStartRecording' module: 'SoundPlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : 'primitives' }
-SoundRecorder >> primStopRecording [
-	"Stop sound recording. Does nothing if recording is not currently in progress. Do not fail if plugin is not available"
-
-	<primitive: 'primitiveSoundStopRecording' module: 'SoundPlugin'>
-]
-
 { #category : 'accessing' }
 SoundRecorder >> recordLevel [
 
@@ -441,39 +383,8 @@ SoundRecorder >> recordLevel: level [
 	"Details: On the Macintosh, the lowest possible record level attenuates the input signal, but does not silence it entirely." 
 
 	recordLevel := (level asFloat min: 1.0) max: 0.0.
-	recordProcess ifNotNil: [
-		self primSetRecordLevel: (1000.0 * recordLevel) asInteger].
-
-]
-
-{ #category : 'private' }
-SoundRecorder >> recordLoop [
-	"Record process loop that records samples."
-
-	| n sampleCount |
-
-	n := 0.
-	[true] whileTrue: [
-		n = 0 ifTrue: [bufferAvailableSema wait].
-		paused
-			ifTrue: [
-				n := self primRecordSamplesInto: meteringBuffer startingAt: 1.
-				self meterFrom: 1 count: n in: meteringBuffer]
-			ifFalse: [
-				n := self primRecordSamplesInto: currentBuffer startingAt: nextIndex.
-				self meterFrom: nextIndex count: n in: currentBuffer.
-				nextIndex := nextIndex + n.
-				stereo
-					ifTrue: [sampleCount := currentBuffer stereoSampleCount]
-					ifFalse: [sampleCount := currentBuffer monoSampleCount].
-				nextIndex > sampleCount
-					ifTrue: [
-						self emitBuffer: currentBuffer.
-						self allocateBuffer]].
-
-		"workaround for OSS emulation on top on ALSA (on Linux environments)"
-		(Delay forMilliseconds: 20) wait.
-	].
+"	recordProcess ifNotNil: [
+		self primSetRecordLevel: (1000.0 * recordLevel) asInteger]."
 
 ]
 
@@ -481,7 +392,7 @@ SoundRecorder >> recordLoop [
 SoundRecorder >> recordedSound [
 	"Return the sound that was recorded."
 
-	^ recordedSound
+	^ recordedSound asSampledSound 
 
 ]
 
@@ -489,12 +400,10 @@ SoundRecorder >> recordedSound [
 SoundRecorder >> resumeRecording [
 	"Continue recording from the point at which it was last paused."
 
-	self flag: #bob.
-	"Note: If canRecordWhilePlaying is true, then recordings may never get started (at least by this method). One possibility, used in a subclass, is to make the #startPlaying unconditional. Another would be to use #startPlaying instead of #resumePlaying in appropriate cases"
-
-	self class canRecordWhilePlaying ifFalse: [self startRecording].
-	paused := false.
-
+	SoundDriver canRecordWhilePlaying ifFalse: [
+		SoundDriver current mainSoundSink pauseAudioDeviceSink ].
+	
+	paused := false
 ]
 
 { #category : 'private' }
@@ -651,41 +560,43 @@ SoundRecorder >> soundSegments [
 SoundRecorder >> startRecording [
 	"Turn of the sound input driver and start the recording process. Initially, recording is paused."
 
-	| semaIndex |
-	recordLevel ifNil: [recordLevel := 0.5].  "lazy initialization"
-	self class canRecordWhilePlaying ifFalse: [SoundPlayer shutDown].
-	recordProcess ifNotNil: [self stopRecording].
+	| semaIndex captureCallback |
+	recordLevel ifNil: [ recordLevel := 0.5 ]. "lazy initialization"
+	SoundDriver canRecordWhilePlaying ifFalse: [ SoundPlayer shutDown ].
+	recordProcess ifNotNil: [ self stopRecording ].
 	paused := true.
 	meteringBuffer := SoundBuffer newMonoSampleCount: 1024.
 	meterLevel := 0.
 	self allocateBuffer.
 	bufferAvailableSema := Semaphore new.
 	semaIndex := Smalltalk registerExternalObject: bufferAvailableSema.
-	self primStartRecordingDesiredSampleRate: samplingRate asInteger
-		stereo: stereo
-		semaIndex: semaIndex.
+	recordedSound := SequentialSound new.
+	captureSink := SoundDriver current mainCaptureSink.
 	RecorderActive := true.
-	samplingRate := self primGetActualRecordingSampleRate.
-	self primSetRecordLevel: (1000.0 * recordLevel) asInteger.
-	recordProcess := [self recordLoop] newProcess.
-	recordProcess priority: Processor userInterruptPriority.
-	recordProcess resume.
-
+	samplingRate := captureSink sampleRate.
+	captureCallback := [ :dequeuedBuffer |
+		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
+	 paused ifFalse: [ self emitBuffer: dequeuedBuffer ] ].
+	dequeueBufferCallback := captureSink addDequeueBufferCallback: captureCallback
+	
 ]
 
 { #category : 'recording controls' }
 SoundRecorder >> stopRecording [
 	"Stop the recording process and turn of the sound input driver."
 
-	recordProcess ifNotNil: [recordProcess terminate].
+	recordProcess ifNotNil: [ recordProcess terminate ].
 	recordProcess := nil.
-	self primStopRecording.
+	SoundDriver canRecordWhilePlaying ifTrue: [
+		captureSink removeDequeueBufferCallback: dequeueBufferCallback ].
+	captureSink stopCapture.
 	RecorderActive := false.
 	Smalltalk unregisterExternalObject: bufferAvailableSema.
-	((currentBuffer ~~ nil) and: [nextIndex > 1])
-		ifTrue: [self emitPartialBuffer].
+	(currentBuffer ~~ nil and: [ nextIndex > 1 ]) ifTrue: [
+		self emitPartialBuffer ].
 	self initializeRecordingState.
-
+	SoundDriver canRecordWhilePlaying ifFalse: [
+		SoundDriver current mainSoundSink resumeAudioDeviceSink ]
 ]
 
 { #category : 'trimming' }

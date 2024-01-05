@@ -1,16 +1,17 @@
 Class {
-	#name : #MIDIControllerMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'MIDIControllerMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'channel',
 		'controller',
 		'midiPort',
 		'lastValue'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #menu }
+{ #category : 'menu' }
 MIDIControllerMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
@@ -19,14 +20,14 @@ MIDIControllerMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIControllerMorph >> channel [
 
 	^ channel
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIControllerMorph >> channel: anInteger [
 
 	channel := anInteger.
@@ -35,14 +36,14 @@ MIDIControllerMorph >> channel: anInteger [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIControllerMorph >> controller [
 
 	^ controller
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIControllerMorph >> controller: anInteger [
 
 	controller := anInteger.
@@ -51,7 +52,7 @@ MIDIControllerMorph >> controller: anInteger [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 MIDIControllerMorph >> controllerList [
 	"Answer a list of controller name, number pairs to be used in the menu."
 
@@ -67,7 +68,7 @@ MIDIControllerMorph >> controllerList [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 MIDIControllerMorph >> controllerName: controllerNumber [
 	"Answer a name for the given controller. If no name is available, use the form 'CC5' (CC is short for 'continuous controller')."
 
@@ -77,13 +78,13 @@ MIDIControllerMorph >> controllerName: controllerNumber [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MIDIControllerMorph >> defaultBorderWidth [
 "answer the default border width for the receiver"
 	^ 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MIDIControllerMorph >> defaultColor [
 "answer the default color/fill style for the receiver"
 	^ Color
@@ -92,7 +93,7 @@ MIDIControllerMorph >> defaultColor [
 		b: 0.0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MIDIControllerMorph >> initialize [
 "initialize the state of the receiver"
 	| slider |
@@ -106,10 +107,10 @@ MIDIControllerMorph >> initialize [
 	channel := 0.
 	controller := 7.
 	"channel volume"
-	slider := SimpleSliderMorph new target: self;
-				 actionSelector: #newSliderValue:;
-				 minVal: 0;
-				 maxVal: 127;
+	slider := PluggableSliderMorph new target: self;
+				 setValueSelector: #newSliderValue:;
+				 min: 0;
+				 max: 127;
 				 extent: 128 @ 10.
 	self addMorphBack: slider.
 	self
@@ -117,21 +118,21 @@ MIDIControllerMorph >> initialize [
 	self updateLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIControllerMorph >> midiPort [
 
 	^ midiPort
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIDIControllerMorph >> midiPort: anInteger [
 
 	midiPort := anInteger.
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 MIDIControllerMorph >> newSliderValue: newValue [
 	"Send a control command out the MIDI port."
 
@@ -144,7 +145,7 @@ MIDIControllerMorph >> newSliderValue: newValue [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 MIDIControllerMorph >> setChannel: evt [
 	| menu |
 	menu := MenuMorph new.
@@ -157,7 +158,7 @@ MIDIControllerMorph >> setChannel: evt [
 	menu popUpEvent: evt in: self world
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 MIDIControllerMorph >> setController: evt [
 	| menu |
 	menu := MenuMorph new.
@@ -170,7 +171,7 @@ MIDIControllerMorph >> setController: evt [
 	menu popUpEvent: evt in: self world
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 MIDIControllerMorph >> updateLabel [
 
 	| label |

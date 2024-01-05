@@ -2,21 +2,22 @@
 I'm a special polgon used to draw line in the envelop editor morph.
 "
 Class {
-	#name : #EnvelopeLineMorph,
-	#superclass : #PolygonMorph,
+	#name : 'EnvelopeLineMorph',
+	#superclass : 'PolygonMorph',
 	#instVars : [
 		'editor'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EnvelopeLineMorph >> defaultColor [
 "answer the default color/fill style for the receiver"
 	^ Color transparent
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeLineMorph >> dragVertex: ix event: evt fromHandle: handle [
 	| p |
 	super dragVertex: ix event: evt fromHandle: handle.
@@ -25,7 +26,7 @@ EnvelopeLineMorph >> dragVertex: ix event: evt fromHandle: handle [
 
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeLineMorph >> dropVertex: ix event: evt fromHandle: handle [
 	| oldVerts |
 	oldVerts := vertices.
@@ -33,7 +34,7 @@ EnvelopeLineMorph >> dropVertex: ix event: evt fromHandle: handle [
 	vertices = oldVerts ifFalse: [owner deletePoint: ix "deleted a vertex"]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 EnvelopeLineMorph >> newVertex: ix event: evt fromHandle: handle [
 	"Install a new vertex if there is room."
 	(owner insertPointAfter: ix) ifFalse: [^ self "not enough room"].
@@ -42,7 +43,7 @@ EnvelopeLineMorph >> newVertex: ix event: evt fromHandle: handle [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EnvelopeLineMorph >> vertices: verts borderWidth: bw borderColor: bc [ 
 	super initialize.
 	vertices := verts.

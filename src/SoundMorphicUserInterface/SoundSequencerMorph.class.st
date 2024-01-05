@@ -1,13 +1,14 @@
 Class {
-	#name : #SoundSequencerMorph,
-	#superclass : #BorderedMorph,
+	#name : 'SoundSequencerMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'controlPanel'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundSequencerMorph >> initialize [
 	super initialize.
 	self extent: 550@350.
@@ -17,7 +18,7 @@ SoundSequencerMorph >> initialize [
 	self addMorph: ((SoundLoopMorph newBounds: (10@200 extent: 512@128)) extent: 512@128).
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SoundSequencerMorph >> makeControlPanel [
 	| bb cc |
 	cc := Color black.
@@ -35,17 +36,17 @@ SoundSequencerMorph >> makeControlPanel [
 
 ]
 
-{ #category : #playing }
+{ #category : 'playing' }
 SoundSequencerMorph >> play [
 	self submorphsDo: [:m | m == controlPanel ifFalse: [m play]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SoundSequencerMorph >> reset [
 	self submorphsDo: [:m | m == controlPanel ifFalse: [m reset]]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 SoundSequencerMorph >> stop [
 	self submorphsDo: [:m | m == controlPanel ifFalse: [m stop]].
 	SoundPlayer shutDown

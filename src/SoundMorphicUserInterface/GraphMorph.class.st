@@ -5,8 +5,8 @@ Implementation notes: Some operations on me may be done at sound sampling rates 
 
 "
 Class {
-	#name : #GraphMorph,
-	#superclass : #BorderedMorph,
+	#name : 'GraphMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'data',
 		'dataColor',
@@ -19,10 +19,11 @@ Class {
 		'cachedForm',
 		'hasChanged'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> appendValue: aPointOrNumber [
 
 	| newVal |
@@ -36,7 +37,7 @@ GraphMorph >> appendValue: aPointOrNumber [
 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> centerCursor [
 	"Scroll so that the cursor is as close as possible to the center of my window."
 
@@ -46,7 +47,7 @@ GraphMorph >> centerCursor [
 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> clear [
 
 	self startIndex: 1.
@@ -55,7 +56,7 @@ GraphMorph >> clear [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> color: aColor [
 
 	super color: aColor.
@@ -63,7 +64,7 @@ GraphMorph >> color: aColor [
 
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 GraphMorph >> convertToCurrentVersion: varDict refStream: smartRefStrm [
 	
 	hasChanged ifNil: [hasChanged := false].
@@ -72,14 +73,14 @@ GraphMorph >> convertToCurrentVersion: varDict refStream: smartRefStrm [
 
 ]
 
-{ #category : #'e-toy support' }
+{ #category : 'e-toy support' }
 GraphMorph >> cursor [
 
 	^ cursor
 
 ]
 
-{ #category : #'e-toy support' }
+{ #category : 'e-toy support' }
 GraphMorph >> cursor: aNumber [
 
 	| truncP |
@@ -93,21 +94,21 @@ GraphMorph >> cursor: aNumber [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> cursorAtEnd [
 
 	^ cursor truncated >= data size
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> cursorColor [
 
 	^ cursorColor
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> cursorColor: aColor [
 
 	cursorColor := aColor.
@@ -115,14 +116,14 @@ GraphMorph >> cursorColor: aColor [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> cursorColorAtZeroCrossing [
 
 	^ cursorColorAtZeroCrossings
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> cursorColorAtZeroCrossings: aColor [
 
 	cursorColorAtZeroCrossings := aColor.
@@ -130,7 +131,7 @@ GraphMorph >> cursorColorAtZeroCrossings: aColor [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> cursorWrapped: aNumber [
 
 	| sz |
@@ -148,14 +149,14 @@ GraphMorph >> cursorWrapped: aNumber [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> data [
 
 	^ data
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> data: aCollection [
 
 	data := aCollection.
@@ -168,14 +169,14 @@ GraphMorph >> data: aCollection [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> dataColor [
 
 	^ dataColor
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> dataColor: aColor [
 
 	dataColor := aColor.
@@ -183,7 +184,7 @@ GraphMorph >> dataColor: aColor [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GraphMorph >> defaultColor [
 "answer the default color/fill style for the receiver"
 	^ Color
@@ -192,7 +193,7 @@ GraphMorph >> defaultColor [
 		b: 0.6
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GraphMorph >> drawCursorOn: aCanvas [
 
 	| ptr x r c |
@@ -208,7 +209,7 @@ GraphMorph >> drawCursorOn: aCanvas [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GraphMorph >> drawDataOn: aCanvas [
 
 	| yScale baseLine x start end value left top bottom right |
@@ -239,7 +240,7 @@ GraphMorph >> drawDataOn: aCanvas [
 
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 GraphMorph >> drawOn: aCanvas [ 
 	| c |
 	cachedForm isNil 
@@ -255,7 +256,7 @@ GraphMorph >> drawOn: aCanvas [
 	self drawCursorOn: aCanvas
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GraphMorph >> flushCachedForm [
 
 	cachedForm := nil.
@@ -263,7 +264,7 @@ GraphMorph >> flushCachedForm [
 
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GraphMorph >> handlesMouseDown: evt [
 
 	evt shiftPressed
@@ -272,7 +273,7 @@ GraphMorph >> handlesMouseDown: evt [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GraphMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -287,7 +288,7 @@ GraphMorph >> initialize [
 	self data: ((0 to: 360 - 1) collect: [:x | (100.0 * x degreesToRadians sin) asInteger])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> interpolatedValueAtCursor [
 	| sz prev frac next |
 	data isEmpty ifTrue: [^0].
@@ -305,7 +306,7 @@ GraphMorph >> interpolatedValueAtCursor [
 	^(1.0 - frac) * (data at: prev) + (frac * (data at: next))
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GraphMorph >> keepIndexInView: index [
 
 	| w newStart |
@@ -318,20 +319,20 @@ GraphMorph >> keepIndexInView: index [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> lastValue [
 	data isEmpty ifTrue: [^0].
 	^data last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> lastValue: aNumber [
 
 	self appendValue: aNumber.
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 GraphMorph >> layoutChanged [
 
 	super layoutChanged.
@@ -339,21 +340,21 @@ GraphMorph >> layoutChanged [
 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> loadSineWave [
 
 	self loadSoundData: SoundBuffer sineTable.
 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> loadSound: aSound [
 
 	self loadSoundData: aSound samples.
 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> loadSoundData: aCollection [
 
 	| newData scale |
@@ -371,7 +372,7 @@ GraphMorph >> loadSoundData: aCollection [
 
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GraphMorph >> mouseMove: evt [
 
 	| x w |
@@ -392,7 +393,7 @@ GraphMorph >> mouseMove: evt [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GraphMorph >> newValueFrom: aPointOrNumber [
 
 	^ aPointOrNumber class = Point
@@ -401,7 +402,7 @@ GraphMorph >> newValueFrom: aPointOrNumber [
 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> playOnce [
 
 	| scaledData scale |
@@ -417,7 +418,7 @@ GraphMorph >> playOnce [
 
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 GraphMorph >> reverse [
 
 	data := data reversed.
@@ -425,14 +426,14 @@ GraphMorph >> reverse [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> startIndex [
 
 	^ startIndex
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> startIndex: aNumber [
 
 	startIndex ~= aNumber ifTrue:  [
@@ -441,7 +442,7 @@ GraphMorph >> startIndex: aNumber [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 GraphMorph >> step [
 	"Make a deferred damage rectangle if I've changed. This allows applications to call methods that invalidate my display at high-bandwidth without paying the cost of doing the damage reporting on ever call; they can merely set hasChanged to true."
 
@@ -453,7 +454,7 @@ GraphMorph >> step [
 			hasChanged := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> valueAtCursor [
 
 	data isEmpty ifTrue: [^ 0].
@@ -461,7 +462,7 @@ GraphMorph >> valueAtCursor [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GraphMorph >> valueAtCursor: aPointOrNumber [
 
 	data isEmpty ifTrue: [^ 0].

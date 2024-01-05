@@ -1,22 +1,23 @@
 Class {
-	#name : #RecordingControlsMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'RecordingControlsMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'recorder',
 		'recordingStatusLight',
 		'recordMeter'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #'parts bin' }
+{ #category : 'parts bin' }
 RecordingControlsMorph class >> descriptionForPartsBin [
 	^ self partName:	'SoundRecorder'
 		categories:		#('Multimedia')
 		documentation:	'A device for making sound recordings.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RecordingControlsMorph class >> registerInFlapsRegistry [
 	"Register the receiver in the system's flaps registry"
 	self environment
@@ -27,7 +28,7 @@ RecordingControlsMorph class >> registerInFlapsRegistry [
 						forFlapNamed: 'Widgets'.]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RecordingControlsMorph >> addButtonRows [
 
 	| r |
@@ -50,16 +51,16 @@ RecordingControlsMorph >> addButtonRows [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 RecordingControlsMorph >> addRecordLevelSlider [
 
 	| levelSlider r |
-	levelSlider := SimpleSliderMorph new
+	levelSlider := PluggableSliderMorph new
 		color: color;
 		extent: 100@2;
-		target: recorder;
-		actionSelector: #recordLevel:;
-		adjustToValue: recorder recordLevel.
+		model: recorder;
+		setValueSelector: #recordLevel:;
+		setValue: recorder recordLevel.
 	r := AlignmentMorph newRow
 		color: color;
 		layoutInset: 0;
@@ -74,7 +75,7 @@ RecordingControlsMorph >> addRecordLevelSlider [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 RecordingControlsMorph >> buttonName: aString action: aSymbol [
 
 	^ SimpleButtonMorph new
@@ -84,7 +85,7 @@ RecordingControlsMorph >> buttonName: aString action: aSymbol [
 
 ]
 
-{ #category : #'button commands' }
+{ #category : 'button commands' }
 RecordingControlsMorph >> done [
 
 	recorder stopRecording.
@@ -92,7 +93,7 @@ RecordingControlsMorph >> done [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RecordingControlsMorph >> initialize [
 
 	| r |
@@ -100,7 +101,7 @@ RecordingControlsMorph >> initialize [
 	self hResizing: #shrinkWrap; vResizing: #shrinkWrap.
 	borderWidth := 2.
 	self listDirection: #topToBottom.
-	recorder := SoundRecorder new.
+	recorder := SoundRecorder new startRecording.
 	self addButtonRows.
 	self addRecordLevelSlider.
 
@@ -111,7 +112,7 @@ RecordingControlsMorph >> initialize [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 RecordingControlsMorph >> makeRecordMeter [
 
 	| outerBox |
@@ -123,7 +124,7 @@ RecordingControlsMorph >> makeRecordMeter [
 
 ]
 
-{ #category : #'button commands' }
+{ #category : 'button commands' }
 RecordingControlsMorph >> makeSoundMorph [
 
 	| m |
@@ -135,7 +136,7 @@ RecordingControlsMorph >> makeSoundMorph [
 
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 RecordingControlsMorph >> makeStatusLight [
 
 	recordingStatusLight := Morph new extent: 18@18.
@@ -144,7 +145,7 @@ RecordingControlsMorph >> makeStatusLight [
 
 ]
 
-{ #category : #'button commands' }
+{ #category : 'button commands' }
 RecordingControlsMorph >> playback [
 	"The user hit the playback button"
 
@@ -154,7 +155,7 @@ RecordingControlsMorph >> playback [
 
 ]
 
-{ #category : #'button commands' }
+{ #category : 'button commands' }
 RecordingControlsMorph >> record [
 
 	recorder clearRecordedSound.
@@ -162,14 +163,14 @@ RecordingControlsMorph >> record [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RecordingControlsMorph >> recorder [
 
 	^ recorder
 
 ]
 
-{ #category : #'button commands' }
+{ #category : 'button commands' }
 RecordingControlsMorph >> show [
 	"Show my samples in a WaveEditor."
 
@@ -187,7 +188,7 @@ RecordingControlsMorph >> show [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 RecordingControlsMorph >> startStepping [
 	"Make the level meter active when dropped into the world. Do nothing if already recording. Note that this will cause other recorders to stop recording..."
 
@@ -198,7 +199,7 @@ RecordingControlsMorph >> startStepping [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 RecordingControlsMorph >> step [
 
 	recorder isPaused
@@ -208,21 +209,21 @@ RecordingControlsMorph >> step [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RecordingControlsMorph >> stepTime [
 
 	^ 50
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 RecordingControlsMorph >> stop [
 
 	recorder pause.
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 RecordingControlsMorph >> stopStepping [
 	"Turn off recording."
 
@@ -231,7 +232,7 @@ RecordingControlsMorph >> stopStepping [
 
 ]
 
-{ #category : #'button commands' }
+{ #category : 'button commands' }
 RecordingControlsMorph >> trim [
 	"Show my samples in a GraphMorph."
 	

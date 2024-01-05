@@ -3,17 +3,18 @@ I am the user interface for a simple software MIDI synthesizer that is driven by
 
 "
 Class {
-	#name : #MidiInputMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'MidiInputMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'midiPortNumber',
 		'midiSynth',
 		'instrumentSelector'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MidiInputMorph >> addChannel [
 	"Add a set of controls for another channel. Prompt the user for the channel number."
 
@@ -26,7 +27,7 @@ MidiInputMorph >> addChannel [
 
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MidiInputMorph >> addChannelControlsFor: channelIndex [
 
 	| r divider col |
@@ -52,7 +53,7 @@ MidiInputMorph >> addChannelControlsFor: channelIndex [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MidiInputMorph >> atChannel: channelIndex from: aPopUpChoice selectInstrument: selection [ 
 	| oldSnd name snd instSelector |
 	oldSnd := midiSynth instrumentForChannel: channelIndex.
@@ -82,7 +83,7 @@ MidiInputMorph >> atChannel: channelIndex from: aPopUpChoice selectInstrument: s
 	(instrumentSelector at: channelIndex) contentsClipped: selection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MidiInputMorph >> channelNumAndMuteButtonFor: channelIndex [
 
 	| muteButton instSelector r |
@@ -123,7 +124,7 @@ MidiInputMorph >> channelNumAndMuteButtonFor: channelIndex [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MidiInputMorph >> closeMIDIPort [
 
 	midiSynth isOn ifTrue: [midiSynth stopMIDITracking].
@@ -131,19 +132,19 @@ MidiInputMorph >> closeMIDIPort [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MidiInputMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MidiInputMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color veryLightGray
 ]
 
-{ #category : #operating }
+{ #category : 'operating' }
 MidiInputMorph >> disableReverb: aBoolean [
 
 	aBoolean
@@ -152,7 +153,7 @@ MidiInputMorph >> disableReverb: aBoolean [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MidiInputMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -174,7 +175,7 @@ MidiInputMorph >> initialize [
 	self extent: 20 @ 20
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MidiInputMorph >> instrumentChoicesForChannel: channelIndex [
 
 	| names inst |
@@ -190,7 +191,7 @@ MidiInputMorph >> instrumentChoicesForChannel: channelIndex [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 MidiInputMorph >> invokeMenu [
 	"Invoke a menu of additonal commands."
 
@@ -206,7 +207,7 @@ MidiInputMorph >> invokeMenu [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MidiInputMorph >> makeControls [
 
 	| bb r reverbSwitch onOffSwitch |
@@ -244,7 +245,7 @@ MidiInputMorph >> makeControls [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MidiInputMorph >> makeRow [
 
 	^ AlignmentMorph newRow
@@ -256,28 +257,28 @@ MidiInputMorph >> makeRow [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MidiInputMorph >> panAndVolControlsFor: channelIndex [
 
 	| volSlider panSlider c r middleLine |
-	volSlider := SimpleSliderMorph new
+	volSlider := PluggableSliderMorph new
 		color: color;
 		extent: 101@2;
 		target: midiSynth;
 		arguments: (Array with: channelIndex);
 		actionSelector: #volumeForChannel:put:;
-		minVal: 0.0;
-		maxVal: 1.0;
-		adjustToValue: (midiSynth volumeForChannel: channelIndex).
-	panSlider := SimpleSliderMorph new
+		min: 0.0;
+		max: 1.0;
+		setValue: (midiSynth volumeForChannel: channelIndex).
+	panSlider := PluggableSliderMorph new
 		color: color;
 		extent: 101@2;
 		target: midiSynth;
 		arguments: (Array with: channelIndex);
-		actionSelector: #panForChannel:put:;
-		minVal: 0.0;
-		maxVal: 1.0;		
-		adjustToValue: (midiSynth panForChannel: channelIndex).
+		setValueSelector: #panForChannel:put:;
+		min: 0.0;
+		max: 1.0;		
+		setValue: (midiSynth panForChannel: channelIndex).
 	c := AlignmentMorph newColumn
 		color: color;
 		layoutInset: 0;
@@ -303,7 +304,7 @@ MidiInputMorph >> panAndVolControlsFor: channelIndex [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MidiInputMorph >> setMIDIPort [
 
 	| portNum |
@@ -313,7 +314,7 @@ MidiInputMorph >> setMIDIPort [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MidiInputMorph >> toggleOnOff [
 
 	midiSynth isOn
@@ -327,7 +328,7 @@ MidiInputMorph >> toggleOnOff [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 MidiInputMorph >> updateInstrumentsFromLibraryExcept: soundsBeingEdited [
 	"The instrument library has been modified. Update my instruments with the new versions from the library. Use a single instrument prototype for all parts with the same name; this allows the envelope editor to edit all the parts by changing a single sound prototype."
 

@@ -1,13 +1,14 @@
 Class {
-	#name : #CodecDemoMorph,
-	#superclass : #BorderedMorph,
+	#name : 'CodecDemoMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'codecClassName'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 CodecDemoMorph >> acceptDroppingMorph: aMorph event: evt [
 
 	| codecClass |
@@ -20,7 +21,7 @@ CodecDemoMorph >> acceptDroppingMorph: aMorph event: evt [
 
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 CodecDemoMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
@@ -28,7 +29,7 @@ CodecDemoMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodecDemoMorph >> codecClassName: aStringOrSymbol [
 
 	| label |
@@ -42,7 +43,7 @@ CodecDemoMorph >> codecClassName: aStringOrSymbol [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CodecDemoMorph >> defaultColor [
 "answer the default color/fill style for the receiver"
 	^ Color
@@ -51,7 +52,7 @@ CodecDemoMorph >> defaultColor [
 		b: 0.677
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CodecDemoMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -60,7 +61,7 @@ CodecDemoMorph >> initialize [
 	self codecClassName: 'MuLawCodec'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CodecDemoMorph >> selectCodec [
 
 	| codecs newCodec |
@@ -73,7 +74,7 @@ CodecDemoMorph >> selectCodec [
 
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 CodecDemoMorph >> wantsDroppedMorph: aMorph event: evt [
 
 	^ false

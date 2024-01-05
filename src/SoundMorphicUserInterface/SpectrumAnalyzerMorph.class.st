@@ -23,8 +23,8 @@ To increase time resolution, increase the sampling rate and decrease the FFT siz
 
 "
 Class {
-	#name : #SpectrumAnalyzerMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'SpectrumAnalyzerMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'soundInput',
 		'statusLight',
@@ -34,10 +34,11 @@ Class {
 		'fft',
 		'displayType'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> addButtonRow [
 
 	| r |
@@ -53,16 +54,16 @@ SpectrumAnalyzerMorph >> addButtonRow [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> addLevelSlider [
 
 	| levelSlider r |
-	levelSlider := SimpleSliderMorph new
+	levelSlider := PluggableSliderMorph new
 		color: color;
 		extent: 100@2;
 		target: soundInput;
-		actionSelector: #recordLevel:;
-		adjustToValue: soundInput recordLevel.
+		setValueSelector: #recordLevel:;
+		setValue: soundInput recordLevel.
 	r := AlignmentMorph newRow
 		color: color;
 		layoutInset: 0;
@@ -77,7 +78,7 @@ SpectrumAnalyzerMorph >> addLevelSlider [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> buttonName: aString action: aSymbol [
 
 	^ SimpleButtonMorph new
@@ -87,13 +88,13 @@ SpectrumAnalyzerMorph >> buttonName: aString action: aSymbol [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpectrumAnalyzerMorph >> defaultBorderWidth [
 "answer the default border width for the receiver"
 	^ 2
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : 'submorphs-add/remove' }
 SpectrumAnalyzerMorph >> delete [
 	"Turn off recording when this morph is deleted."
 
@@ -102,7 +103,7 @@ SpectrumAnalyzerMorph >> delete [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpectrumAnalyzerMorph >> initialize [
 "initialize the state of the receiver"
 	super initialize.
@@ -122,7 +123,7 @@ SpectrumAnalyzerMorph >> initialize [
 	self resetDisplay
 ]
 
-{ #category : #'menu and buttons' }
+{ #category : 'menu and buttons' }
 SpectrumAnalyzerMorph >> invokeMenu [
 	"Invoke the settings menu."
 
@@ -135,7 +136,7 @@ SpectrumAnalyzerMorph >> invokeMenu [
 	aMenu popUpInWorld
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> makeLevelMeter [
 
 	| outerBox |
@@ -147,7 +148,7 @@ SpectrumAnalyzerMorph >> makeLevelMeter [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> makeStatusLight [
 
 	| s |
@@ -160,7 +161,7 @@ SpectrumAnalyzerMorph >> makeStatusLight [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> processBuffer: buf [ 
 	"Analyze one buffer of data."
 
@@ -178,7 +179,7 @@ SpectrumAnalyzerMorph >> processBuffer: buf [
 			sonogramMorph plotColumn: (data copyFrom: 1 to: data size // 1)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> removeAllDisplays [
 	"Remove all currently showing displays."
 
@@ -188,7 +189,7 @@ SpectrumAnalyzerMorph >> removeAllDisplays [
 
 ]
 
-{ #category : #'menu and buttons' }
+{ #category : 'menu and buttons' }
 SpectrumAnalyzerMorph >> resetDisplay [
 	"Recreate my display after changing some parameter such as FFT size."
 
@@ -198,7 +199,7 @@ SpectrumAnalyzerMorph >> resetDisplay [
 
 ]
 
-{ #category : #'menu and buttons' }
+{ #category : 'menu and buttons' }
 SpectrumAnalyzerMorph >> setDisplayType [
 	"Set the display type."
 
@@ -216,7 +217,7 @@ SpectrumAnalyzerMorph >> setDisplayType [
 
 ]
 
-{ #category : #'menu and buttons' }
+{ #category : 'menu and buttons' }
 SpectrumAnalyzerMorph >> setFFTSize [
 	"Set the size of the FFT used for frequency analysis."
 
@@ -233,7 +234,7 @@ SpectrumAnalyzerMorph >> setFFTSize [
 
 ]
 
-{ #category : #'menu and buttons' }
+{ #category : 'menu and buttons' }
 SpectrumAnalyzerMorph >> setSamplingRate [
 	"Set the sampling rate to be used for incoming sound data."
 
@@ -251,7 +252,7 @@ SpectrumAnalyzerMorph >> setSamplingRate [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> showSignal [
 	"Display the actual signal waveform."
 
@@ -266,7 +267,7 @@ SpectrumAnalyzerMorph >> showSignal [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> showSonogram [
 	"Display a sonogram showing the frequency spectrum versus time."
 
@@ -289,7 +290,7 @@ SpectrumAnalyzerMorph >> showSonogram [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> showSpectrum [
 	"Display the frequency spectrum."
 
@@ -303,7 +304,7 @@ SpectrumAnalyzerMorph >> showSpectrum [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 SpectrumAnalyzerMorph >> start [
 	"Start displaying sound data."
 
@@ -314,7 +315,7 @@ SpectrumAnalyzerMorph >> start [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 SpectrumAnalyzerMorph >> step [
 	"Update the record light, level meter, and display."
 
@@ -331,14 +332,14 @@ SpectrumAnalyzerMorph >> step [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpectrumAnalyzerMorph >> stepTime [
 
 	^ 0
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 SpectrumAnalyzerMorph >> stop [
 	"Stop displaying sound data."
 
@@ -346,7 +347,7 @@ SpectrumAnalyzerMorph >> stop [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 SpectrumAnalyzerMorph >> stopStepping [
 	"Turn off recording."
 
@@ -355,7 +356,7 @@ SpectrumAnalyzerMorph >> stopStepping [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpectrumAnalyzerMorph >> updateDisplay [
 	"Update the display if any data is available."
 

@@ -6,8 +6,8 @@ timeScale is in pixels per score tick.
 Currently the ambient track (for synchronizing thumbnails, eg) is treated specially here and in the score.  This should be cleaned up by adding a trackType or something like it in the score.
 "
 Class {
-	#name : #PianoRollScoreMorph,
-	#superclass : #BorderedMorph,
+	#name : 'PianoRollScoreMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'scorePlayer',
 		'score',
@@ -32,10 +32,11 @@ Class {
 	#classVars : [
 		'NotePasteBuffer'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 PianoRollScoreMorph >> acceptDroppingMorph: aMorph event: evt [
 	"In addition to placing this morph in the pianoRoll, add a corresponding
 	event to the score so that it will always appear when played, in addition
@@ -47,7 +48,7 @@ PianoRollScoreMorph >> acceptDroppingMorph: aMorph event: evt [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PianoRollScoreMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
 
 	super addCustomMenuItems: aMenu hand: aHandMorph.
@@ -61,13 +62,13 @@ PianoRollScoreMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PianoRollScoreMorph >> addKeyboard [
 
 	(KeyboardMorphForInput new pianoRoll: self) openInWorld
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PianoRollScoreMorph >> addNotes [
 	"Recompute the set of morphs that should be visible at the current scroll position."
 
@@ -120,7 +121,7 @@ PianoRollScoreMorph >> addNotes [
 
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 PianoRollScoreMorph >> appendEvent: noteEvent fullDuration: fullDuration [ 
 
 	| sel x |
@@ -137,7 +138,7 @@ PianoRollScoreMorph >> appendEvent: noteEvent fullDuration: fullDuration [
 	self rebuildFromScore
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 PianoRollScoreMorph >> autoScrollForX: x [
 	"Scroll by the amount x lies outside of my innerBounds.  Return true if this happens."
 
@@ -153,20 +154,20 @@ PianoRollScoreMorph >> autoScrollForX: x [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PianoRollScoreMorph >> beatLinesOnOff [
 
 	showBeatLines := showBeatLines not.
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> beatsPerMeasure: n [
 
 	^ self timeSignature: n over: notePerBeat
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> contractTime [
 
 	timeScale := timeScale / 1.5.
@@ -174,7 +175,7 @@ PianoRollScoreMorph >> contractTime [
 
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 PianoRollScoreMorph >> copySelection [
 	selection isNil ifTrue: [^self].
 	NotePasteBuffer := (score tracks at: selection first) 
@@ -182,26 +183,26 @@ PianoRollScoreMorph >> copySelection [
 				to: selection third
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 PianoRollScoreMorph >> cutSelection [
 	selection isNil ifTrue: [^self].
 	self copySelection.
 	self deleteSelection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PianoRollScoreMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PianoRollScoreMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color white
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 PianoRollScoreMorph >> deleteSelection [
 	| selMorphs priorEvent x |
 	(selection isNil or: [selection second = 0]) ifTrue: [^self].
@@ -221,7 +222,7 @@ PianoRollScoreMorph >> deleteSelection [
 	selMorphs isEmpty ifFalse: [(selMorphs last noteOfDuration: 0.3) play]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PianoRollScoreMorph >> drawMeasureLinesOn: aCanvas [
 
 	| ticksPerMeas x measureLineColor inner |
@@ -252,7 +253,7 @@ PianoRollScoreMorph >> drawMeasureLinesOn: aCanvas [
 
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PianoRollScoreMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
@@ -260,7 +261,7 @@ PianoRollScoreMorph >> drawOn: aCanvas [
 
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PianoRollScoreMorph >> drawStaffOn: aCanvas [
 
 	| blackKeyColor l r topEdge y |
@@ -280,7 +281,7 @@ PianoRollScoreMorph >> drawStaffOn: aCanvas [
 
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> expandTime [
 
 	timeScale := timeScale * 1.5.
@@ -288,7 +289,7 @@ PianoRollScoreMorph >> expandTime [
 
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> extent: aPoint [
 	"Force rebuild when re-sized."
 
@@ -298,7 +299,7 @@ PianoRollScoreMorph >> extent: aPoint [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 PianoRollScoreMorph >> fullBounds [
 	"Overridden to clip submorph hit detection to my bounds."
 
@@ -307,7 +308,7 @@ PianoRollScoreMorph >> fullBounds [
 
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 PianoRollScoreMorph >> goToTime: scoreTime [
 
 	| track trackSize index newLeftEdgeTime |
@@ -327,13 +328,13 @@ PianoRollScoreMorph >> goToTime: scoreTime [
 
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PianoRollScoreMorph >> handlesMouseDown: evt [
 
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PianoRollScoreMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -346,7 +347,7 @@ PianoRollScoreMorph >> initialize [
 	self clipSubmorphs: true
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 PianoRollScoreMorph >> insertSelection [
 	self selection isNil ifTrue: [^self].
 	score insertEvents: NotePasteBuffer at: self selection.
@@ -354,7 +355,7 @@ PianoRollScoreMorph >> insertSelection [
 	self rebuildFromScore
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 PianoRollScoreMorph >> insertTransposed [
 	| delta transposedNotes list |
 	list := (12 to: -12 by: -1) collect: [:i | i printString].
@@ -368,7 +369,7 @@ PianoRollScoreMorph >> insertTransposed [
 	self rebuildFromScore
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PianoRollScoreMorph >> invokeScoreMenu: evt [
 	"Invoke the score's edit menu."
 
@@ -410,7 +411,7 @@ PianoRollScoreMorph >> invokeScoreMenu: evt [
 
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PianoRollScoreMorph >> isBlackKey: midiKey [
 	"Answer true if the given MIDI key corresponds to a black key on the piano keyboard."
 
@@ -425,7 +426,7 @@ PianoRollScoreMorph >> isBlackKey: midiKey [
 
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 PianoRollScoreMorph >> layoutChanged [
 	"Override this to avoid propagating 'layoutChanged' when just adding/removing note objects."
 
@@ -434,21 +435,21 @@ PianoRollScoreMorph >> layoutChanged [
 
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PianoRollScoreMorph >> measureLinesOnOff [
 
 	showMeasureLines := showMeasureLines not.
 	self changed
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> midiKeyForY: y [
 
 	^ lowestNote - ((y - (bounds bottom - borderWidth - 4)) // 3)
 
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PianoRollScoreMorph >> mouseDown: evt [
 
 	| noteMorphs chordRect |
@@ -471,7 +472,7 @@ PianoRollScoreMorph >> mouseDown: evt [
 
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PianoRollScoreMorph >> mouseMove: evt [
 
 	| noteMorphs chordRect |
@@ -500,7 +501,7 @@ PianoRollScoreMorph >> mouseMove: evt [
 
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PianoRollScoreMorph >> mouseUp: evt [
 
 	soundsPlayingMorph ifNotNil: [soundsPlayingMorph delete].
@@ -509,7 +510,7 @@ PianoRollScoreMorph >> mouseUp: evt [
 
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 PianoRollScoreMorph >> moveCursorToTime: scoreTime [
 
 	| cursorOffset desiredCursorHeight |
@@ -532,26 +533,26 @@ PianoRollScoreMorph >> moveCursorToTime: scoreTime [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> movieClipPlayer [
 
 	^ movieClipPlayer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> movieClipPlayer: moviePlayer [
 
 	movieClipPlayer := moviePlayer
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> notePerBeat: n [
 
 	^ self timeSignature: beatsPerMeasure over: n
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 PianoRollScoreMorph >> notesInRect: timeSlice [
 
 	^ self submorphsSatisfying:
@@ -559,7 +560,7 @@ PianoRollScoreMorph >> notesInRect: timeSlice [
 				and: [m isKindOf: PianoRollNoteMorph]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PianoRollScoreMorph >> on: aScorePlayer [
 
 	scorePlayer := aScorePlayer.
@@ -574,7 +575,7 @@ PianoRollScoreMorph >> on: aScorePlayer [
 
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PianoRollScoreMorph >> rebuildFromScore [
 	"Rebuild my submorphs from the score. This method should be invoked after changing the time scale, the color or visibility of a track, the extent of this morph, etc."
 
@@ -583,7 +584,7 @@ PianoRollScoreMorph >> rebuildFromScore [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PianoRollScoreMorph >> removedMorph: aMorph [
 	| trackSize |
 	trackSize := score ambientTrack size.
@@ -594,19 +595,19 @@ PianoRollScoreMorph >> removedMorph: aMorph [
 	^super removedMorph: aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> score [
 
 	^ score
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> scorePlayer [
 
 	^ scorePlayer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> selection [
 	"Returns an array of 3 elements:
 		trackIndex
@@ -624,13 +625,13 @@ PianoRollScoreMorph >> selection [
 	^ selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> selection: anArray [
 
 	selection := anArray
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 PianoRollScoreMorph >> step [
 
 	| t |
@@ -647,32 +648,32 @@ PianoRollScoreMorph >> step [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PianoRollScoreMorph >> stepTime [
 
 	^ 0
 
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> tickTimeAtCursor [
 	cursor ifNil: [^ 0].
 	^ self timeForX: cursor left
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> timeForX: aNumber [
 
 	^ ((aNumber - bounds left - borderWidth) asFloat / timeScale + leftEdgeTime) asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> timeScale [
 
 	^ timeScale  "in pixels per tick"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PianoRollScoreMorph >> timeSignature: num over: denom [
 
 	beatsPerMeasure := num.
@@ -680,7 +681,7 @@ PianoRollScoreMorph >> timeSignature: num over: denom [
 	self changed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PianoRollScoreMorph >> updateLowestNote [
 	"find the actual lowest note in the score"
 
@@ -694,14 +695,14 @@ PianoRollScoreMorph >> updateLowestNote [
 
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> xForTime: aNumber [
 
 	^ ((aNumber - leftEdgeTime) asFloat * timeScale) asInteger + bounds left + borderWidth
 
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 PianoRollScoreMorph >> yForMidiKey: midiKey [
 
 	^ (bounds bottom - borderWidth - 4) - (3 * (midiKey - lowestNote))

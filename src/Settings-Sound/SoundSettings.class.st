@@ -1,10 +1,11 @@
 Class {
-	#name : #SoundSettings,
-	#superclass : #Object,
-	#category : #'Settings-Sound'
+	#name : 'SoundSettings',
+	#superclass : 'Object',
+	#category : 'Settings-Sound',
+	#package : 'Settings-Sound'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundSettings class >> keepPlayerAroundSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #stopSoundWhenDone)
@@ -14,7 +15,7 @@ SoundSettings class >> keepPlayerAroundSettingOn: aBuilder [
 		target: SoundPlayer
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundSettings class >> quickStartSoundSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #soundQuickStart)
@@ -24,12 +25,13 @@ SoundSettings class >> quickStartSoundSettingOn: aBuilder [
 		target: SoundPlayer
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SoundSettings class >> recordWhilePlayingSettingOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder setting: #canRecordWhilePlaying)
 		parent: #soundEnabled;
 		label: 'Allow simultanious recording and playing';
 		description: 'Turn this off if your VM crashes when playing sound';
-		target: SoundRecorder
+		target: SoundDriver
 ]

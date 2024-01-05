@@ -12,8 +12,8 @@ To try this out, execute...
 Then open a pianoRoll and, from that, open a keyboard.  The rule is that the keyboard will append after the current selection.  If the current selection is muted or nil, then input will go to the end of the first non-muted track.
 "
 Class {
-	#name : #KeyboardMorphForInput,
-	#superclass : #PianoKeyboardMorph,
+	#name : 'KeyboardMorphForInput',
+	#superclass : 'PianoKeyboardMorph',
 	#instVars : [
 		'pianoRoll',
 		'duration',
@@ -24,10 +24,11 @@ Class {
 		'prevSelection',
 		'startOfNextNote'
 	],
-	#category : #SoundMorphicUserInterface
+	#category : 'SoundMorphicUserInterface',
+	#package : 'SoundMorphicUserInterface'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KeyboardMorphForInput >> addRecordingControls [
 	| button switch playRow durRow articRow modRow |
 
@@ -124,7 +125,7 @@ KeyboardMorphForInput >> addRecordingControls [
 
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> articulation: artic onOff: ignored [    "artic = eg, #legato, #normal, #staccato."
 	"Set the articulation of notes to be emitted when a key is pressed."
 
@@ -135,23 +136,23 @@ KeyboardMorphForInput >> articulation: artic onOff: ignored [    "artic = eg, #l
 	articulation := artic
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> backspaceNote [
 
 	self deleteNotes
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> buildChord: onOff [
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> deleteNotes [
 
 	pianoRoll deleteSelection
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> durMod: durMod onOff: ignored [    "durMod = eg, #dotted, #normal, #triplets, #quints"
 	"Set the duration of notes to be emitted when a key is pressed."
 
@@ -162,7 +163,7 @@ KeyboardMorphForInput >> durMod: durMod onOff: ignored [    "durMod = eg, #dotte
 	durationModifier := durMod
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> duration: denom onOff: ignored [    "denom = eg, 1, 2, 4, 8, 16"
 	"Set the duration of notes to be emitted when a key is pressed."
 
@@ -174,7 +175,7 @@ KeyboardMorphForInput >> duration: denom onOff: ignored [    "denom = eg, 1, 2, 
 	self durMod: #normal onOff: true
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> emitRest [
 
 	| sel noteEvent |
@@ -200,7 +201,7 @@ KeyboardMorphForInput >> emitRest [
 	startOfNextNote := startOfNextNote + self fullDuration.
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> fullDuration [
 
 	| num denom |
@@ -211,7 +212,7 @@ KeyboardMorphForInput >> fullDuration [
 	^ pianoRoll score ticksPerQuarterNote * 4 * num // duration // denom
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KeyboardMorphForInput >> initialize [
 "initialize the state of the receiver"
 	super initialize.
@@ -224,7 +225,7 @@ KeyboardMorphForInput >> initialize [
 	insertMode := false
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 KeyboardMorphForInput >> mouseDownPitch: midiKey event: event noteMorph: keyMorph [
 
 	| sel noteEvent |
@@ -251,7 +252,7 @@ KeyboardMorphForInput >> mouseDownPitch: midiKey event: event noteMorph: keyMorp
 	startOfNextNote := startOfNextNote + self fullDuration.
 ]
 
-{ #category : #'simple keyboard' }
+{ #category : 'simple keyboard' }
 KeyboardMorphForInput >> mouseUpPitch: pitch event: event noteMorph: noteMorph [
 	noteMorph color: ((#(0 1 3 5 6 8 10) includes: pitch\\12)
 					ifTrue: [whiteKeyColor]
@@ -259,7 +260,7 @@ KeyboardMorphForInput >> mouseUpPitch: pitch event: event noteMorph: noteMorph [
 
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> noteDuration [
 
 	articulation == #staccato ifTrue: [^ (self fullDuration * 0.65) asInteger].
@@ -268,13 +269,13 @@ KeyboardMorphForInput >> noteDuration [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KeyboardMorphForInput >> pianoRoll: prMorph [
 
 	pianoRoll := prMorph
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 KeyboardMorphForInput >> soundForEvent: noteEvent inTrack: trackIndex [
 
 	| sound player |
@@ -291,7 +292,7 @@ KeyboardMorphForInput >> soundForEvent: noteEvent inTrack: trackIndex [
 
 ]
 
-{ #category : #'note controls' }
+{ #category : 'note controls' }
 KeyboardMorphForInput >> velocity [
 
 	^ 80  "Later put a slider on the keyboard control"
