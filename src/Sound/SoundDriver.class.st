@@ -31,7 +31,6 @@ SoundDriver class >> canRecordWhilePlaying [
 SoundDriver class >> canRecordWhilePlaying: aBoolean [
 	"Return true if this platform supports simultaneous sound recording and playback."
 
-	CanRecordWhilePlaying = aBoolean ifFalse: [ SoundDriver reset ].
 	CanRecordWhilePlaying := aBoolean
 ]
 
