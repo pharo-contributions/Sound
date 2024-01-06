@@ -22,10 +22,10 @@ Class {
 		'nextIndex',
 		'codec',
 		'desiredSampleRate',
-		'captureSink',
 		'dequeueBufferCallback'
 	],
 	#classVars : [
+		'ActiveSoundRecorder',
 		'CanRecordWhilePlaying',
 		'RecorderActive'
 	],
@@ -33,6 +33,11 @@ Class {
 	#package : 'Sound',
 	#tag : 'Core'
 }
+
+{ #category : 'adding' }
+SoundRecorder class >> addActive: anObject [
+	ActiveSoundRecorder add: anObject.
+]
 
 { #category : 'accessing' }
 SoundRecorder class >> anyActive [
@@ -44,9 +49,26 @@ SoundRecorder class >> anyActive [
 SoundRecorder class >> initialize [
 	"SoundRecorder initialize"
 	"Details: Some computers cannot record and playback sound at the same time. If CanRecordWhilePlaying is false, then the SoundRecorder alternates between recording and playing. If it is true, sounds can be playing during recording."
-
+	SessionManager default
+		registerToolClassNamed: self name.
+		
 	CanRecordWhilePlaying := false.
+	ActiveSoundRecorder := IdentitySet new.
+]
 
+{ #category : 'adding' }
+SoundRecorder class >> removeActive: anObject [
+	ActiveSoundRecorder remove: anObject.
+]
+
+{ #category : 'system startup' }
+SoundRecorder class >> shutDown [ 
+	ActiveSoundRecorder do: [ :each | each detroyDequeueBufferCallback ]
+]
+
+{ #category : 'system startup' }
+SoundRecorder class >> startUp [
+	ActiveSoundRecorder do: [ :each | each createDequeueBufferCallback ]
 ]
 
 { #category : 'private' }
@@ -62,6 +84,12 @@ SoundRecorder >> allocateBuffer [
 		(bufferTime truncateTo: self samplesPerFrame).
 	nextIndex := 1.
 
+]
+
+{ #category : 'private' }
+SoundRecorder >> captureSink [
+
+	^ SoundDriver current mainCaptureSink
 ]
 
 { #category : 'recording controls' }
@@ -172,6 +200,15 @@ SoundRecorder >> copyTo: resultBuf from: startIndex to: endIndex from: buf start
 
 ]
 
+{ #category : 'private' }
+SoundRecorder >> createDequeueBufferCallback [
+	| captureCallback |
+	captureCallback := [ :dequeuedBuffer |
+		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
+	 paused ifFalse: [ self emitBuffer: dequeuedBuffer ] ].
+	dequeueBufferCallback := self captureSink addDequeueBufferCallback: captureCallback
+]
+
 { #category : 'accessing' }
 SoundRecorder >> desiredSampleRate: newRate [
 
@@ -180,6 +217,11 @@ SoundRecorder >> desiredSampleRate: newRate [
 
 	desiredSampleRate := samplingRate := newRate  "Best are 44100 22050 11025"
 
+]
+
+{ #category : 'private' }
+SoundRecorder >> detroyDequeueBufferCallback [
+	 self captureSink removeDequeueBufferCallback: dequeueBufferCallback
 ]
 
 { #category : 'private' }
@@ -560,7 +602,7 @@ SoundRecorder >> soundSegments [
 SoundRecorder >> startRecording [
 	"Turn of the sound input driver and start the recording process. Initially, recording is paused."
 
-	| semaIndex captureCallback |
+	| semaIndex |
 	recordLevel ifNil: [ recordLevel := 0.5 ]. "lazy initialization"
 	SoundDriver canRecordWhilePlaying ifFalse: [ SoundPlayer shutDown ].
 	recordProcess ifNotNil: [ self stopRecording ].
@@ -571,13 +613,10 @@ SoundRecorder >> startRecording [
 	bufferAvailableSema := Semaphore new.
 	semaIndex := Smalltalk registerExternalObject: bufferAvailableSema.
 	recordedSound := SequentialSound new.
-	captureSink := SoundDriver current mainCaptureSink.
 	RecorderActive := true.
-	samplingRate := captureSink sampleRate.
-	captureCallback := [ :dequeuedBuffer |
-		self meterFrom: 1 count: dequeuedBuffer size in: dequeuedBuffer.
-	 paused ifFalse: [ self emitBuffer: dequeuedBuffer ] ].
-	dequeueBufferCallback := captureSink addDequeueBufferCallback: captureCallback
+	samplingRate := self captureSink sampleRate.
+	self class addActive: self.
+	self createDequeueBufferCallback
 	
 ]
 
@@ -588,8 +627,9 @@ SoundRecorder >> stopRecording [
 	recordProcess ifNotNil: [ recordProcess terminate ].
 	recordProcess := nil.
 	SoundDriver canRecordWhilePlaying ifTrue: [
-		captureSink removeDequeueBufferCallback: dequeueBufferCallback ].
-	captureSink stopCapture.
+		self captureSink removeDequeueBufferCallback: dequeueBufferCallback ].
+	self captureSink stopCapture.
+	self class removeActive: self.
 	RecorderActive := false.
 	Smalltalk unregisterExternalObject: bufferAvailableSema.
 	(currentBuffer ~~ nil and: [ nextIndex > 1 ]) ifTrue: [
