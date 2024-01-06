@@ -16,6 +16,15 @@ Class {
 	#tag : 'Driver'
 }
 
+{ #category : 'accessing' }
+SoundSink >> activeSounds [
+	| result |
+	activeSoundsMutex critical: [ 
+		result := activeSounds copy.
+	].
+	^ result
+]
+
 { #category : 'mixing process' }
 SoundSink >> computeNextRequiredSampleCount [
 	^ 0
