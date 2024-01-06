@@ -57,6 +57,12 @@ SoundDriver class >> defaultMixerSampleRate [
 	^ 48000
 ]
 
+{ #category : 'initialization' }
+SoundDriver class >> initialize [
+	SessionManager default
+		registerToolClassNamed: self name
+]
+
 { #category : 'testing' }
 SoundDriver class >> isAvailable [
 	^ false
@@ -93,6 +99,16 @@ SoundDriver class >> reset [
 	].
 
 	CurrentDriver := nil.
+]
+
+{ #category : 'system startup' }
+SoundDriver class >> shutDown [
+	self reset
+]
+
+{ #category : 'system startup' }
+SoundDriver class >> startUp [
+	self reset
 ]
 
 { #category : 'accessing' }
@@ -158,13 +174,15 @@ SoundDriver >> samplingRate [
 { #category : 'initialize-destroy' }
 SoundDriver >> shutdown [
 	"This is the place for shutting down the driver when a explicit reset is requested"
-
-	soundMutex critical: [  
+	soundMutex critical: [
+		mainSoundSink stopMixingProcess.
 		soundMutex terminateProcess.
+		mainSoundSink := nil.
 		soundMutex := nil.
 	].
 	captureMutex critical: [  
 		captureMutex terminateProcess.
+		captureSoundSink := nil.
 		captureMutex := nil.
 	]
 ]
